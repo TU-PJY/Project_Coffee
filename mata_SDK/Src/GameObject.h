@@ -85,6 +85,10 @@ public:
 	// FPS indicator function
 	virtual void RenderIndicator() {}
 
+	// ED functiion
+	virtual GLfloat GetPosition() { return {}; }
+	virtual void TellNextPosition(GLfloat Position) {}
+
 private:
 	glm::vec4 ViewportPosition();
 	glm::vec4 LocalPosition();

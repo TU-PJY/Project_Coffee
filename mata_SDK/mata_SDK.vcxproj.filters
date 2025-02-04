@@ -151,6 +151,9 @@
     <Filter Include="[2]___________[ Object ]\[ ED ]">
       <UniqueIdentifier>{f8c3176a-d871-41f7-8214-c9191a930150}</UniqueIdentifier>
     </Filter>
+    <Filter Include="[2]___________[ Object ]\[ Shelf ]">
+      <UniqueIdentifier>{242befeb-523a-4cd9-94d2-7110c0fc7797}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AnimationUtil.cpp">
@@ -418,6 +421,9 @@
     </ClInclude>
     <ClInclude Include="ED.h">
       <Filter>[2]___________[ Object ]\[ ED ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Shelf.h">
+      <Filter>[2]___________[ Object ]\[ Shelf ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

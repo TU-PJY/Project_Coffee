@@ -8,13 +8,13 @@ class ImageResource {
 public:
 	SpriteSheet ED{};
 	SpriteSheet Coffee{};
-	Image Shelf{};
+	SpriteSheet Shelf{};
 };
 
 // Declare the sound resource here. 
 class SoundResource {
 public:
-
+	Sound Whoosh{};
 };
 
 // Data Format list

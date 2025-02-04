@@ -2,6 +2,7 @@
 #include <ModeHeader.h>
 
 #include "ED.h"
+#include "Shelf.h"
 
 class Play_Mode {
 public:
@@ -24,6 +25,7 @@ public:
 		System.SetBackColor(0.3, 0.3, 0.3);
 
 		scene.AddObject(new ED, "ed", LAYER3);
+		scene.AddObject(new Shelf(2, 1.75), "shelf", LAYER2);
 
 		SetUp();
 	}
