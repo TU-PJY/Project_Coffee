@@ -401,7 +401,7 @@
     <ClInclude Include="Src\LoadingScreen.h">
       <Filter>[5]___________[ System ]\[ System Object ]</Filter>
     </ClInclude>
-    <ClInclude Include="GameMode1.h">
+    <ClInclude Include="PlayMode.h">
       <Filter>[1]___________[ GameMode ]</Filter>
     </ClInclude>
     <ClInclude Include="Src\SystemText.h">

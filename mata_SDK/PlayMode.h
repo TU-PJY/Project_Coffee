@@ -1,10 +1,10 @@
 #pragma once
 #include <ModeHeader.h>
 
-class GameMode1 {
+class Play_Mode {
 public:
 	// define mode name and mode type here
-	std::string ModeName { "GameMode1" };
+	std::string ModeName { "PlayMode" };
 	int         ModeType { MODE_TYPE_DEFAULT };
 
 	// when you activate this option, you can access the camera controller.
@@ -35,9 +35,9 @@ public:
 	// this is a container that stores object pointers for accessing object controllers.
 	// a pointer to the object corresponding to the tag entered in InputObjectTag is added when the mode starts.
 	std::vector<GameObject*> InputObject{};
-	static GameMode1* M_Inst;
+	static Play_Mode* M_Inst;
 
-	GameMode1() {
+	Play_Mode() {
 		M_Inst = this;
 	}
 
@@ -150,4 +150,4 @@ public:
 	}
 #pragma endregion
 };
-extern GameMode1 Mode1;
+extern Play_Mode Mode1;
