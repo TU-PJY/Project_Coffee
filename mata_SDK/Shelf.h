@@ -1,8 +1,18 @@
 #pragma once
 #include <Scene.h>
 
+// 커피 구조체
+typedef struct {
+	// 커피 종류
+	int Type;
+
+	// 커피 위치
+	glm::vec2 Position;
+}CoffeeStruct;
+
 class Shelf : public GameObject {
 private:
+	//////////////////////// 선반
 	// 이드의 위치값을 얻기 위한 이드 객체 포인터
 	GameObject* PtrED{};
 
@@ -24,6 +34,18 @@ private:
 	// 다음 선반 생성 여부
 	bool NextShelfGenerated{};
 
+	//////////////////////// 커피
+	// 커피들의 위치 및 종류를 저장하는 벡터
+	std::vector<CoffeeStruct> CoffeeVec{};
+
+	// 커피의 위치를 저장하는 벡터
+	std::vector<bool> IndexVec{};
+
+	// 사운드 채널
+	SoundChannel SndChannel[5]{};
+	int PlayChannel = 0;
+	int StopChannel = 1;
+
 public:
 	Shelf(int Num, GLfloat PositionValue) {
 		NumShelf = Num;
@@ -35,6 +57,29 @@ public:
 
 		// 이드 객체 포인터 연결
 		PtrED = scene.Find("ed");
+
+		// 선반 한 칸당 4개의 커피들을 랜덤으로 배치한다.
+		// 마지막 칸은 3개만 배치한다.
+		int GenTime = Num * 4 - 1;
+		for (int i = 0; i < GenTime; ++i) {
+			CoffeeStruct Coffee{};
+			// 타입 결정
+			Coffee.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
+
+			// 위치 결정
+			// 1이면 위칸, 0이면 아래칸
+			int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
+			if (RandomNum == 1)
+				Coffee.Position.y = 0.13;
+			else
+				Coffee.Position.y = -0.28;
+
+			Coffee.Position.x = PositionValue - 0.75 + 0.5 * i;
+			CoffeeVec.emplace_back(Coffee);
+
+			// 위아래 위치 여부만 별도로 저장하여 이드와 상호작용 시 사용
+			IndexVec.emplace_back(RandomNum);
+		}
 	}
 
 	void UpdateFunc(float FrameTime) {
@@ -56,6 +101,7 @@ public:
 	}
 
 	void RenderFunc() {
+		// 선반 렌더링
 		for (int i = 0; i < NumShelf; i++) {
 			Begin();
 			transform.Move(MoveMatrix, Position + Length * i, 0.0);
@@ -71,5 +117,46 @@ public:
 			else // 중간 부분
 				imageUtil.RenderStaticSpriteSheet(Img.Shelf, 1);
 		}
+
+		// 커피 렌더링
+		for (auto& Coffee : CoffeeVec) {
+			Begin();
+			transform.Move(MoveMatrix, Coffee.Position);
+			transform.Scale(MoveMatrix, 0.45, 0.45);
+			imageUtil.RenderStaticSpriteSheet(Img.Coffee, Coffee.Type);
+		}
+	}
+
+	// 가장 앞에 있는 커피의 위 또는 아래의 위치 여부를 얻는다
+	// 위에 있을 시 true,  아래에 있을 시 false
+	bool GetFrontCoffee() {
+		return IndexVec.front();
+	}
+
+	// 가장 앞에 있는 커피를 부순다.
+	void BreakCoffee() {
+		// 커피 종류마다 다른 부서지는 사운드를 재생한다
+		int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
+
+		soundUtil.Stop(SndChannel[StopChannel++]);
+
+		if (CoffeeVec.begin()->Type == Box)
+			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel++]);
+
+		else if (CoffeeVec.begin()->Type == Glass)
+			soundUtil.Play(Snd.GlassBreak[RandomNum], SndChannel[PlayChannel++]);
+
+		else if (CoffeeVec.begin()->Type == Can)
+			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel++]);
+
+		EX.ClampValue(StopChannel, 0, 4, CLAMP_RETURN);
+		EX.ClampValue(PlayChannel, 0, 4, CLAMP_RETURN);
+
+		IndexVec.erase(IndexVec.begin());
+		CoffeeVec.erase(CoffeeVec.begin());
+
+		// 커피가 모두 부숴지면 자신의 태그를 지워 다음 선반이 검색되도록 한다.
+		if (IndexVec.empty())
+			ObjectTag = "";
 	}
 };

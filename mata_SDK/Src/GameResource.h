@@ -16,6 +16,8 @@ class SoundResource {
 public:
 	Sound Whoosh{};
 	Sound NextWhoosh{};
+
+	Sound BoxBreak[3]{}, GlassBreak[3]{}, CanBreak[3]{};
 };
 
 // Data Format list
@@ -52,6 +54,13 @@ enum ED_StateEnum {
 	HitLow2,
 	HitPeople,
 	GameOver
+};
+
+// 커피 종류 열거형
+enum CoffeeTypeEnum {
+	Box,
+	Glass,
+	Can
 };
 
 extern ImageResource Img;

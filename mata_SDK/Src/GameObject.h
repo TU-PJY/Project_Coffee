@@ -89,6 +89,10 @@ public:
 	virtual GLfloat GetPosition() { return {}; }
 	virtual void TellNextPosition(GLfloat Position) {}
 
+	// Shelf Function
+	virtual bool GetFrontCoffee() { return {}; }
+	virtual void BreakCoffee() {}
+
 private:
 	glm::vec4 ViewportPosition();
 	glm::vec4 LocalPosition();

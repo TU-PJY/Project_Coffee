@@ -22,8 +22,11 @@ private:
 	GLfloat PrevFrame = Frame;
 	GLfloat AnimationSize{};
 
-	// 다음 선반으로 이동 시 기울어지는 애니메이션을 재생한다
+	// 머리로 부수는 프레임 재생 시 기울어지는 애니메이션을 재생한다
 	GLfloat TiltValue{};
+
+	// 다음 선반으로 이동 시 앞뒤로 늘어지는 효과를 재생한다
+	GLfloat EffectSize{};
 
 	// 상태가 변경되면 일정 시간 이후 다시 Idle 상태로 북귀하도록 한다
 	TimerUtil StateTimer{};
@@ -39,8 +42,8 @@ private:
 	// 이드가 커피를 부순 횟수
 	int BreakCount{};
 
-	// 커피를 부숴야하는 개수, 초기값 8개
-	int MaxBreak{8};
+	// 커피를 부숴야하는 개수, 초기값 7개
+	int MaxBreak{7};
 
 	// 다음 선반의 시작 지점
 	GLfloat NextPosition{};
@@ -48,12 +51,6 @@ private:
 public:
 	void InputKey(KeyEvent& Event) {
 		if (Event.Type == NORMAL_KEY_DOWN && Event.NormalKey == NK_SPACE) { 
-			Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitLow2); 
-			if ((int)PrevGeneratedFrame == (int)Frame) 
-				Frame++;
-			PrevGeneratedFrame = Frame;
-			StateTimer.Reset();
-
 			soundUtil.Stop(SndChannel[StopChannel++]);
 			soundUtil.Play(Snd.Whoosh, SndChannel[PlayChannel++]);
 			EX.ClampValue(StopChannel, 0, 4, CLAMP_RETURN);
@@ -61,16 +58,37 @@ public:
 
 			DestPosition += 0.5;
 
+			AnimationSize = -0.7;
+
+			// 가장 앞에 있는 커피를 부순다. 
+			if (auto Shelf = scene.Find("shelf"); Shelf) {
+				// 커피가 위에 있을 경우
+				if (Shelf->GetFrontCoffee()) 
+					Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+
+				// 아래에 있을 경우
+				else 
+					Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+
+				// 머리로 치는 동작은 약간의 틸팅을 준다.
+				if ((int)Frame == HitHigh1)
+					TiltValue = 1.0;
+
+				PrevFrame = Frame;
+
+				Shelf->BreakCoffee();
+			}
+
 			BreakCount++;
 
 			// 커피를 모두 부수면 다음 선반으로 이동하고 부숴야하는 개수가 4 증가한다.
-			// 앞으로 기울어지는 애니메이션을 재생한다.
+			// 앞으로 늘어나는 애니메이션을 재생한다.
 			if (BreakCount >= MaxBreak) {
 				DestPosition = NextPosition;
 				BreakCount = 0;
 				MaxBreak += 4;
 
-				TiltValue = 2.0;
+				EffectSize = 7.0;
 
 				soundUtil.Stop(SndChannel2);
 				soundUtil.Play(Snd.NextWhoosh, SndChannel2);
@@ -99,7 +117,10 @@ public:
 		mathUtil.Lerp(AnimationSize, 0.0, 15.0, FrameTime);
 
 		// TiltValue가 0.0보다 크다면 다시 0.0으로 복귀시킨다
-		mathUtil.Lerp(TiltValue, 0.0, 5.0, FrameTime);
+		mathUtil.Lerp(TiltValue, 0.0, 10.0, FrameTime);
+
+		// EffectSize가 0.0보다 크다면 다시 0.0으로 복귀시킨다
+		mathUtil.Lerp(EffectSize, 0.0, 10.0, FrameTime);
 
 
 		// 목표 위치로 이동하도록 한다
@@ -115,8 +136,8 @@ public:
 
 	void RenderFunc() {
 		Begin();
-		transform.Move(MoveMatrix, Position + TiltValue * 0.5, AnimationSize * 0.5);
-		transform.Scale(MoveMatrix, 2.0, 2.0 + AnimationSize);
+		transform.Move(MoveMatrix, Position + TiltValue * 0.5 - EffectSize * 0.5, AnimationSize * 0.5);
+		transform.Scale(MoveMatrix, 2.0 + EffectSize, 2.0 + AnimationSize);
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
 		imageUtil.RenderSpriteSheet(Img.ED, Frame);
 	}

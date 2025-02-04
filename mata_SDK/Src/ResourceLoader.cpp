@@ -22,6 +22,24 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.Whoosh, "Assets//Sound//whoosh.mp3");
 	soundUtil.Load(Snd.NextWhoosh, "Assets//Sound//next-shelf.mp3");
 
+	for (int i = 0; i < 3; ++i) {
+		std::string FileName = "Assets//Sound//box-hit-";
+		FileName += std::to_string(i + 1) + ".mp3";
+		soundUtil.Load(Snd.BoxBreak[i], FileName);
+	}
+
+	for (int i = 0; i < 3; ++i) {
+		std::string FileName = "Assets//Sound//glass-hit-";
+		FileName += std::to_string(i + 1) + ".mp3";
+		soundUtil.Load(Snd.GlassBreak[i], FileName);
+	}
+
+	for (int i = 0; i < 3; ++i) {
+		std::string FileName = "Assets//Sound//metal-hit-";
+		FileName += std::to_string(i + 1) + ".mp3";
+		soundUtil.Load(Snd.CanBreak[i], FileName);
+	}
+
 	return 0;
 }
 
