@@ -141,6 +141,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ED.cpp" />
     <ClCompile Include="Modes.cpp" />
     <ClCompile Include="Src\AnimationUtil.cpp" />
     <ClCompile Include="Src\CameraController.cpp" />
@@ -183,6 +184,7 @@
     <ClCompile Include="Src\UiUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ED.h" />
     <ClInclude Include="PlayMode.h" />
     <ClInclude Include="Src\AnimationUtil.h" />
     <ClInclude Include="Src\CameraController.h" />

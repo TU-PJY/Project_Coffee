@@ -148,6 +148,9 @@
     <Filter Include="[5]___________[ System ]\[ Util ]\[ Text Util ]">
       <UniqueIdentifier>{ebbafb29-e74d-4f67-ae00-7ab61d0dd40e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="[2]___________[ Object ]\[ ED ]">
+      <UniqueIdentifier>{f8c3176a-d871-41f7-8214-c9191a930150}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AnimationUtil.cpp">
@@ -269,6 +272,9 @@
     </ClCompile>
     <ClCompile Include="Modes.cpp">
       <Filter>[1]___________[ GameMode ]\[0]_Mode Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ED.cpp">
+      <Filter>[2]___________[ Object ]\[ ED ]</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -409,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="Src\ModeHeader.h">
       <Filter>[1]___________[ GameMode ]\[0]_Mode Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ED.h">
+      <Filter>[2]___________[ Object ]\[ ED ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

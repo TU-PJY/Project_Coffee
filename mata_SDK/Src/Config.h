@@ -16,7 +16,7 @@ constexpr bool FULL_SCREEN_OPTION = false;
 
 //////////////////////////////////// SDK options
 // intro screen option
-constexpr bool ENABLE_INTRO_SCREEN = true;
+constexpr bool ENABLE_INTRO_SCREEN = false;
 
 // frame limits option
 // If this option is set to 0, the system will run at maximum framerate.
@@ -47,7 +47,7 @@ constexpr bool SHOW_FPS = true;
 // scene layer option
 // 'EOL' should be typed at last
 enum Layer
-{ LAYER1, LAYER2, LAYER3, EOL };
+{ LAYER1, LAYER2, LAYER3, LAYER4, LAYER5, EOL };
 
 // Specifies the size of the deletion location buffer
 constexpr int DELETE_LOCATION_BUFFER_SIZE = 500;
@@ -89,7 +89,7 @@ constexpr bool USE_FILE_SECURITY = false;
 // Recommend that you make this part private or 
 // modify it with the default password before distributing
 constexpr unsigned char AES_KEY[16]
-{ "1234567890" };
+{ "34342180319" };
 
 constexpr unsigned char IV_KEY[16]
-{ "1234567890" };
+{ "34342180319" };

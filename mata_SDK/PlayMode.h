@@ -1,6 +1,8 @@
 #pragma once
 #include <ModeHeader.h>
 
+#include "ED.h"
+
 class Play_Mode {
 public:
 	// define mode name and mode type here
@@ -13,14 +15,15 @@ public:
 	// type object tag to input device event
 	std::vector<std::string> InputObjectTag
 	{
-
+		"ed"
 	};
 
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
 		System.SetBackColor(0.3, 0.3, 0.3);
-		// Add task here
+
+		scene.AddObject(new ED, "ed", LAYER3);
 
 		SetUp();
 	}
