@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="[6]___________[ Template ]">
+      <UniqueIdentifier>{a0f3d2c9-d45e-42c5-ac1f-c1a53d8811ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[1]___________[ GameMode ]">
+      <UniqueIdentifier>{824d0f24-8e5b-4c58-99e5-e019f51ea99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[2]___________[ Object ]">
+      <UniqueIdentifier>{56801dea-cc93-4de6-be84-193b881c5076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[3]___________[ Camera ]">
+      <UniqueIdentifier>{a94ebc27-9b04-4c84-b876-bb9fcb87cae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[0]___________[ Config ]">
+      <UniqueIdentifier>{c229d7fb-288d-4e48-b8b0-7e7dbd38a78d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]">
+      <UniqueIdentifier>{7f6a4887-d06e-4c65-963d-2b7d61cea12c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]">
+      <UniqueIdentifier>{019278b2-60d4-4cad-b935-d813a31f2c87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Collision Util ]">
+      <UniqueIdentifier>{4048cd52-6e69-47f1-ad3d-07de4f88f83e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Mouse Util ]">
+      <UniqueIdentifier>{3fbba05c-17d5-4a1e-9a94-8c237067a9a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Shader Util ]">
+      <UniqueIdentifier>{b56d104c-471b-4b68-914e-a701e7902ee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Random Util ]">
+      <UniqueIdentifier>{a260c5f1-65f3-4ff6-afa8-97676fbd2054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Timer Util ]">
+      <UniqueIdentifier>{6c809ee9-0b72-4df6-a180-049726371c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Physics Util ]">
+      <UniqueIdentifier>{63469aed-9fc3-41f7-bbf0-32d2050b40a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Clipping Util ]">
+      <UniqueIdentifier>{9bceb82f-2ade-4d6d-9360-521458e8d522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ UI Util ]">
+      <UniqueIdentifier>{4bc61999-6038-4873-89f1-097ff59edac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Move Util ]">
+      <UniqueIdentifier>{a3986c5c-3d03-4f63-ba7d-4f37ac97802a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ EX Util ]">
+      <UniqueIdentifier>{7143f403-e5d1-41d0-946b-ebb32ffaf2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Transform Util ]">
+      <UniqueIdentifier>{97cfbf89-8ee3-4d67-b4fb-aed1f7833e3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Font Util ]">
+      <UniqueIdentifier>{f2cdada2-a380-46fd-8cf3-b9ff333dcc11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Image Util ]">
+      <UniqueIdentifier>{fa74e18f-898f-4b61-addd-ca55a9892895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Sound Util ]">
+      <UniqueIdentifier>{22512964-c0e1-42b6-8ae0-9c32d227bc22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Thread Util ]">
+      <UniqueIdentifier>{7fd964a6-1f53-4574-8c6f-a2bbbea7a889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ File Util ]">
+      <UniqueIdentifier>{d2e93683-5de8-4639-98b5-ff99bff6c54f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Math Util ]">
+      <UniqueIdentifier>{4a85a4fd-aaad-4cd4-9601-add0201898fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Compute Util ]">
+      <UniqueIdentifier>{f7456d94-6103-44fc-b1c5-33fe9e736f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ String Util ]">
+      <UniqueIdentifier>{0d426163-3f7a-4344-9513-1c4da459934c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ GLSL ]">
+      <UniqueIdentifier>{4eec4c3d-2375-48d7-85d7-413e0553d75c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Header ]">
+      <UniqueIdentifier>{2f35df9f-153e-4b4a-906d-058f259a0979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Scene ]">
+      <UniqueIdentifier>{f7b86d35-cb50-4352-9482-a8fb321f19f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ System Mode ]">
+      <UniqueIdentifier>{9d92d68b-96f8-4a78-90d4-bd16df8b7372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ System Object ]">
+      <UniqueIdentifier>{c8dde2fb-f4fd-4595-9cdf-614100ed40cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ System Resource ]">
+      <UniqueIdentifier>{60990a8d-71aa-447d-aab7-dfa6b035b3b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ TinyXML ]">
+      <UniqueIdentifier>{b411906d-dba6-43b2-9fb9-8fdc86ab615a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ TinyXML ]\[ Header ]">
+      <UniqueIdentifier>{0e3bd161-f85a-4c63-9fec-ca808700d64f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ TinyXML ]\[ CPP ]">
+      <UniqueIdentifier>{8687cc53-1f7c-47a2-a2ed-4388623b0fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[4]___________[ Resources ]">
+      <UniqueIdentifier>{a23e0c3a-d6ca-4199-bc98-de8c1d7c55be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ AnimationUtil ]">
+      <UniqueIdentifier>{4850e16c-dcfa-4087-ac33-4dcbebf53e98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Camera Util ]">
+      <UniqueIdentifier>{f246ec1e-8aa5-4a4c-86c6-75a511ec4ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ GameObject ]">
+      <UniqueIdentifier>{f67944b9-c91f-464e-976e-0b8958cf7ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Main ]">
+      <UniqueIdentifier>{0db3b7f8-93be-4b88-bfa5-da8ad252be70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[1]___________[ GameMode ]\[0]_Mode Source">
+      <UniqueIdentifier>{e5570cb2-8557-4f05-9d45-ce94e1bf6e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Script Util ]">
+      <UniqueIdentifier>{81f53a74-031c-406e-82e2-a9d6a7f85d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Shape Util ]">
+      <UniqueIdentifier>{74b0aa9a-a87c-4a17-bdd5-d4f93ac8a450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Line ]">
+      <UniqueIdentifier>{186e77d4-d667-4ca8-a7db-0c4ff78a4275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Rect ]">
+      <UniqueIdentifier>{1717a6b1-c315-40dc-a9e1-71209e40100b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Circle ]">
+      <UniqueIdentifier>{8ca8864d-f116-4649-ac79-d0c373874068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ GameObject ]\[ Object Value ]">
+      <UniqueIdentifier>{8b8a436e-7668-404f-9fa0-864c2eec418e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ UI Util ]\[0] [ Pack ]">
+      <UniqueIdentifier>{38262568-5f1a-4ff0-9a03-cc13df33dcd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Text Util ]">
+      <UniqueIdentifier>{ebbafb29-e74d-4f67-ae00-7ab61d0dd40e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\AnimationUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ AnimationUtil ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CameraController.cpp">
+      <Filter>[3]___________[ Camera ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CameraUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Camera Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CircleBrush.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Circle ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ClippingUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Clipping Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CollisionUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Collision Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ComputeUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Compute Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Display.cpp">
+      <Filter>[5]___________[ System ]\[ Main ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ExUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ EX Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FileUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ File Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FontUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Font Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject.cpp">
+      <Filter>[5]___________[ System ]\[ GameObject ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ImageUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Image Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\LineBrush.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Line ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Main.cpp">
+      <Filter>[5]___________[ System ]\[ Main ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MathUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Math Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ObjectValue.cpp">
+      <Filter>[5]___________[ System ]\[ GameObject ]\[ Object Value ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MouseUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Mouse Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MoveUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Move Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PhysicsUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Physics Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\RandomUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Random Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\RectBrush.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Rect ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ResourceLoader.cpp">
+      <Filter>[4]___________[ Resources ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Scene.cpp">
+      <Filter>[5]___________[ System ]\[ Scene ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ScriptUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Script Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SetUp.cpp">
+      <Filter>[5]___________[ System ]\[ Main ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ShaderUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Shader Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SoundUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Sound Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StringUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ String Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SysMode.cpp">
+      <Filter>[5]___________[ System ]\[ System Mode ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TextUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Text Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ThreadUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Thread Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TimerUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Timer Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Library\tinyxml\tinystr.cpp">
+      <Filter>[5]___________[ System ]\[ TinyXML ]\[ CPP ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Library\tinyxml\tinyxml.cpp">
+      <Filter>[5]___________[ System ]\[ TinyXML ]\[ CPP ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Library\tinyxml\tinyxmlerror.cpp">
+      <Filter>[5]___________[ System ]\[ TinyXML ]\[ CPP ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Library\tinyxml\tinyxmlparser.cpp">
+      <Filter>[5]___________[ System ]\[ TinyXML ]\[ CPP ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TransformUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Transform Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\UiUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ UI Util ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Modes.cpp">
+      <Filter>[1]___________[ GameMode ]\[0]_Mode Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\AnimationUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ AnimationUtil ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CameraController.h">
+      <Filter>[3]___________[ Camera ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CameraUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Camera Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CircleBrush.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Circle ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ClippingUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Clipping Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CollisionUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Collision Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ComputeUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Compute Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Config.h">
+      <Filter>[0]___________[ Config ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ErrorMessage.h">
+      <Filter>[5]___________[ System ]\[ System Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ExUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ EX Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\FileUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ File Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\FontUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Font Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\FPSInd.h">
+      <Filter>[5]___________[ System ]\[ System Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameObject.h">
+      <Filter>[5]___________[ System ]\[ GameObject ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameResource.h">
+      <Filter>[4]___________[ Resources ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ImageUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Image Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\IntroMode.h">
+      <Filter>[5]___________[ System ]\[ System Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\IntroScreen.h">
+      <Filter>[5]___________[ System ]\[ System Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\LineBrush.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Line ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\LoadingMode.h">
+      <Filter>[5]___________[ System ]\[ System Mode ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MathUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Math Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ObjectValue.h">
+      <Filter>[5]___________[ System ]\[ GameObject ]\[ Object Value ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MouseUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Mouse Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MoveUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Move Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PhysicsUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Physics Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\RandomUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Random Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\RectBrush.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Rect ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Scene.h">
+      <Filter>[5]___________[ System ]\[ Scene ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ScriptUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Script Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\SDKHeader.h">
+      <Filter>[5]___________[ System ]\[ Header ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ShaderUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Shader Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\SoundUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Sound Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StringUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ String Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\SystemResource.h">
+      <Filter>[5]___________[ System ]\[ System Resource ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TextUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Text Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ThreadUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Thread Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TimerUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Timer Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Library\tinyxml\tinystr.h">
+      <Filter>[5]___________[ System ]\[ TinyXML ]\[ Header ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Library\tinyxml\tinyxml.h">
+      <Filter>[5]___________[ System ]\[ TinyXML ]\[ Header ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TransformUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Transform Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\UiUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ UI Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\UtilPack.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ UI Util ]\[0] [ Pack ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\LoadingScreen.h">
+      <Filter>[5]___________[ System ]\[ System Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode1.h">
+      <Filter>[1]___________[ GameMode ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\SystemText.h">
+      <Filter>[5]___________[ System ]\[ System Resource ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ModeHeader.h">
+      <Filter>[1]___________[ GameMode ]\[0]_Mode Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ModeTemplate_Manual.txt">
+      <Filter>[6]___________[ Template ]</Filter>
+    </Text>
+    <Text Include="ModeTemplate.txt">
+      <Filter>[6]___________[ Template ]</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SDKResource\GLSL\ComputeMatrix.glsl">
+      <Filter>[5]___________[ System ]\[ GLSL ]</Filter>
+    </None>
+    <None Include="SDKResource\GLSL\Fragment_Image.glsl">
+      <Filter>[5]___________[ System ]\[ GLSL ]</Filter>
+    </None>
+    <None Include="SDKResource\GLSL\Fragment_Shape.glsl">
+      <Filter>[5]___________[ System ]\[ GLSL ]</Filter>
+    </None>
+    <None Include="SDKResource\GLSL\Fragment_Text.glsl">
+      <Filter>[5]___________[ System ]\[ GLSL ]</Filter>
+    </None>
+    <None Include="SDKResource\GLSL\Vertex.glsl">
+      <Filter>[5]___________[ System ]\[ GLSL ]</Filter>
+    </None>
+  </ItemGroup>
+</Project>
