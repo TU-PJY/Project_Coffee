@@ -20,6 +20,7 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 
 DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.Whoosh, "Assets//Sound//whoosh.mp3");
+	soundUtil.Load(Snd.NextWhoosh, "Assets//Sound//next-shelf.mp3");
 
 	return 0;
 }

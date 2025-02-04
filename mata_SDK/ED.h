@@ -22,6 +22,9 @@ private:
 	GLfloat PrevFrame = Frame;
 	GLfloat AnimationSize{};
 
+	// 다음 선반으로 이동 시 기울어지는 애니메이션을 재생한다
+	GLfloat TiltValue{};
+
 	// 상태가 변경되면 일정 시간 이후 다시 Idle 상태로 북귀하도록 한다
 	TimerUtil StateTimer{};
 
@@ -30,6 +33,8 @@ private:
 	SoundChannel SndChannel[5]{};
 	int PlayChannel = 0;
 	int StopChannel = 1;
+
+	SoundChannel SndChannel2{};
 	        
 	// 이드가 커피를 부순 횟수
 	int BreakCount{};
@@ -58,10 +63,17 @@ public:
 
 			BreakCount++;
 
+			// 커피를 모두 부수면 다음 선반으로 이동하고 부숴야하는 개수가 4 증가한다.
+			// 앞으로 기울어지는 애니메이션을 재생한다.
 			if (BreakCount >= MaxBreak) {
 				DestPosition = NextPosition;
 				BreakCount = 0;
 				MaxBreak += 4;
+
+				TiltValue = 2.0;
+
+				soundUtil.Stop(SndChannel2);
+				soundUtil.Play(Snd.NextWhoosh, SndChannel2);
 			}
 		}
 	}
@@ -71,7 +83,7 @@ public:
 		// 단, 현재 프레임이 Idle일 경우 AnimationSize를 변경하지 않는다
 		if ((int)PrevFrame != (int)Frame) {
 			if ((int)Frame != Idle) 
-				AnimationSize = -0.4;
+				AnimationSize = -0.7;
 			PrevFrame = Frame;
 		}
 		
@@ -82,11 +94,17 @@ public:
 				Frame = Idle; 
 		}
 
+
 		// AnimationSize가 0.0보다 작다면 다시 0.0으로 복귀시킨다
 		mathUtil.Lerp(AnimationSize, 0.0, 15.0, FrameTime);
 
+		// TiltValue가 0.0보다 크다면 다시 0.0으로 복귀시킨다
+		mathUtil.Lerp(TiltValue, 0.0, 5.0, FrameTime);
+
+
 		// 목표 위치로 이동하도록 한다
 		mathUtil.Lerp(Position, DestPosition, 20.0, FrameTime);
+
 
 		// 카메라가 이드를 부드럽게 따라오도록 한다
 		mathUtil.Lerp(CameraPosition, -DestPosition, 7.0, FrameTime);
@@ -97,8 +115,9 @@ public:
 
 	void RenderFunc() {
 		Begin();
-		transform.Move(MoveMatrix, Position, AnimationSize * 0.5);
+		transform.Move(MoveMatrix, Position + TiltValue * 0.5, AnimationSize * 0.5);
 		transform.Scale(MoveMatrix, 2.0, 2.0 + AnimationSize);
+		transform.Shear(MoveMatrix, TiltValue, 0.0);
 		imageUtil.RenderSpriteSheet(Img.ED, Frame);
 	}
 

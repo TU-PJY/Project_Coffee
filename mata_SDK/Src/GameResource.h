@@ -15,6 +15,7 @@ public:
 class SoundResource {
 public:
 	Sound Whoosh{};
+	Sound NextWhoosh{};
 };
 
 // Data Format list

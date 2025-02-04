@@ -10,7 +10,7 @@ SDKSystem* SDKSystem::S_Inst;
 
 GLvoid SDKSystem::Main() {
 	if (S_Inst->FPSLimit > 0) {
-		std::chrono::duration<double> Duration(S_Inst->DestFPS);
+		std::chrono::duration<double, std::milli> Duration(S_Inst->DestFPS);
 		std::this_thread::sleep_for(Duration);
 	}
 
