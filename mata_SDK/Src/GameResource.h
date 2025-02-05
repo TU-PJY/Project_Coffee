@@ -9,6 +9,7 @@ public:
 	SpriteSheet ED{};
 	SpriteSheet Coffee{};
 	SpriteSheet Shelf{};
+	SpriteSheet Other{};
 };
 
 // Declare the sound resource here. 

@@ -36,7 +36,6 @@ private:
 
 	// 이드 사운드 채널
 	SoundChannel SndChannel{};
-
 	SoundChannel SndChannel2{};
 	        
 	// 이드가 커피를 부순 횟수

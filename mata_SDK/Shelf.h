@@ -1,14 +1,14 @@
 #pragma once
 #include <Scene.h>
 
-// 커피 구조체
+// 물건 구조체
 typedef struct {
 	// 커피 종류
 	int Type;
 
 	// 커피 위치
 	glm::vec2 Position;
-}CoffeeStruct;
+}ItemStruct;
 
 class Shelf : public GameObject {
 private:
@@ -34,9 +34,12 @@ private:
 	// 다음 선반 생성 여부
 	bool NextShelfGenerated{};
 
-	//////////////////////// 커피
+	//////////////////////// 물건
 	// 커피들의 위치 및 종류를 저장하는 벡터
-	std::vector<CoffeeStruct> CoffeeVec{};
+	std::vector<ItemStruct> CoffeeVec{};
+
+	// 커피가 아닌 다른 물건들의 위치 및 종류를 저장하는 벡터
+	std::vector<ItemStruct> OtherVec{}; 
 
 	// 커피의 위치를 저장하는 벡터
 	std::vector<bool> IndexVec{};
@@ -62,20 +65,32 @@ public:
 		// 마지막 칸은 3개만 배치한다.
 		int GenTime = Num * 4 - 1;
 		for (int i = 0; i < GenTime; ++i) {
-			CoffeeStruct Coffee{};
+			ItemStruct Coffee{};
+			ItemStruct Other{};
+
 			// 타입 결정
 			Coffee.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
+			Other.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
 
 			// 위치 결정
 			// 1이면 위칸, 0이면 아래칸
+			// 커피와 다른 물건이 겹치지 않도록 배치한다
 			int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
-			if (RandomNum == 1)
+			if (RandomNum == 1) {
 				Coffee.Position.y = 0.14;
-			else
+				Other.Position.y = -0.27;
+			}
+			else {
 				Coffee.Position.y = -0.27;
+				Other.Position.y = 0.14;
+			}
 
+			// x 위치는 커피와 다른 물건이 같도록 한다
 			Coffee.Position.x = PositionValue - 0.75 + 0.5 * i;
+			Other.Position.x = Coffee.Position.x;
 			CoffeeVec.emplace_back(Coffee);
+			OtherVec.emplace_back(Other);
+			
 
 			// 위아래 위치 여부만 별도로 저장하여 이드와 상호작용 시 사용
 			IndexVec.emplace_back(RandomNum);
@@ -124,6 +139,14 @@ public:
 			transform.Move(MoveMatrix, Coffee.Position);
 			transform.Scale(MoveMatrix, 0.45, 0.45);
 			imageUtil.RenderStaticSpriteSheet(Img.Coffee, Coffee.Type);
+		}
+
+		// 다른 물건 렌더링
+		for (auto& Other : OtherVec) {
+			Begin();
+			transform.Move(MoveMatrix, Other.Position);
+			transform.Scale(MoveMatrix, 0.45, 0.45);
+			imageUtil.RenderStaticSpriteSheet(Img.Other, Other.Type);
 		}
 	}
 
