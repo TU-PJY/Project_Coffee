@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "CameraController.h"
 
 void GameObject::Begin(int RenderType) {
 	transform.Identity(ResultMatrix);
@@ -122,6 +123,35 @@ void GameObject::ResetUnitTransform() {
 	UnitBlurValue = 0.0f;
 }
 
+bool GameObject::CheckFrustum(GLfloat X, GLfloat Y, GLfloat SizeX, GLfloat SizeY) {
+	if ((X < -CameraPosition.x - ASP(1.0) - SizeX * 0.5 || X > -CameraPosition.x + ASP(1.0) + SizeX * 0.5) &&
+		(Y < -CameraPosition.y - 1.0 - SizeY * 0.5 || Y > -CameraPosition.y + 1.0 + SizeY * 0.5))
+		return false;
+
+	return true;
+}
+
+bool GameObject::CheckFrustum(glm::vec2 Position, glm::vec2 Size) {
+	if ((Position.x < -CameraPosition.x - ASP(1.0) - Size.x * 0.5 || Position.x > -CameraPosition.x + ASP(1.0) + Size.x * 0.5) &&
+		(Position.y < -CameraPosition.y - 1.0 - Size.y * 0.5 || Position.y > -CameraPosition.y + 1.0 + Size.y * 0.5))
+		return false;
+
+	return true;
+}
+
+bool GameObject::CheckFrustumH(GLfloat X, GLfloat SizeX) {
+	if (X < -CameraPosition.x - ASP(1.0) - SizeX * 0.5 || X > -CameraPosition.x + ASP(1.0) + SizeX * 0.5)
+		return false;
+
+	return true;
+}
+
+bool GameObject::CheckFrustumV(GLfloat Y, GLfloat SizeY) {
+	if (Y < -CameraPosition.y - 1.0 - SizeY * 0.5 || Y > -CameraPosition.y + 1.0 + SizeY * 0.5)
+		return false;
+
+	return true;
+}
 ////////////////////////// private
 
 glm::vec4 GameObject::ViewportPosition() {

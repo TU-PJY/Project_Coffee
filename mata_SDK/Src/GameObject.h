@@ -41,6 +41,11 @@ public:
 	void SetUnitBlur(GLfloat Strength);
 	void ResetUnitTransform();
 
+	bool CheckFrustum(GLfloat X, GLfloat Y, GLfloat SizeX, GLfloat SizeY);
+	bool CheckFrustum(glm::vec2 Position, glm::vec2 Size);
+	bool CheckFrustumH(GLfloat X, GLfloat SizeX);
+	bool CheckFrustumV(GLfloat Y, GLfloat SizeY);
+
 	void SetFlip(int FlipOpt);
 	void SetBlur(GLfloat Strength);
 	

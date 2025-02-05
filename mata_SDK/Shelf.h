@@ -34,9 +34,6 @@ private:
 	// 다음 선반 생성 여부
 	bool NextShelfGenerated{};
 
-	// 렌더링 유무를 결정하기 위한 이드의 현재 위치
-	GLfloat EDPosition{};
-
 	//////////////////////// 물건
 	// 커피들의 위치 및 종류를 저장하는 벡터
 	std::vector<ItemStruct> CoffeeVec{};
@@ -93,7 +90,6 @@ public:
 			Other.Position.x = Coffee.Position.x;
 			CoffeeVec.emplace_back(Coffee);
 			OtherVec.emplace_back(Other);
-			
 
 			// 위아래 위치 여부만 별도로 저장하여 이드와 상호작용 시 사용
 			IndexVec.emplace_back(RandomNum);
@@ -101,11 +97,8 @@ public:
 	}
 
 	void UpdateFunc(float FrameTime) {
-		// 이드 위치 얻기
-		EDPosition = PtrED->GetPosition();
-
-		// 이드가 선반의 중간 지점에 도달하면 다음 선반을 미리 생성한다
-		if (!NextShelfGenerated && MiddlePoint <= EDPosition) {
+		// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
+		if (!NextShelfGenerated && MiddlePoint <= -CameraPosition.x) {
 			NextShelfGenerated = true;
 			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
 
@@ -114,7 +107,7 @@ public:
 		}
 
 		// 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
-		if (EndPoint < WindowRect.lx - CameraPosition.x) 
+		if (EndPoint < -CameraPosition.x - ASP(1.0))
 			scene.DeleteObject(this);
 	}
 
@@ -124,8 +117,7 @@ public:
 			GLfloat ShelfPosition = Position + Length * i;
 
 			// 화면에 보이지 않는 선반은 렌더링을 건너뛴다.
-			if (ShelfPosition < WindowRect.lx -CameraPosition.x - Length * 0.5 ||
-				ShelfPosition > -CameraPosition.x + WindowRect.rx + Length * 0.5)
+			if (!CheckFrustumH(ShelfPosition, Length))
 				continue;
 
 			Begin();
@@ -146,8 +138,7 @@ public:
 		// 커피 렌더링
 		for (auto& Coffee : CoffeeVec) {
 			// 화면에 보이지 않는 커피는 렌더링을 건너뛴다.
-			if (Coffee.Position.x < WindowRect.lx - CameraPosition.x - 0.225 || 
-				Coffee.Position.x > -CameraPosition.x + WindowRect.rx + 0.225)
+			if (!CheckFrustumH(Coffee.Position.x, 0.45))
 				continue;
 
 			Begin();
@@ -159,8 +150,7 @@ public:
 		// 다른 물건 렌더링
 		for (auto& Other : OtherVec) {
 			// 화면에 보이지 않는 물건은 렌더링을 건너뛴다.
-			if (Other.Position.x < WindowRect.lx - CameraPosition.x - 0.225 || 
-				Other.Position.x > -CameraPosition.x + WindowRect.rx + 0.225)
+			if (!CheckFrustumH(Other.Position.x, 0.45))
 				continue;
 
 			Begin();
