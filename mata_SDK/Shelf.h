@@ -13,7 +13,7 @@ typedef struct {
 class Shelf : public GameObject {
 private:
 	//////////////////////// 선반
-	// 이드의 위치값을 얻기 위한 이드 객체 포인터
+	// 이드 객체 포인터
 	GameObject* PtrED{};
 
 	// 선반 개수
