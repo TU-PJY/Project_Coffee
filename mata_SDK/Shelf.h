@@ -58,8 +58,8 @@ public:
 		Position = PositionValue;
 
 		// 중간 지점 및 끝 지점 길이 계산 
-		MiddlePoint = Length * (GLfloat)(Num - 1) * 0.5;
-		EndPoint = Length * (GLfloat)(Num - 1) + Length * 0.5;
+		MiddlePoint = Position + Length * (GLfloat)(Num - 1) * 0.5;
+		EndPoint = Position + Length * (GLfloat)(Num - 1) + Length * 0.5;
 
 		// 이드 객체 포인터 연결
 		PtrED = scene.Find("ed");
@@ -105,29 +105,31 @@ public:
 		EDPosition = PtrED->GetPosition();
 
 		// 이드가 선반의 중간 지점에 도달하면 다음 선반을 미리 생성한다
-		if (!NextShelfGenerated && Position + MiddlePoint <= EDPosition) {
+		if (!NextShelfGenerated && MiddlePoint <= EDPosition) {
 			NextShelfGenerated = true;
-			scene.AddObject(new Shelf(NumShelf + 1, Position + EndPoint + Length * 2.0), "shelf", LAYER2);
+			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
 
 			// 이드가 이동해야 할 다음 위치를 알린다
-			PtrED->TellNextPosition(Position + EndPoint + Length * 2.0 - 1.75);
+			PtrED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
 		}
 
 		// 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
-		if (Position + Length * (NumShelf - 1) < WindowRect.lx - CameraPosition.x - Length * 0.5) 
+		if (EndPoint < WindowRect.lx - CameraPosition.x) 
 			scene.DeleteObject(this);
 	}
 
 	void RenderFunc() {
 		// 선반 렌더링
 		for (int i = 0; i < NumShelf; i++) {
+			GLfloat ShelfPosition = Position + Length * i;
+
 			// 화면에 보이지 않는 선반은 렌더링을 건너뛴다.
-			if (Position + Length * i < WindowRect.lx -CameraPosition.x - Length * 0.5 || 
-				Position + Length * i >  -CameraPosition.x + WindowRect.rx + Length * 0.5)
+			if (ShelfPosition < WindowRect.lx -CameraPosition.x - Length * 0.5 ||
+				ShelfPosition > -CameraPosition.x + WindowRect.rx + Length * 0.5)
 				continue;
 
 			Begin();
-			transform.Move(MoveMatrix, Position + Length * i, 0.0);
+			transform.Move(MoveMatrix, ShelfPosition, 0.0);
 			transform.Scale(MoveMatrix, Length, Length);
 
 			// 맨 앞부분과 맨 뒷 부분을 제외한 나머지 부분은 같은 프레임으로 렌더링한다.
@@ -145,7 +147,7 @@ public:
 		for (auto& Coffee : CoffeeVec) {
 			// 화면에 보이지 않는 커피는 렌더링을 건너뛴다.
 			if (Coffee.Position.x < WindowRect.lx - CameraPosition.x - 0.225 || 
-				Coffee.Position.x >  -CameraPosition.x + WindowRect.rx + 0.225)
+				Coffee.Position.x > -CameraPosition.x + WindowRect.rx + 0.225)
 				continue;
 
 			Begin();
@@ -158,7 +160,7 @@ public:
 		for (auto& Other : OtherVec) {
 			// 화면에 보이지 않는 물건은 렌더링을 건너뛴다.
 			if (Other.Position.x < WindowRect.lx - CameraPosition.x - 0.225 || 
-				Other.Position.x >  -CameraPosition.x + WindowRect.rx + 0.225)
+				Other.Position.x > -CameraPosition.x + WindowRect.rx + 0.225)
 				continue;
 
 			Begin();
