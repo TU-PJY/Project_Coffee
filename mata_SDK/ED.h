@@ -85,7 +85,7 @@ public:
 				BreakCount = 0;
 				MaxBreak += 4;
 
-				TiltValue = 2.0;
+				TiltValue = 3.0;
 
 				soundUtil.Stop(SndChannel2);
 				soundUtil.Play(Snd.NextWhoosh, SndChannel2);
@@ -134,8 +134,8 @@ public:
 	}
 
 	void RenderFunc() {
-		glm::vec2 FinalPosition { Position + AnimationSize * 0.5 + TiltValue * 0.5 , BreatheSize * 0.5 };
-		glm::vec2 FinalSize{ 2.0+ AnimationSize, 2.0 + BreatheSize };
+		glm::vec2 FinalPosition { Position + AnimationSize * 0.5 + TiltValue * 0.5 , BreatheSize * 0.5 - AnimationSize * 0.25};
+		glm::vec2 FinalSize{ 2.0 + AnimationSize, 2.0 + BreatheSize - AnimationSize * 0.5};
 
 		Begin();
 		transform.Move(MoveMatrix, FinalPosition);
