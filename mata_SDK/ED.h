@@ -28,14 +28,15 @@ private:
 	// 다음 선반으로 이동 시 앞뒤로 늘어지는 효과를 재생한다
 	GLfloat EffectSize{};
 
+	// 이드 숨쉬기 애니메이션
+	GLfloat BreatheSize{};
+	SinLoop BreatheLoop{};
+
 	// 상태가 변경되면 일정 시간 이후 다시 Idle 상태로 북귀하도록 한다
 	TimerUtil StateTimer{};
 
 	// 이드 사운드 채널
-	// 안정적인 빠른 재생을 위해 순환 채널을 사용한다
-	SoundChannel SndChannel[5]{};
-	int PlayChannel = 0;
-	int StopChannel = 1;
+	SoundChannel SndChannel{};
 
 	SoundChannel SndChannel2{};
 	        
@@ -51,13 +52,12 @@ private:
 public:
 	void InputKey(KeyEvent& Event) {
 		if (Event.Type == NORMAL_KEY_DOWN && Event.NormalKey == NK_SPACE) { 
-			soundUtil.Stop(SndChannel[StopChannel++]);
-			soundUtil.Play(Snd.Whoosh, SndChannel[PlayChannel++]);
-			EX.ClampValue(StopChannel, 0, 4, CLAMP_RETURN);
-			EX.ClampValue(PlayChannel, 0, 4, CLAMP_RETURN);
+			soundUtil.Stop(SndChannel);
+			soundUtil.Play(Snd.Whoosh, SndChannel);
+
+			StateTimer.Reset();
 
 			DestPosition += 0.5;
-
 			AnimationSize = -0.7;
 
 			// 가장 앞에 있는 커피를 부순다. 
@@ -65,20 +65,22 @@ public:
 				// 커피가 위에 있을 경우
 				if (Shelf->GetFrontCoffee()) 
 					Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
-
 				// 아래에 있을 경우
 				else 
 					Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+
+				//  이전 프레임 갱신
+				PrevFrame = Frame;
 
 				// 머리로 치는 동작은 약간의 틸팅을 준다.
 				if ((int)Frame == HitHigh1)
 					TiltValue = 1.0;
 
-				PrevFrame = Frame;
-
+				// 커피 파괴
 				Shelf->BreakCoffee();
 			}
 
+			// 부순 커피 횟수 증가
 			BreakCount++;
 
 			// 커피를 모두 부수면 다음 선반으로 이동하고 부숴야하는 개수가 4 증가한다.
@@ -97,6 +99,7 @@ public:
 	}
 
 	void UpdateFunc(float FrameTime) {
+		// 프레임
 		// 이전 프레임과 현재 프레임이 다를 경우 이전 프레임을 갱신하고 애니메이션 출력하도록 한다
 		// 단, 현재 프레임이 Idle일 경우 AnimationSize를 변경하지 않는다
 		if ((int)PrevFrame != (int)Frame) {
@@ -113,6 +116,7 @@ public:
 		}
 
 
+		// 애니메이션
 		// AnimationSize가 0.0보다 작다면 다시 0.0으로 복귀시킨다
 		mathUtil.Lerp(AnimationSize, 0.0, 15.0, FrameTime);
 
@@ -122,10 +126,13 @@ public:
 		// EffectSize가 0.0보다 크다면 다시 0.0으로 복귀시킨다
 		mathUtil.Lerp(EffectSize, 0.0, 10.0, FrameTime);
 
+		// 이드의 숨쉬기 애니메이션을 업데이트 한다
+		BreatheSize = BreatheLoop.Update(0.03, 6.0, FrameTime);
 
+
+		// 이동
 		// 목표 위치로 이동하도록 한다
 		mathUtil.Lerp(Position, DestPosition, 20.0, FrameTime);
-
 
 		// 카메라가 이드를 부드럽게 따라오도록 한다
 		mathUtil.Lerp(CameraPosition, -DestPosition, 7.0, FrameTime);
@@ -135,9 +142,12 @@ public:
 	}
 
 	void RenderFunc() {
+		glm::vec2 FinalPosition { Position + TiltValue * 0.5 - EffectSize * 0.5, AnimationSize * 0.5 + BreatheSize * 0.5 };
+		glm::vec2 FinalSize{ 2.0 + EffectSize, 2.0 + AnimationSize + BreatheSize };
+
 		Begin();
-		transform.Move(MoveMatrix, Position + TiltValue * 0.5 - EffectSize * 0.5, AnimationSize * 0.5);
-		transform.Scale(MoveMatrix, 2.0 + EffectSize, 2.0 + AnimationSize);
+		transform.Move(MoveMatrix, FinalPosition);
+		transform.Scale(MoveMatrix, FinalSize);
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
 		imageUtil.RenderSpriteSheet(Img.ED, Frame);
 	}

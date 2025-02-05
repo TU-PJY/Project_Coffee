@@ -56,7 +56,7 @@ constexpr int DELETE_LOCATION_BUFFER_SIZE = 500;
 
 //////////////////////////////////// Sound Options
 // Max sound channel option
-constexpr int MAX_CHANNEL_SIZE = 32;
+constexpr int MAX_CHANNEL_SIZE = 150;
 
 // FFT Size option
 constexpr int FFT_SIZE = 1024;

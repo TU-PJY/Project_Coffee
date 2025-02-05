@@ -44,7 +44,7 @@ private:
 	// 사운드 채널
 	SoundChannel SndChannel[5]{};
 	int PlayChannel = 0;
-	int StopChannel = 1;
+	int StopChannel = 2;
 
 public:
 	Shelf(int Num, GLfloat PositionValue) {
@@ -70,9 +70,9 @@ public:
 			// 1이면 위칸, 0이면 아래칸
 			int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
 			if (RandomNum == 1)
-				Coffee.Position.y = 0.13;
+				Coffee.Position.y = 0.14;
 			else
-				Coffee.Position.y = -0.28;
+				Coffee.Position.y = -0.27;
 
 			Coffee.Position.x = PositionValue - 0.75 + 0.5 * i;
 			CoffeeVec.emplace_back(Coffee);
