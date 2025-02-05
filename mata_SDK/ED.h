@@ -18,15 +18,14 @@ private:
 
 	GLfloat PrevGeneratedFrame{};
 
-	// 현재 프레임과 이전 프레임이 다르면 살짝 눌리는 애니메이션을 재생한다
+	// 현재 프레임과 이전 프레임
 	GLfloat PrevFrame = Frame;
+
+	// 앞뒤로 늘어나는 효과를 준다
 	GLfloat AnimationSize{};
 
-	// 머리로 부수는 프레임 재생 시 기울어지는 애니메이션을 재생한다
+	// 앞으로 기울어지는 효과를 준다
 	GLfloat TiltValue{};
-
-	// 다음 선반으로 이동 시 앞뒤로 늘어지는 효과를 재생한다
-	GLfloat EffectSize{};
 
 	// 이드 숨쉬기 애니메이션
 	GLfloat BreatheSize{};
@@ -58,7 +57,7 @@ public:
 			StateTimer.Reset();
 
 			DestPosition += 0.5;
-			AnimationSize = -0.7;
+			AnimationSize = 1.0;
 
 			// 가장 앞에 있는 커피를 부순다. 
 			if (auto Shelf = scene.Find("shelf"); Shelf) {
@@ -71,10 +70,6 @@ public:
 
 				//  이전 프레임 갱신
 				PrevFrame = Frame;
-
-				// 머리로 치는 동작은 약간의 틸팅을 준다.
-				if ((int)Frame == HitHigh1)
-					TiltValue = 1.0;
 
 				// 커피 파괴
 				Shelf->BreakCoffee();
@@ -90,7 +85,7 @@ public:
 				BreakCount = 0;
 				MaxBreak += 4;
 
-				EffectSize = 7.0;
+				TiltValue = 2.0;
 
 				soundUtil.Stop(SndChannel2);
 				soundUtil.Play(Snd.NextWhoosh, SndChannel2);
@@ -121,10 +116,7 @@ public:
 		mathUtil.Lerp(AnimationSize, 0.0, 15.0, FrameTime);
 
 		// TiltValue가 0.0보다 크다면 다시 0.0으로 복귀시킨다
-		mathUtil.Lerp(TiltValue, 0.0, 10.0, FrameTime);
-
-		// EffectSize가 0.0보다 크다면 다시 0.0으로 복귀시킨다
-		mathUtil.Lerp(EffectSize, 0.0, 10.0, FrameTime);
+		mathUtil.Lerp(TiltValue, 0.0, 5.0, FrameTime);
 
 		// 이드의 숨쉬기 애니메이션을 업데이트 한다
 		BreatheSize = BreatheLoop.Update(0.03, 6.0, FrameTime);
@@ -142,8 +134,8 @@ public:
 	}
 
 	void RenderFunc() {
-		glm::vec2 FinalPosition { Position + TiltValue * 0.5 - EffectSize * 0.5, AnimationSize * 0.5 + BreatheSize * 0.5 };
-		glm::vec2 FinalSize{ 2.0 + EffectSize, 2.0 + AnimationSize + BreatheSize };
+		glm::vec2 FinalPosition { Position + AnimationSize * 0.5 + TiltValue * 0.5 , BreatheSize * 0.5 };
+		glm::vec2 FinalSize{ 2.0+ AnimationSize, 2.0 + BreatheSize };
 
 		Begin();
 		transform.Move(MoveMatrix, FinalPosition);
