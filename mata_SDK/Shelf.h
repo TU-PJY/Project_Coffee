@@ -34,6 +34,9 @@ private:
 	// 다음 선반 생성 여부
 	bool NextShelfGenerated{};
 
+	// 렌더링 유무를 결정하기 위한 이드의 현재 위치
+	GLfloat EDPosition{};
+
 	//////////////////////// 물건
 	// 커피들의 위치 및 종류를 저장하는 벡터
 	std::vector<ItemStruct> CoffeeVec{};
@@ -99,7 +102,7 @@ public:
 
 	void UpdateFunc(float FrameTime) {
 		// 이드 위치 얻기
-		GLfloat EDPosition = PtrED->GetPosition();
+		EDPosition = PtrED->GetPosition();
 
 		// 이드가 선반의 중간 지점에 도달하면 다음 선반을 미리 생성한다
 		if (!NextShelfGenerated && Position + MiddlePoint <= EDPosition) {
@@ -111,13 +114,18 @@ public:
 		}
 
 		// 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
-		if (Position + EndPoint <= WindowRect.lx + EDPosition - 0.5)
+		if (Position + Length * (NumShelf - 1) < WindowRect.lx - CameraPosition.x - Length * 0.5) 
 			scene.DeleteObject(this);
 	}
 
 	void RenderFunc() {
 		// 선반 렌더링
 		for (int i = 0; i < NumShelf; i++) {
+			// 화면에 보이지 않는 선반은 렌더링을 건너뛴다.
+			if (Position + Length * i < WindowRect.lx -CameraPosition.x - Length * 0.5 || 
+				Position + Length * i >  -CameraPosition.x + WindowRect.rx + Length * 0.5)
+				continue;
+
 			Begin();
 			transform.Move(MoveMatrix, Position + Length * i, 0.0);
 			transform.Scale(MoveMatrix, Length, Length);
@@ -135,6 +143,11 @@ public:
 
 		// 커피 렌더링
 		for (auto& Coffee : CoffeeVec) {
+			// 화면에 보이지 않는 커피는 렌더링을 건너뛴다.
+			if (Coffee.Position.x < WindowRect.lx - CameraPosition.x - 0.225 || 
+				Coffee.Position.x >  -CameraPosition.x + WindowRect.rx + 0.225)
+				continue;
+
 			Begin();
 			transform.Move(MoveMatrix, Coffee.Position);
 			transform.Scale(MoveMatrix, 0.45, 0.45);
@@ -143,6 +156,11 @@ public:
 
 		// 다른 물건 렌더링
 		for (auto& Other : OtherVec) {
+			// 화면에 보이지 않는 물건은 렌더링을 건너뛴다.
+			if (Other.Position.x < WindowRect.lx - CameraPosition.x - 0.225 || 
+				Other.Position.x >  -CameraPosition.x + WindowRect.rx + 0.225)
+				continue;
+
 			Begin();
 			transform.Move(MoveMatrix, Other.Position);
 			transform.Scale(MoveMatrix, 0.45, 0.45);

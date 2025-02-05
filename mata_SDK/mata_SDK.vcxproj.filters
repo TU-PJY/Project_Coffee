@@ -276,9 +276,6 @@
     <ClCompile Include="Modes.cpp">
       <Filter>[1]___________[ GameMode ]\[0]_Mode Source</Filter>
     </ClCompile>
-    <ClCompile Include="ED.cpp">
-      <Filter>[2]___________[ Object ]\[ ED ]</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\AnimationUtil.h">
