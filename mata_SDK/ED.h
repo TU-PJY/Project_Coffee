@@ -126,10 +126,10 @@ public:
 		mathUtil.Lerp(Position, DestPosition, 20.0, FrameTime);
 
 		// 카메라가 이드를 부드럽게 따라오도록 한다
-		mathUtil.Lerp(CameraPosition, -DestPosition, 7.0, FrameTime);
+		mathUtil.Lerp(CameraPosition, DestPosition, 7.0, FrameTime);
 
 		// 이드를 약간 오른쪽에서 바라보도록 한다
-		CameraControl->MoveCamera(CameraPosition - 0.5, 0.0);
+		cameraControl.MoveCamera(CameraPosition + 0.5, 0.0);
 	}
 
 	void RenderFunc() {
@@ -140,7 +140,7 @@ public:
 		transform.Move(MoveMatrix, FinalPosition);
 		transform.Scale(MoveMatrix, FinalSize);
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
-		imageUtil.RenderSpriteSheet(Img.ED, Frame);
+		imageUtil.RenderStaticSpriteSheet(Img.ED, Frame);
 	}
 
 	GLfloat GetPosition() {

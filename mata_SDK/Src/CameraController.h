@@ -1,14 +1,13 @@
 ﻿#pragma once
-#include "GameObject.h"
+#include "CameraUtil.h"
 
 extern glm::vec2 CameraPosition;
 extern GLfloat CameraRotation;
 extern GLfloat CameraZoom;
 
-class CameraController : public GameObject {
+class CameraController {
 public:
-	void InputKey(KeyEvent& Event);
-	void UpdateFunc(float FrameTime);
+	void Update(float FrameTime);
 	void MoveCamera(GLfloat X, GLfloat Y);
 	void MoveCamera(glm::vec2& PositionValue);
 	void RotateCamera(GLfloat Degree);
@@ -17,7 +16,10 @@ public:
 	GLfloat ComputeNextZoom(int ZoomType, GLfloat ZoomValue);
 
 private:
+	glm::vec2 Position{};
+	GLfloat Rotation{};
+
 	void ComputeCameraMatrix();
 };
 
-extern GameObject* CameraControl;
+extern CameraController cameraControl;

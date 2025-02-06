@@ -7,7 +7,7 @@ private:
 	bool      StaticRenderCommand{};
 	
 public:
-	glm::mat4 ViewMatrix{ 1.0 }, Projection{ 1.0 }, MoveMatrix{ 1.0 }, RotateMatrix{ 1.0 };
+	glm::mat4 ViewMatrix{ 1.0 }, Projection{ 1.0 }, CameraMatrix{ 1.0 };
 	GLfloat   ZoomValue{ 1.0f };
 
 	void CalculateASPECT();

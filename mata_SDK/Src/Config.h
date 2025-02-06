@@ -37,6 +37,9 @@ constexpr bool SHOW_FPS = true;
 // show boundbox option
 #define SHOW_BOUND_BOX
 
+// show frustumbox option
+//#define SHOW_FRUSTUM_BOX
+
 // Program termination options when developing a program
 // When this option is activated, pressing ESC will immediately terminate the program.
 #define ENABLE_DEV_EXIT
@@ -47,7 +50,7 @@ constexpr bool SHOW_FPS = true;
 // scene layer option
 // 'EOL' should be typed at last
 enum Layer
-{ LAYER1, LAYER2, LAYER3, LAYER4, LAYER5, EOL };
+{ LAYER1, LAYER2, LAYER3, EOL };
 
 // Specifies the size of the deletion location buffer
 constexpr int DELETE_LOCATION_BUFFER_SIZE = 500;
@@ -56,7 +59,7 @@ constexpr int DELETE_LOCATION_BUFFER_SIZE = 500;
 
 //////////////////////////////////// Sound Options
 // Max sound channel option
-constexpr int MAX_CHANNEL_SIZE = 150;
+constexpr int MAX_CHANNEL_SIZE = 32;
 
 // FFT Size option
 constexpr int FFT_SIZE = 1024;
@@ -89,7 +92,7 @@ constexpr bool USE_FILE_SECURITY = false;
 // Recommend that you make this part private or 
 // modify it with the default password before distributing
 constexpr unsigned char AES_KEY[16]
-{ "34342180319" };
+{ "1234567890" };
 
 constexpr unsigned char IV_KEY[16]
-{ "34342180319" };
+{ "1234567890" };

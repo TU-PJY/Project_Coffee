@@ -49,6 +49,9 @@ private:
 	int PlayChannel = 0;
 	int StopChannel = 2;
 
+	// 프러스텀 컬링을 위한 AABB
+	AABB aabb{};
+
 public:
 	Shelf(int Num, GLfloat PositionValue) {
 		NumShelf = Num;
@@ -98,7 +101,7 @@ public:
 
 	void UpdateFunc(float FrameTime) {
 		// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
-		if (!NextShelfGenerated && MiddlePoint <= -CameraPosition.x) {
+		if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
 			NextShelfGenerated = true;
 			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
 
@@ -107,7 +110,7 @@ public:
 		}
 
 		// 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
-		if (EndPoint < -CameraPosition.x - ASP(1.0))
+		if (EndPoint < CameraPosition.x - ASP(1.0))
 			scene.DeleteObject(this);
 	}
 
@@ -115,9 +118,10 @@ public:
 		// 선반 렌더링
 		for (int i = 0; i < NumShelf; i++) {
 			GLfloat ShelfPosition = Position + Length * i;
+			aabb.Update(ShelfPosition, 0.0, Length, Length);
 
 			// 화면에 보이지 않는 선반은 렌더링을 건너뛴다.
-			if (!CheckFrustumH(ShelfPosition, Length))
+			if (!frustum.Check(aabb)) 
 				continue;
 
 			Begin();
@@ -137,8 +141,10 @@ public:
 
 		// 커피 렌더링
 		for (auto& Coffee : CoffeeVec) {
+			aabb.Update(Coffee.Position, 0.45, 0.45);
+
 			// 화면에 보이지 않는 커피는 렌더링을 건너뛴다.
-			if (!CheckFrustumH(Coffee.Position.x, 0.45))
+			if (!frustum.Check(aabb))
 				continue;
 
 			Begin();
@@ -146,17 +152,20 @@ public:
 			transform.Scale(MoveMatrix, 0.45, 0.45);
 			imageUtil.RenderStaticSpriteSheet(Img.Coffee, Coffee.Type);
 		}
-
+		int index{};
 		// 다른 물건 렌더링
 		for (auto& Other : OtherVec) {
+			aabb.Update(Other.Position, 0.45, 0.45);
+
 			// 화면에 보이지 않는 물건은 렌더링을 건너뛴다.
-			if (!CheckFrustumH(Other.Position.x, 0.45))
+			if (!frustum.Check(aabb)) 
 				continue;
 
 			Begin();
 			transform.Move(MoveMatrix, Other.Position);
 			transform.Scale(MoveMatrix, 0.45, 0.45);
 			imageUtil.RenderStaticSpriteSheet(Img.Other, Other.Type);
+			++index;
 		}
 	}
 

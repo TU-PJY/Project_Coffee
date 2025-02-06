@@ -19,66 +19,6 @@
     <Filter Include="[5]___________[ System ]">
       <UniqueIdentifier>{7f6a4887-d06e-4c65-963d-2b7d61cea12c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]">
-      <UniqueIdentifier>{019278b2-60d4-4cad-b935-d813a31f2c87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Collision Util ]">
-      <UniqueIdentifier>{4048cd52-6e69-47f1-ad3d-07de4f88f83e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Mouse Util ]">
-      <UniqueIdentifier>{3fbba05c-17d5-4a1e-9a94-8c237067a9a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Shader Util ]">
-      <UniqueIdentifier>{b56d104c-471b-4b68-914e-a701e7902ee0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Random Util ]">
-      <UniqueIdentifier>{a260c5f1-65f3-4ff6-afa8-97676fbd2054}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Timer Util ]">
-      <UniqueIdentifier>{6c809ee9-0b72-4df6-a180-049726371c03}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Physics Util ]">
-      <UniqueIdentifier>{63469aed-9fc3-41f7-bbf0-32d2050b40a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Clipping Util ]">
-      <UniqueIdentifier>{9bceb82f-2ade-4d6d-9360-521458e8d522}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ UI Util ]">
-      <UniqueIdentifier>{4bc61999-6038-4873-89f1-097ff59edac5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Move Util ]">
-      <UniqueIdentifier>{a3986c5c-3d03-4f63-ba7d-4f37ac97802a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ EX Util ]">
-      <UniqueIdentifier>{7143f403-e5d1-41d0-946b-ebb32ffaf2ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Transform Util ]">
-      <UniqueIdentifier>{97cfbf89-8ee3-4d67-b4fb-aed1f7833e3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Font Util ]">
-      <UniqueIdentifier>{f2cdada2-a380-46fd-8cf3-b9ff333dcc11}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Image Util ]">
-      <UniqueIdentifier>{fa74e18f-898f-4b61-addd-ca55a9892895}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Sound Util ]">
-      <UniqueIdentifier>{22512964-c0e1-42b6-8ae0-9c32d227bc22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Thread Util ]">
-      <UniqueIdentifier>{7fd964a6-1f53-4574-8c6f-a2bbbea7a889}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ File Util ]">
-      <UniqueIdentifier>{d2e93683-5de8-4639-98b5-ff99bff6c54f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Math Util ]">
-      <UniqueIdentifier>{4a85a4fd-aaad-4cd4-9601-add0201898fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Compute Util ]">
-      <UniqueIdentifier>{f7456d94-6103-44fc-b1c5-33fe9e736f54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ String Util ]">
-      <UniqueIdentifier>{0d426163-3f7a-4344-9513-1c4da459934c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="[5]___________[ System ]\[ GLSL ]">
       <UniqueIdentifier>{4eec4c3d-2375-48d7-85d7-413e0553d75c}</UniqueIdentifier>
     </Filter>
@@ -109,12 +49,6 @@
     <Filter Include="[4]___________[ Resources ]">
       <UniqueIdentifier>{a23e0c3a-d6ca-4199-bc98-de8c1d7c55be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ AnimationUtil ]">
-      <UniqueIdentifier>{4850e16c-dcfa-4087-ac33-4dcbebf53e98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ Camera Util ]">
-      <UniqueIdentifier>{f246ec1e-8aa5-4a4c-86c6-75a511ec4ed6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="[5]___________[ System ]\[ GameObject ]">
       <UniqueIdentifier>{f67944b9-c91f-464e-976e-0b8958cf7ab9}</UniqueIdentifier>
     </Filter>
@@ -123,6 +57,66 @@
     </Filter>
     <Filter Include="[1]___________[ GameMode ]\[0]_Mode Source">
       <UniqueIdentifier>{e5570cb2-8557-4f05-9d45-ce94e1bf6e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ GameObject ]\[ Object Value ]">
+      <UniqueIdentifier>{8b8a436e-7668-404f-9fa0-864c2eec418e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]">
+      <UniqueIdentifier>{019278b2-60d4-4cad-b935-d813a31f2c87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Collision Util ]">
+      <UniqueIdentifier>{4048cd52-6e69-47f1-ad3d-07de4f88f83e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Mouse Util ]">
+      <UniqueIdentifier>{3fbba05c-17d5-4a1e-9a94-8c237067a9a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Shader Util ]">
+      <UniqueIdentifier>{b56d104c-471b-4b68-914e-a701e7902ee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Random Util ]">
+      <UniqueIdentifier>{a260c5f1-65f3-4ff6-afa8-97676fbd2054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Timer Util ]">
+      <UniqueIdentifier>{6c809ee9-0b72-4df6-a180-049726371c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Physics Util ]">
+      <UniqueIdentifier>{63469aed-9fc3-41f7-bbf0-32d2050b40a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Clipping Util ]">
+      <UniqueIdentifier>{9bceb82f-2ade-4d6d-9360-521458e8d522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Move Util ]">
+      <UniqueIdentifier>{a3986c5c-3d03-4f63-ba7d-4f37ac97802a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ EX Util ]">
+      <UniqueIdentifier>{7143f403-e5d1-41d0-946b-ebb32ffaf2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Font Util ]">
+      <UniqueIdentifier>{f2cdada2-a380-46fd-8cf3-b9ff333dcc11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Image Util ]">
+      <UniqueIdentifier>{fa74e18f-898f-4b61-addd-ca55a9892895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Sound Util ]">
+      <UniqueIdentifier>{22512964-c0e1-42b6-8ae0-9c32d227bc22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Thread Util ]">
+      <UniqueIdentifier>{7fd964a6-1f53-4574-8c6f-a2bbbea7a889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ File Util ]">
+      <UniqueIdentifier>{d2e93683-5de8-4639-98b5-ff99bff6c54f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Math Util ]">
+      <UniqueIdentifier>{4a85a4fd-aaad-4cd4-9601-add0201898fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Compute Util ]">
+      <UniqueIdentifier>{f7456d94-6103-44fc-b1c5-33fe9e736f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ String Util ]">
+      <UniqueIdentifier>{0d426163-3f7a-4344-9513-1c4da459934c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ AnimationUtil ]">
+      <UniqueIdentifier>{4850e16c-dcfa-4087-ac33-4dcbebf53e98}</UniqueIdentifier>
     </Filter>
     <Filter Include="[5]___________[ System ]\[ Util ]\[ Script Util ]">
       <UniqueIdentifier>{81f53a74-031c-406e-82e2-a9d6a7f85d59}</UniqueIdentifier>
@@ -139,20 +133,23 @@
     <Filter Include="[5]___________[ System ]\[ Util ]\[ Shape Util ]\[ Circle ]">
       <UniqueIdentifier>{8ca8864d-f116-4649-ac79-d0c373874068}</UniqueIdentifier>
     </Filter>
-    <Filter Include="[5]___________[ System ]\[ GameObject ]\[ Object Value ]">
-      <UniqueIdentifier>{8b8a436e-7668-404f-9fa0-864c2eec418e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="[5]___________[ System ]\[ Util ]\[ UI Util ]\[0] [ Pack ]">
+    <Filter Include="[5]___________[ System ]\[ Util ]\[0] [ Pack ]">
       <UniqueIdentifier>{38262568-5f1a-4ff0-9a03-cc13df33dcd9}</UniqueIdentifier>
     </Filter>
     <Filter Include="[5]___________[ System ]\[ Util ]\[ Text Util ]">
       <UniqueIdentifier>{ebbafb29-e74d-4f67-ae00-7ab61d0dd40e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="[2]___________[ Object ]\[ ED ]">
-      <UniqueIdentifier>{f8c3176a-d871-41f7-8214-c9191a930150}</UniqueIdentifier>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ UI Util ]">
+      <UniqueIdentifier>{4bc61999-6038-4873-89f1-097ff59edac5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="[2]___________[ Object ]\[ Shelf ]">
-      <UniqueIdentifier>{242befeb-523a-4cd9-94d2-7110c0fc7797}</UniqueIdentifier>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Transform Util ]">
+      <UniqueIdentifier>{97cfbf89-8ee3-4d67-b4fb-aed1f7833e3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Camera Util ]">
+      <UniqueIdentifier>{f246ec1e-8aa5-4a4c-86c6-75a511ec4ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Util ]\[ Frustum Util ]">
+      <UniqueIdentifier>{c0d402a3-6a02-46a7-9a5d-b38ba1216622}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +273,9 @@
     <ClCompile Include="Modes.cpp">
       <Filter>[1]___________[ GameMode ]\[0]_Mode Source</Filter>
     </ClCompile>
+    <ClCompile Include="Src\FrustumUtil.cpp">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Frustum Util ]</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\AnimationUtil.h">
@@ -325,9 +325,6 @@
     </ClInclude>
     <ClInclude Include="Src\ImageUtil.h">
       <Filter>[5]___________[ System ]\[ Util ]\[ Image Util ]</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\IntroMode.h">
-      <Filter>[5]___________[ System ]\[ System Object ]</Filter>
     </ClInclude>
     <ClInclude Include="Src\IntroScreen.h">
       <Filter>[5]___________[ System ]\[ System Object ]</Filter>
@@ -402,13 +399,10 @@
       <Filter>[5]___________[ System ]\[ Util ]\[ UI Util ]</Filter>
     </ClInclude>
     <ClInclude Include="Src\UtilPack.h">
-      <Filter>[5]___________[ System ]\[ Util ]\[ UI Util ]\[0] [ Pack ]</Filter>
+      <Filter>[5]___________[ System ]\[ Util ]\[0] [ Pack ]</Filter>
     </ClInclude>
     <ClInclude Include="Src\LoadingScreen.h">
       <Filter>[5]___________[ System ]\[ System Object ]</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayMode.h">
-      <Filter>[1]___________[ GameMode ]</Filter>
     </ClInclude>
     <ClInclude Include="Src\SystemText.h">
       <Filter>[5]___________[ System ]\[ System Resource ]</Filter>
@@ -416,11 +410,20 @@
     <ClInclude Include="Src\ModeHeader.h">
       <Filter>[1]___________[ GameMode ]\[0]_Mode Source</Filter>
     </ClInclude>
+    <ClInclude Include="Src\FrustumUtil.h">
+      <Filter>[5]___________[ System ]\[ Util ]\[ Frustum Util ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\IntroMode.h">
+      <Filter>[5]___________[ System ]\[ System Mode ]</Filter>
+    </ClInclude>
     <ClInclude Include="ED.h">
-      <Filter>[2]___________[ Object ]\[ ED ]</Filter>
+      <Filter>[2]___________[ Object ]</Filter>
     </ClInclude>
     <ClInclude Include="Shelf.h">
-      <Filter>[2]___________[ Object ]\[ Shelf ]</Filter>
+      <Filter>[2]___________[ Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayMode.h">
+      <Filter>[1]___________[ GameMode ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

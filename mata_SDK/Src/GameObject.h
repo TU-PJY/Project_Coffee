@@ -41,11 +41,6 @@ public:
 	void SetUnitBlur(GLfloat Strength);
 	void ResetUnitTransform();
 
-	bool CheckFrustum(GLfloat X, GLfloat Y, GLfloat SizeX, GLfloat SizeY);
-	bool CheckFrustum(glm::vec2 Position, glm::vec2 Size);
-	bool CheckFrustumH(GLfloat X, GLfloat SizeX);
-	bool CheckFrustumV(GLfloat Y, GLfloat SizeY);
-
 	void SetFlip(int FlipOpt);
 	void SetBlur(GLfloat Strength);
 	
@@ -78,14 +73,6 @@ public:
 
 	// Obtains an BoundingCircle object from a specific object class.
 	virtual BoundingCircle GetBoundingCircle() { return {}; }
-
-	// camera functions
-	virtual void MoveCamera(GLfloat X, GLfloat Y) {}
-	virtual void MoveCamera(glm::vec2 Position) {}
-	virtual void RotateCamera(GLfloat Degree) {}
-	virtual void CameraZoom(int ZoomType, GLfloat ZoomValue) {}
-	virtual void ChangeCameraZoom(GLfloat ZoomValue) {}
-	virtual GLfloat ComputeNextZoom(int ZoomType, GLfloat ZoomValue) { return {}; }
 
 	// FPS indicator function
 	virtual void RenderIndicator() {}

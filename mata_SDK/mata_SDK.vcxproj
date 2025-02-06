@@ -151,6 +151,7 @@
     <ClCompile Include="Src\ComputeUtil.cpp" />
     <ClCompile Include="Src\FileUtil.cpp" />
     <ClCompile Include="Src\FontUtil.cpp" />
+    <ClCompile Include="Src\FrustumUtil.cpp" />
     <ClCompile Include="Src\Library\tinyxml\tinystr.cpp" />
     <ClCompile Include="Src\Library\tinyxml\tinyxml.cpp" />
     <ClCompile Include="Src\Library\tinyxml\tinyxmlerror.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Src\FileUtil.h" />
     <ClInclude Include="Src\ExUtil.h" />
     <ClInclude Include="Src\FontUtil.h" />
+    <ClInclude Include="Src\FrustumUtil.h" />
     <ClInclude Include="Src\ModeHeader.h" />
     <ClInclude Include="Src\SDKHeader.h" />
     <ClInclude Include="Src\Library\tinyxml\tinystr.h" />

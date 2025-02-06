@@ -18,7 +18,6 @@ int PREV_WIDTH, PREV_HEIGHT;
 const glm::mat4 IdentityMatrix = glm::mat4(1.0f);
 
 Camera camera;
-GameObject* CameraControl;
 GameObject* Indicator;
 
 GLfloat ASPECT;
@@ -99,9 +98,6 @@ void SDKSystem::InitSystem() {
 	FPSLimit = FRAME_LIMITS;
 	if (FPSLimit > 0)
 		DestFPS = 1000.0 / (float)FPSLimit;
-
-	scene.AddObject(new CameraController, "MGK_OBJECT_CAMERA_CONTROLLER", LAYER1, OBJECT_TYPE_STATIC);
-	CameraControl = scene.Find("MGK_OBJECT_CAMERA_CONTROLLER");
 
 	scene.Init(LoadingMode.Start);
 }

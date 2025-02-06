@@ -2,6 +2,7 @@
 #include "CameraController.h"
 #include "FPSInd.h"
 #include "Scene.h"
+#include "FrustumUtil.h"
 #include <thread>
 #include <chrono>
 
@@ -9,25 +10,25 @@ SDKSystem System;
 SDKSystem* SDKSystem::S_Inst;
 
 GLvoid SDKSystem::Main() {
-	if (S_Inst->FPSLimit > 0) {
-		std::chrono::duration<double, std::milli> Duration(S_Inst->DestFPS);
-		std::this_thread::sleep_for(Duration);
-	}
-
 	glClearColor(BackColor.r, BackColor.g, BackColor.b, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	if (S_Inst->UpdateActivateCommand) {
 		scene.Update();
+		cameraControl.Update(S_Inst->DeltaTime);
+		frustum.Update();
 		scene.Render();
 		scene.CompleteCommand();
-#ifdef USE_SOUND_SYSTEM
 		soundUtil.Update();
-#endif
 	}
 
 	if (SHOW_FPS && Indicator)
 		Indicator->RenderIndicator();
+
+	if (S_Inst->FPSLimit > 0) {
+		std::chrono::duration<double, std::milli> Duration(S_Inst->DestFPS);
+		std::this_thread::sleep_for(Duration);
+	}
 
 	S_Inst->CurrentTime = float(glutGet(GLUT_ELAPSED_TIME));
 	S_Inst->DeltaTime = (S_Inst->CurrentTime - S_Inst->PrevTime) / 1000.0;

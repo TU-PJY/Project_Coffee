@@ -10,9 +10,6 @@ public:
 	std::string ModeName { "PlayMode" };
 	int         ModeType { MODE_TYPE_DEFAULT };
 
-	// when you activate this option, you can access the camera controller.
-	bool        UseCameraController{ false };
-
 	// type object tag to input device event
 	std::vector<std::string> InputObjectTag
 	{
@@ -53,9 +50,6 @@ public:
 			if (auto Object = scene.Find(Tag); Object)
 				M_Inst->InputObject.emplace_back(Object);
 		}
-
-		if (M_Inst->UseCameraController)
-			M_Inst->InputObject.emplace_back(CameraControl);
 
 		scene.RegisterModeName(M_Inst->ModeName);
 		scene.RegisterDestructor(Destructor);

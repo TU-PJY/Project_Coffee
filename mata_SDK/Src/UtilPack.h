@@ -1,6 +1,7 @@
 #pragma once
 #include "AnimationUtil.h"
 #include "CameraUtil.h"
+#include "CameraController.h"
 #include "ClippingUtil.h"
 #include "CollisionUtil.h"
 #include "ComputeUtil.h"
@@ -21,6 +22,7 @@
 #include "SoundUtil.h"
 #include "ScriptUtil.h"
 #include "FileUtil.h"
+#include "FrustumUtil.h"
 #include "GameResource.h"
 #include "SystemResource.h"
 #include "SystemText.h"
