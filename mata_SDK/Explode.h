@@ -21,10 +21,6 @@ private:
 	// 종이 커피를 부술 경우 활성화 한다 
 	bool IsStick{};
 
-	// 프러스텀 컬링을 위한 AABB와 OOBB
-	AABB aabb{};
-	OOBB oobb{};
-
 public:
 	Explode(glm::vec2 Position, bool StickCoffee) {
 		IsStick = StickCoffee;
@@ -62,15 +58,18 @@ public:
 	void UpdateFunc(float FrameTime) {
 		// 각 방울의 물리 시뮬레이션 실행
 		for (auto& D : DropVec) {
-			D.ps.UpdateFalling(D.Position.y, FrameTime);
+			// 화면 밖을 벗어난 객체는 업데이트 하지 않는다.
+			if (D.Position.x > CameraPosition.x - ASP(1.0) - 0.12) {
+				D.ps.UpdateFalling(D.Position.y, FrameTime);
 
-			// 바닥에 떨어질때까지 움직인다
-			if (D.ps.GetFallingState()) {
-				D.Position.x += D.MoveSpeed * FrameTime;
+				// 바닥에 떨어질때까지 움직인다
+				if (D.ps.GetFallingState()) {
+					D.Position.x += D.MoveSpeed * FrameTime;
 
-				// 커피 스틱일 경우 회전 업데이트
-				if (IsStick)
-					D.Rotation += D.RotateSpeed * FrameTime;
+					// 커피 스틱일 경우 회전 업데이트
+					if (IsStick)
+						D.Rotation += D.RotateSpeed * FrameTime;
+				}
 			}
 		}
 	}
@@ -78,17 +77,16 @@ public:
 	void RenderFunc() {
 		int Count{};
 
+		// 화면을 벗어나면 렌더링을 건너뛴다
 		for (auto& D : DropVec) {
 			if (IsStick) {
-				oobb.Update(D.Position, 0.2, 0.2, D.Rotation);
-				if (!frustum.Check(oobb)) {
+				if (D.Position.x < CameraPosition.x - ASP(1.0) - 0.12) {
 					Count++;
 					continue;
 				}
 			}
 			else {
-				aabb.Update(D.Position, 0.12, 0.12);
-				if (!frustum.Check(aabb)) {
+				if (D.Position.x < CameraPosition.x - ASP(1.0) - 0.06) {
 					Count++;
 					continue;
 				}
@@ -102,15 +100,16 @@ public:
 				transform.Rotate(MoveMatrix, D.Rotation);
 				imageUtil.Render(Img.Stick);
 			}
-
-			// 바닥에 떨어지면 다른 스프라이트를 렌더링한다
-			if (D.ps.GetFallingState()) {
-				transform.Scale(MoveMatrix, 0.06, 0.06);
-				imageUtil.RenderStaticSpriteSheet(Img.Drop, 0);
-			}
 			else {
-				transform.Scale(MoveMatrix, 0.12, 0.12);
-				imageUtil.RenderStaticSpriteSheet(Img.Drop, 1);
+				// 바닥에 떨어지면 다른 스프라이트를 렌더링한다
+				if (D.ps.GetFallingState()) {
+					transform.Scale(MoveMatrix, 0.06, 0.06);
+					imageUtil.RenderStaticSpriteSheet(Img.Drop, 0);
+				}
+				else {
+					transform.Scale(MoveMatrix, 0.12, 0.12);
+					imageUtil.RenderStaticSpriteSheet(Img.Drop, 1);
+				}
 			}
 		}
 

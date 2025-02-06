@@ -33,6 +33,9 @@ private:
 	// 선반 끝지점 위치
 	GLfloat EndPoint{};
 
+	// 선반 렌더링을 시작하는 인덱스
+	int StartShelfIndex{};
+
 	// 다음 선반 생성 여부
 	bool NextShelfGenerated{};
 
@@ -40,19 +43,22 @@ private:
 	// 커피들의 위치 및 종류를 저장하는 벡터
 	std::vector<ItemStruct> CoffeeVec{};
 
+	// 커피 렌더링을 시작하는 인덱스
+	int StartCoffeeIndex{};
+
 	// 커피가 아닌 다른 물건들의 위치 및 종류를 저장하는 벡터
 	std::vector<ItemStruct> OtherVec{}; 
 
-	// 커피의 위치를 저장하는 벡터
-	std::vector<bool> IndexVec{};
+	// 커피가 아닌 다른 물건들의 렌더링을 시작하는 인덱스
+	int StartOtherIndex{};
+
+	// 커피의 위치를 저장하는 덱
+	std::deque<bool> IndexVec{};
 
 	// 사운드 채널
 	SoundChannel SndChannel[5]{};
 	int PlayChannel = 0;
 	int StopChannel = 2;
-
-	// 프러스텀 컬링을 위한 AABB
-	AABB aabb{};
 
 public:
 	Shelf(int Num, GLfloat PositionValue) {
@@ -111,20 +117,25 @@ public:
 			PtrED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
 		}
 
-		// 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
+		// 마지막 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
 		if (EndPoint < CameraPosition.x - ASP(1.0))
 			scene.DeleteObject(this);
 	}
 
 	void RenderFunc() {
 		// 선반 렌더링
-		for (int i = 0; i < NumShelf; i++) {
+		for (int i = StartShelfIndex; i < NumShelf; i++) {
 			GLfloat ShelfPosition = Position + Length * i;
-			aabb.Update(ShelfPosition, 0.0, Length, Length);
 
-			// 화면에 보이지 않는 선반은 렌더링을 건너뛴다.
-			if (!frustum.Check(aabb)) 
+			// 화면보다 오른쪽에 있는 선반은 렌더링을 건너뛴다
+			if (ShelfPosition > CameraPosition.x + ASP(1.0) + Length * 0.5)
 				continue;
+
+			// 더 이상 화면에서 보이지 않을 선반은 렌더링을 더 이상 하지 않는다.
+			else if (Position + Length * StartShelfIndex < CameraPosition.x - ASP(1.0) - Length * 0.5) {
+				StartShelfIndex++;
+				continue;
+			}
 
 			Begin();
 			transform.Move(MoveMatrix, ShelfPosition, 0.0);
@@ -142,32 +153,41 @@ public:
 		}
 
 		// 커피 렌더링
-		for (auto& Coffee : CoffeeVec) {
-			aabb.Update(Coffee.Position, 0.45, 0.45);
-
-			// 화면에 보이지 않는 커피는 렌더링을 건너뛴다.
-			if (!frustum.Check(aabb))
+		size_t CoffeeVecSize = CoffeeVec.size();
+		for (int i = StartCoffeeIndex; i < CoffeeVecSize; i++) {
+			// 화면보다 오른쪽에 있는 커피는 렌더링을 건너뛴다.
+			if (CoffeeVec[i].Position.x > CameraPosition.x + ASP(1.0) + 0.255)
 				continue;
 
+			// 더 이상 보이지 않을 커피는 더 이상 렌더링 하지 않는다.
+			else if (CoffeeVec[i].Position.x < CameraPosition.x - ASP(1.0) - 0.255) {
+				StartCoffeeIndex++;
+				continue;
+			}
+
 			Begin();
-			transform.Move(MoveMatrix, Coffee.Position);
+			transform.Move(MoveMatrix, CoffeeVec[i].Position);
 			transform.Scale(MoveMatrix, 0.45, 0.45);
-			imageUtil.RenderStaticSpriteSheet(Img.Coffee, Coffee.Type);
+			imageUtil.RenderStaticSpriteSheet(Img.Coffee, CoffeeVec[i].Type);
 		}
-		int index{};
+	
 		// 다른 물건 렌더링
-		for (auto& Other : OtherVec) {
-			aabb.Update(Other.Position, 0.45, 0.45);
-
-			// 화면에 보이지 않는 물건은 렌더링을 건너뛴다.
-			if (!frustum.Check(aabb)) 
+		size_t OtherVecSize = OtherVec.size();
+		for (int i = StartOtherIndex; i < OtherVecSize; i++) {
+			// 화면보다 오른쪽에 있는 물건은 렌더링을 건너뛴다.
+			if (OtherVec[i].Position.x > CameraPosition.x + ASP(1.0) + 0.255)
 				continue;
 
+			// 더 이상 보이지 않을 물건은 더 이상 렌더링 하지 않는다.
+			else if (OtherVec[i].Position.x < CameraPosition.x - ASP(1.0) - 0.255) {
+				StartOtherIndex++;
+				continue;
+			}
+
 			Begin();
-			transform.Move(MoveMatrix, Other.Position);
+			transform.Move(MoveMatrix, OtherVec[i].Position);
 			transform.Scale(MoveMatrix, 0.45, 0.45);
-			imageUtil.RenderStaticSpriteSheet(Img.Other, Other.Type);
-			++index;
+			imageUtil.RenderStaticSpriteSheet(Img.Other, OtherVec[i].Type);
 		}
 	}
 
