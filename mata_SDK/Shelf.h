@@ -129,7 +129,7 @@ public:
 
 			// 화면보다 오른쪽에 있는 선반은 렌더링을 건너뛴다
 			if (ShelfPosition > CameraPosition.x + ASP(1.0) + Length * 0.5)
-				continue;
+				break;
 
 			// 더 이상 화면에서 보이지 않을 선반은 렌더링을 더 이상 하지 않는다.
 			else if (Position + Length * StartShelfIndex < CameraPosition.x - ASP(1.0) - Length * 0.5) {
@@ -157,7 +157,7 @@ public:
 		for (int i = StartCoffeeIndex; i < CoffeeVecSize; i++) {
 			// 화면보다 오른쪽에 있는 커피는 렌더링을 건너뛴다.
 			if (CoffeeVec[i].Position.x > CameraPosition.x + ASP(1.0) + 0.255)
-				continue;
+				break;
 
 			// 더 이상 보이지 않을 커피는 더 이상 렌더링 하지 않는다.
 			else if (CoffeeVec[i].Position.x < CameraPosition.x - ASP(1.0) - 0.255) {
@@ -176,7 +176,7 @@ public:
 		for (int i = StartOtherIndex; i < OtherVecSize; i++) {
 			// 화면보다 오른쪽에 있는 물건은 렌더링을 건너뛴다.
 			if (OtherVec[i].Position.x > CameraPosition.x + ASP(1.0) + 0.255)
-				continue;
+				break;
 
 			// 더 이상 보이지 않을 물건은 더 이상 렌더링 하지 않는다.
 			else if (OtherVec[i].Position.x < CameraPosition.x - ASP(1.0) - 0.255) {
