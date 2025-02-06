@@ -175,7 +175,12 @@ public:
 			Begin();
 			transform.Move(MoveMatrix, CoffeeVec[i].Position);
 			transform.Scale(MoveMatrix, 0.45, 0.45);
-			imageUtil.RenderStaticSpriteSheet(Img.Coffee, CoffeeVec[i].Type);
+
+			// 파괴된 커피는 파괴된 스프라이트를 렌더링한다
+			if(CoffeeVec[i].Destroyed)
+				imageUtil.RenderStaticSpriteSheet(Img.DestroyedCoffee, CoffeeVec[i].Type);
+			else
+				imageUtil.RenderStaticSpriteSheet(Img.Coffee, CoffeeVec[i].Type);
 		}
 	
 

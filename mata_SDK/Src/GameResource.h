@@ -9,6 +9,7 @@ class ImageResource {
 public:
 	SpriteSheet ED{};
 	SpriteSheet Coffee{};
+	SpriteSheet DestroyedCoffee{};
 	SpriteSheet Shelf{};
 	SpriteSheet Other{};
 	SpriteSheet Drop{};
