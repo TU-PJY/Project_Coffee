@@ -10,6 +10,9 @@ typedef struct {
 
 	// 커피 위치
 	glm::vec2 Position;
+
+	// 파괴 상태
+	bool Destroyed;
 }ItemStruct;
 
 class Shelf : public GameObject {
@@ -46,6 +49,9 @@ private:
 	// 커피 렌더링을 시작하는 인덱스
 	int StartCoffeeIndex{};
 
+	// 가장 먼저 참조할 커피 인덱스
+	int CurrentCoffeeIndex{};
+
 	// 커피가 아닌 다른 물건들의 위치 및 종류를 저장하는 벡터
 	std::vector<ItemStruct> OtherVec{}; 
 
@@ -53,7 +59,7 @@ private:
 	int StartOtherIndex{};
 
 	// 커피의 위치를 저장하는 덱
-	std::deque<bool> IndexVec{};
+	std::deque<bool> IndexDeq{};
 
 	// 사운드 채널
 	SoundChannel SndChannel[5]{};
@@ -103,7 +109,7 @@ public:
 			OtherVec.emplace_back(Other);
 
 			// 위아래 위치 여부만 별도로 저장하여 이드와 상호작용 시 사용
-			IndexVec.emplace_back(RandomNum);
+			IndexDeq.emplace_back(RandomNum);
 		}
 	}
 
@@ -152,6 +158,7 @@ public:
 				imageUtil.RenderStaticSpriteSheet(Img.Shelf, 1);
 		}
 
+
 		// 커피 렌더링
 		size_t CoffeeVecSize = CoffeeVec.size();
 		for (int i = StartCoffeeIndex; i < CoffeeVecSize; i++) {
@@ -171,6 +178,7 @@ public:
 			imageUtil.RenderStaticSpriteSheet(Img.Coffee, CoffeeVec[i].Type);
 		}
 	
+
 		// 다른 물건 렌더링
 		size_t OtherVecSize = OtherVec.size();
 		for (int i = StartOtherIndex; i < OtherVecSize; i++) {
@@ -194,40 +202,44 @@ public:
 	// 가장 앞에 있는 커피의 위 또는 아래의 위치 여부를 얻는다
 	// 위에 있을 시 true,  아래에 있을 시 false
 	bool GetFrontCoffee() {
-		return IndexVec.front();
+		return IndexDeq.front();
 	}
 
 	// 가장 앞에 있는 커피를 부순다.
 	void BreakCoffee() {
-		// 커피 종류마다 다른 부서지는 사운드를 재생한다
+		// 사운드 3가지 중 1가지 랜덤 선택
 		int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
 
+		// 커피 종류마다 다른 사운드를 재생한다
 		soundUtil.Stop(SndChannel[StopChannel++]);
-
-		if (CoffeeVec.begin()->Type == Box)
-			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel++]);
-
-		else if (CoffeeVec.begin()->Type == Glass)
-			soundUtil.Play(Snd.GlassBreak[RandomNum], SndChannel[PlayChannel++]);
-
-		else if (CoffeeVec.begin()->Type == Can)
-			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel++]);
+		switch (CoffeeVec[CurrentCoffeeIndex].Type) {
+		case Box:
+			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel++]);  break;
+		case Glass:
+			soundUtil.Play(Snd.GlassBreak[RandomNum], SndChannel[PlayChannel++]);  break;
+		case Can:
+			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel++]);  break;
+		}
 
 		EX.ClampValue(StopChannel, 0, 4, CLAMP_RETURN);
 		EX.ClampValue(PlayChannel, 0, 4, CLAMP_RETURN);
 
 		// 종이 커피 이외의 커피를 부수면 커피가 터져나오는 애니메이션 객체를 추가한다
-		if(CoffeeVec.begin()->Type != Box)
-			scene.AddObject(new Explode(CoffeeVec.begin()->Position, false), "explode", LAYER3);
+		if(CoffeeVec[CurrentCoffeeIndex].Type != Box)
+			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, false), "explode", LAYER3);
 		// 종이 커피라면 커피 스틱이 터져나오는 애니메이션 객체를 추가한다
 		else
-			scene.AddObject(new Explode(CoffeeVec.begin()->Position, true), "explode", LAYER3);
+			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, true), "explode", LAYER3);
 
-		IndexVec.erase(IndexVec.begin());
-		CoffeeVec.erase(CoffeeVec.begin());
+		// 커피는 파괴 상태가 되고 더 이상 이드와 상호작용하지 않는다. 
+		IndexDeq.erase(IndexDeq.begin());
+		CoffeeVec[CurrentCoffeeIndex].Destroyed = true;
+
+		// 참조 인덱스 증가
+		CurrentCoffeeIndex++;
 
 		// 커피가 모두 부숴지면 자신의 태그를 지워 다음 선반이 검색되도록 한다.
-		if (IndexVec.empty())
+		if (CurrentCoffeeIndex == NumShelf * 4 - 1)
 			ObjectTag = "";
 	}
 };
