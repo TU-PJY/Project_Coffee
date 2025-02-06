@@ -1,6 +1,8 @@
 #pragma once
 #include <Scene.h>
 
+#include "Explode.h"
+
 // 물건 구조체
 typedef struct {
 	// 커피 종류
@@ -193,6 +195,13 @@ public:
 
 		EX.ClampValue(StopChannel, 0, 4, CLAMP_RETURN);
 		EX.ClampValue(PlayChannel, 0, 4, CLAMP_RETURN);
+
+		// 종이 커피 이외의 커피를 부수면 커피가 터져나오는 애니메이션 객체를 추가한다
+		if(CoffeeVec.begin()->Type != Box)
+			scene.AddObject(new Explode(CoffeeVec.begin()->Position, false), "explode", LAYER3);
+		// 종이 커피라면 커피 스틱이 터져나오는 애니메이션 객체를 추가한다
+		else
+			scene.AddObject(new Explode(CoffeeVec.begin()->Position, true), "explode", LAYER3);
 
 		IndexVec.erase(IndexVec.begin());
 		CoffeeVec.erase(CoffeeVec.begin());

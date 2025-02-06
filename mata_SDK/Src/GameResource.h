@@ -1,5 +1,6 @@
 #pragma once
 #include "SDKHeader.h"
+#include "Imageutil.h"
 #include "ScriptUtil.h"
 #include "FileUtil.h"
 
@@ -10,6 +11,8 @@ public:
 	SpriteSheet Coffee{};
 	SpriteSheet Shelf{};
 	SpriteSheet Other{};
+	SpriteSheet Drop{};
+	Image Stick{};
 };
 
 // Declare the sound resource here. 

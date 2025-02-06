@@ -385,7 +385,7 @@ void ImageUtil::RenderSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat& Frame
 	PrepareRender(SpriteSheetStruct);
 
 	glBindVertexArray(VAO);
-	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[Frame]);
+	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[(int)Frame]);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
@@ -397,7 +397,7 @@ void ImageUtil::RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat 
 	PrepareRender(SpriteSheetStruct);
 
 	glBindVertexArray(VAO);
-	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[Frame]);
+	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[(int)Frame]);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 

@@ -184,6 +184,7 @@
     <ClCompile Include="Src\UiUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Explode.h" />
     <ClInclude Include="ED.h" />
     <ClInclude Include="PlayMode.h" />
     <ClInclude Include="Shelf.h" />
