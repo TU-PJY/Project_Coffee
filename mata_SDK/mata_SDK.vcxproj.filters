@@ -440,6 +440,9 @@
     <ClInclude Include="DestroyedCan.h">
       <Filter>[2]___________[ Object ]</Filter>
     </ClInclude>
+    <ClInclude Include="People.h">
+      <Filter>[2]___________[ Object ]</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ModeTemplate_Manual.txt">

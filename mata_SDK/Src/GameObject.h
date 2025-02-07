@@ -83,7 +83,11 @@ public:
 
 	// Shelf Function
 	virtual ItemStruct GetFrontCoffee() { return {}; }
+	virtual void EnableCoffeeHit() {}
 	virtual void BreakCoffee() {}
+
+	// people function
+	virtual void HitPeople() {}
 
 private:
 	glm::vec4 ViewportPosition();

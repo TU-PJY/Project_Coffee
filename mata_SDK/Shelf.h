@@ -3,6 +3,7 @@
 
 #include "Explode.h"
 #include "DestroyedCan.h"
+#include "People.h"
 
 class Shelf : public GameObject {
 private:
@@ -52,10 +53,29 @@ private:
 	int PlayChannel = 0;
 	int StopChannel = 2;
 
+	// 사람이 추가되었는지의 여부
+	bool PeopleAdded{};
+
+	// 사람을 다음 선반에 추가할 지의 여부
+	// 현재 선반에서 사람을 쳤다면 다음 선반에는 사람을 추가하지 않는다.
+	bool CreatePeopleInNextShelf{};
+
 public:
-	Shelf(int Num, GLfloat PositionValue) {
+	Shelf(int Num, GLfloat PositionValue, bool CreatePeople) {
 		NumShelf = Num;
 		Position = PositionValue;
+
+		// false이면 현재 선반에서 사람을 추가하지 않고 다음 선반에서 추가한다.
+		if (!CreatePeople) {
+			PeopleAdded = true;
+			CreatePeopleInNextShelf = true;
+		}
+
+		// true이면 현재 선반에서 사람을 추가하고 다음 선반에는 추가하지 않는다.
+		else {
+			PeopleAdded = false;
+			CreatePeopleInNextShelf = false;
+		}
 
 		// 중간 지점 및 끝 지점 길이 계산 
 		MiddlePoint = Position + Length * (GLfloat)(Num - 1) * 0.5;
@@ -70,6 +90,22 @@ public:
 		for (int i = 0; i < GenTime; ++i) {
 			ItemStruct Coffee{};
 			ItemStruct Other{};
+
+			// 선반이 4개가 만들어지는 시점부터 사람을 추가한다
+			// 단, 중간 지점 이후부터 추가한다
+			if (i > GenTime / 2 && !PeopleAdded) {
+				// 하나의 위치 당 10퍼센트의 확률로 사람을 배치한다
+				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, 10);
+				if (RandNum == 1) {
+					scene.AddObject(new People(glm::vec2(PositionValue - 0.75 + 0.5 * i, 0.0)), "people", LAYER4);
+
+					// 한 번 배치한 이후에는 같은 선반에 더 이상 배치하지 않는다.
+					PeopleAdded = true;
+					
+					// 해당 변수가 활성화 되어있으면 사람과 먼제 상호작용하게 된다.
+					Coffee.IsPeopleFront = true;
+				}
+			}
 
 			// 타입 결정
 			Coffee.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
@@ -102,7 +138,7 @@ public:
 		// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
 		if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
 			NextShelfGenerated = true;
-			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
+			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0, CreatePeopleInNextShelf), "shelf", LAYER2);
 
 			// 이드가 이동해야 할 다음 위치를 알린다
 			PtrED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
@@ -195,6 +231,12 @@ public:
 		return CoffeeVec[CurrentCoffeeIndex];
 	}
 
+	// 커피를 부술 수 있는 상태로 전환한다
+	void EnableCoffeeHit() {
+		CoffeeVec[CurrentCoffeeIndex].IsPeopleFront = false;
+	}
+
+
 	// 가장 앞에 있는 커피를 부순다.
 	void BreakCoffee() {
 		// 사운드 3가지 중 1가지 랜덤 선택
@@ -216,14 +258,14 @@ public:
 
 		// 종이 커피 이외의 커피를 부수면 커피가 터져나오는 애니메이션 객체를 추가한다
 		if(CoffeeVec[CurrentCoffeeIndex].Type != Box)
-			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, false), "explode", LAYER3);
+			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, false), "explode", LAYER4);
 		// 종이 커피라면 커피 스틱이 터져나오는 애니메이션 객체를 추가한다
 		else
-			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, true), "explode", LAYER3);
+			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, true), "explode", LAYER4);
 
 		// 캔커피라면 찌그러진 캔을 추가한다
 		if (CoffeeVec[CurrentCoffeeIndex].Type == Can)
-			scene.AddObject(new DestroyedCan(CoffeeVec[CurrentCoffeeIndex].Position), "destroyed_can", LAYER3);
+			scene.AddObject(new DestroyedCan(CoffeeVec[CurrentCoffeeIndex].Position), "destroyed_can", LAYER4);
 
 		// 커피는 파괴 상태가 되고 더 이상 이드와 상호작용하지 않는다.
 		CoffeeVec[CurrentCoffeeIndex].Destroyed = true;

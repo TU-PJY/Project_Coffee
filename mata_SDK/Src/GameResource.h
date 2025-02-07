@@ -18,6 +18,8 @@ public:
 	Image Stick{};
 
 	SpriteSheet Cart{};
+
+	SpriteSheet People{};
 };
 
 // Declare the sound resource here. 
@@ -29,6 +31,7 @@ public:
 
 	Sound BoxBreak[3]{}, GlassBreak[3]{}, CanBreak[3]{};
 	Sound CanDrop{};
+	Sound PeopleHit{};
 };
 
 // Data Format list
@@ -63,7 +66,7 @@ enum ED_StateEnum {
 	HitHigh2,
 	HitLow1,
 	HitLow2,
-	HitPeople,
+	KickPeople,
 	GameOver
 };
 
@@ -87,6 +90,9 @@ typedef struct {
 
 	// 파괴 상태
 	bool Destroyed;
+
+	// 앞에 사람이 서있는지 여부
+	bool IsPeopleFront;
 }ItemStruct;
 
 extern ImageResource Img;

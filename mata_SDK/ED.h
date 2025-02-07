@@ -49,13 +49,13 @@ private:
 
 	// 키가 눌린 상태
 	// 하나라도 눌린 키가 있으면 조작할 수 없다
-	bool KeyPressed[3]{};
+	bool KeyPressed[4]{};
 
 public:
 	void InputKey(KeyEvent& Event) {
 		if (Event.Type == SPECIAL_KEY_DOWN) { 
 			// 3개의 키 중 하나라도 눌린 키가 있으면 동작하지 않는다
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 4; i++)
 				if (KeyPressed[i])
 					return;
 
@@ -68,63 +68,69 @@ public:
 			else
 				return;
 
-			StateTimer.Reset();
-			AnimationSize = 1.0;
-
-			bool IsCorrect{};
-
 			// 가장 앞에 있는 커피를 부순다. 
 			if (auto Shelf = scene.Find("shelf"); Shelf) {
+				bool IsCorrect{};
+
 				ItemStruct Item = Shelf->GetFrontCoffee();
 
-				if (Item.Type == Can && Event.SpecialKey == SK_ARROW_LEFT)
-					IsCorrect = true;
-				else if (Item.Type == Box && Event.SpecialKey == SK_ARROW_DOWN)
-					IsCorrect = true;
-				else if (Item.Type == Glass && Event.SpecialKey == SK_ARROW_RIGHT)
-					IsCorrect = true;
+				// 앞에 사람이 서있다면 커피와 상호작용 할 수 없다.
+				if (Item.IsPeopleFront)
+					return;
 
-				// 종류에 맞는 키를 눌러야 부술 수 있다.
-				if (IsCorrect) {
-					soundUtil.Stop(SndChannel);
-					soundUtil.Play(Snd.Whoosh, SndChannel);
-
-					if (Item.IsUpside)
-						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
-					else
-						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
-					PrevFrame = Frame;
-
-					DestPosition += 0.5;
-					 
-					Shelf->BreakCoffee();
-					BreakCount++;
-
-					// 커피를 다 부수면 다음 선반으로 이동한다
-					// 부숴야할 커피는 4개 증가한다
-					if (BreakCount == MaxBreak) {
-						DestPosition = NextPosition;
-						BreakCount = 0;
-						MaxBreak += 4;
-
-						TiltValue = 3.0;
-
-						soundUtil.Stop(SndChannel2);
-						soundUtil.Play(Snd.NextWhoosh, SndChannel2);
-					}
-				}
-
-			    // 맞는 키가 아닐 경우 엉뚱한 곳을 친다.
 				else {
-					soundUtil.Stop(SndChannel);
-					soundUtil.Play(Snd.MissWhoosh, SndChannel);
+					StateTimer.Reset();
+					AnimationSize = 1.0;
 
-					if (Item.IsUpside)
-						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
-					else
-						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+					if (Item.Type == Can && Event.SpecialKey == SK_ARROW_LEFT)
+						IsCorrect = true;
+					else if (Item.Type == Box && Event.SpecialKey == SK_ARROW_DOWN)
+						IsCorrect = true;
+					else if (Item.Type == Glass && Event.SpecialKey == SK_ARROW_RIGHT)
+						IsCorrect = true;
 
-					PrevFrame = Frame;
+					// 종류에 맞는 키를 눌러야 부술 수 있다.
+					if (IsCorrect) {
+						soundUtil.Stop(SndChannel);
+						soundUtil.Play(Snd.Whoosh, SndChannel);
+
+						if (Item.IsUpside)
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+						else
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+						PrevFrame = Frame;
+
+						DestPosition += 0.5;
+
+						Shelf->BreakCoffee();
+						BreakCount++;
+
+						// 커피를 다 부수면 다음 선반으로 이동한다
+						// 부숴야할 커피는 4개 증가한다
+						if (BreakCount == MaxBreak) {
+							DestPosition = NextPosition;
+							BreakCount = 0;
+							MaxBreak += 4;
+
+							TiltValue = 3.0;
+
+							soundUtil.Stop(SndChannel2);
+							soundUtil.Play(Snd.NextWhoosh, SndChannel2);
+						}
+					}
+
+					// 맞는 키가 아닐 경우 엉뚱한 곳을 친다.
+					else {
+						soundUtil.Stop(SndChannel);
+						soundUtil.Play(Snd.MissWhoosh, SndChannel);
+
+						if (Item.IsUpside)
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+						else
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+
+						PrevFrame = Frame;
+					}
 				}
 			}
 		}
@@ -137,6 +143,38 @@ public:
 				KeyPressed[1] = false;
 			else if (Event.SpecialKey == SK_ARROW_RIGHT)
 				KeyPressed[2] = false;
+		}
+
+		if (Event.Type == NORMAL_KEY_DOWN && Event.NormalKey == NK_SPACE) {
+			for (int i = 0; i < 4; i++)
+				if (KeyPressed[i])
+					return;
+
+			KeyPressed[3] = true;
+
+			// 앞에 있는 사람을 발로 찬다.
+			if (auto Shelf = scene.Find("shelf"); Shelf) {
+				ItemStruct Item = Shelf->GetFrontCoffee();
+
+				if (Item.IsPeopleFront) {
+					if (auto People = scene.Find("people"); People) {
+						soundUtil.Stop(SndChannel);
+						soundUtil.Play(Snd.Whoosh, SndChannel);
+
+						StateTimer.Reset();
+						AnimationSize = 1.0;
+
+						People->HitPeople();
+						Shelf->EnableCoffeeHit();
+						Frame = KickPeople;
+						PrevFrame = Frame;
+					}
+				}
+			}
+		}
+
+		if (Event.Type == NORMAL_KEY_UP && Event.NormalKey == NK_SPACE) {
+			KeyPressed[3] = false;
 		}
 	}
 
