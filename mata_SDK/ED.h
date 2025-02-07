@@ -47,11 +47,27 @@ private:
 	// 다음 선반의 시작 지점
 	GLfloat NextPosition{};
 
+	// 키가 눌린 상태
+	// 하나라도 눌린 키가 있으면 조작할 수 없다
+	bool KeyPressed[3]{};
+
 public:
 	void InputKey(KeyEvent& Event) {
 		if (Event.Type == SPECIAL_KEY_DOWN) { 
 			if (!(Event.SpecialKey == SK_ARROW_LEFT || Event.SpecialKey == SK_ARROW_DOWN || Event.SpecialKey == SK_ARROW_RIGHT))
 				return;
+
+			// 3개의 키 중 하나라도 눌린 키가 있으면 동작하지 않는다
+			for (int i = 0; i < 3; i++)
+				if (KeyPressed[i])
+					return;
+
+			if (Event.SpecialKey == SK_ARROW_LEFT)
+				KeyPressed[0] = true;
+			else if (Event.SpecialKey == SK_ARROW_DOWN)
+				KeyPressed[1] = true;
+			else if (Event.SpecialKey == SK_ARROW_RIGHT)
+				KeyPressed[2] = true;
 
 			StateTimer.Reset();
 			AnimationSize = 1.0;
@@ -116,6 +132,16 @@ public:
 					PrevFrame = Frame;
 				}
 			}
+		}
+
+		// 키 입력을 중단해야 다른 키를 입력받을 수 있도록 한다
+		if (Event.Type == SPECIAL_KEY_UP) {
+			if (Event.SpecialKey == SK_ARROW_LEFT)
+				KeyPressed[0] = false;
+			else if (Event.SpecialKey == SK_ARROW_DOWN)
+				KeyPressed[1] = false;
+			else if (Event.SpecialKey == SK_ARROW_RIGHT)
+				KeyPressed[2] = false;
 		}
 	}
 
