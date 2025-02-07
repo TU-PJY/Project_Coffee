@@ -50,7 +50,7 @@ constexpr bool SHOW_FPS = true;
 // scene layer option
 // 'EOL' should be typed at last
 enum Layer
-{ LAYER1, LAYER2, LAYER3, EOL };
+{ LAYER1, LAYER2, LAYER3, LAYER4, EOL };
 
 // Specifies the size of the deletion location buffer
 constexpr int DELETE_LOCATION_BUFFER_SIZE = 500;

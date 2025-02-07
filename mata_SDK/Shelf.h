@@ -2,6 +2,7 @@
 #include <Scene.h>
 
 #include "Explode.h"
+#include "DestroyedCan.h"
 
 class Shelf : public GameObject {
 private:
@@ -219,6 +220,10 @@ public:
 		// 종이 커피라면 커피 스틱이 터져나오는 애니메이션 객체를 추가한다
 		else
 			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, true), "explode", LAYER3);
+
+		// 캔커피라면 찌그러진 캔을 추가한다
+		if (CoffeeVec[CurrentCoffeeIndex].Type == Can)
+			scene.AddObject(new DestroyedCan(CoffeeVec[CurrentCoffeeIndex].Position), "destroyed_can", LAYER3);
 
 		// 커피는 파괴 상태가 되고 더 이상 이드와 상호작용하지 않는다.
 		CoffeeVec[CurrentCoffeeIndex].Destroyed = true;

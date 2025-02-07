@@ -11,6 +11,7 @@ public:
 
 	SpriteSheet Coffee{};
 	SpriteSheet DestroyedCoffee{};
+	Image DestroyedCan{};
 	SpriteSheet Shelf{};
 	SpriteSheet Other{};
 	SpriteSheet Drop{};
@@ -27,6 +28,7 @@ public:
 	Sound NextWhoosh{};
 
 	Sound BoxBreak[3]{}, GlassBreak[3]{}, CanBreak[3]{};
+	Sound CanDrop{};
 };
 
 // Data Format list

@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cart.h" />
+    <ClInclude Include="DestroyedCan.h" />
     <ClInclude Include="Explode.h" />
     <ClInclude Include="ED.h" />
     <ClInclude Include="PlayMode.h" />

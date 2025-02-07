@@ -54,9 +54,6 @@ private:
 public:
 	void InputKey(KeyEvent& Event) {
 		if (Event.Type == SPECIAL_KEY_DOWN) { 
-			if (!(Event.SpecialKey == SK_ARROW_LEFT || Event.SpecialKey == SK_ARROW_DOWN || Event.SpecialKey == SK_ARROW_RIGHT))
-				return;
-
 			// 3개의 키 중 하나라도 눌린 키가 있으면 동작하지 않는다
 			for (int i = 0; i < 3; i++)
 				if (KeyPressed[i])
@@ -68,6 +65,8 @@ public:
 				KeyPressed[1] = true;
 			else if (Event.SpecialKey == SK_ARROW_RIGHT)
 				KeyPressed[2] = true;
+			else
+				return;
 
 			StateTimer.Reset();
 			AnimationSize = 1.0;
@@ -80,13 +79,10 @@ public:
 
 				if (Item.Type == Can && Event.SpecialKey == SK_ARROW_LEFT)
 					IsCorrect = true;
-
 				else if (Item.Type == Box && Event.SpecialKey == SK_ARROW_DOWN)
 					IsCorrect = true;
-
 				else if (Item.Type == Glass && Event.SpecialKey == SK_ARROW_RIGHT)
 					IsCorrect = true;
-
 
 				// 종류에 맞는 키를 눌러야 부술 수 있다.
 				if (IsCorrect) {
@@ -97,7 +93,6 @@ public:
 						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 					else
 						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
-
 					PrevFrame = Frame;
 
 					DestPosition += 0.5;
@@ -107,7 +102,7 @@ public:
 
 					// 커피를 다 부수면 다음 선반으로 이동한다
 					// 부숴야할 커피는 4개 증가한다
-					if (BreakCount >= MaxBreak) {
+					if (BreakCount == MaxBreak) {
 						DestPosition = NextPosition;
 						BreakCount = 0;
 						MaxBreak += 4;
@@ -134,7 +129,7 @@ public:
 			}
 		}
 
-		// 키 입력을 중단해야 다른 키를 입력받을 수 있도록 한다
+		// 키 입력을 모두 중단해야 다른 키를 입력할 수 있다
 		if (Event.Type == SPECIAL_KEY_UP) {
 			if (Event.SpecialKey == SK_ARROW_LEFT)
 				KeyPressed[0] = false;

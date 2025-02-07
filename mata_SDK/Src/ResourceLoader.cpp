@@ -17,6 +17,8 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.LoadSpriteSheetT(Img.DestroyedCoffee, "Assets//Sprite//sheet-destroyed.png");
 	imageUtil.LoadSpriteSheetT(Img.Other, "Assets//Sprite//sheet-other.png");
 
+	imageUtil.LoadT(Img.DestroyedCan, "Assets//Sprite//can-destroyed.png");
+
 	imageUtil.SetSpriteSheetSize(30, 30, 2, 1);
 	imageUtil.LoadSpriteSheetT(Img.Drop, "Assets//Sprite//sheet-drop.png");
 
@@ -50,6 +52,8 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 		FileName += std::to_string(i + 1) + ".mp3";
 		soundUtil.Load(Snd.CanBreak[i], FileName);
 	}
+
+	soundUtil.Load(Snd.CanDrop, "Assets//Sound//metal-drop.mp3");
 
 	return 0;
 }
