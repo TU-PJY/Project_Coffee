@@ -53,9 +53,6 @@ public:
 			if (!(Event.SpecialKey == SK_ARROW_LEFT || Event.SpecialKey == SK_ARROW_DOWN || Event.SpecialKey == SK_ARROW_RIGHT))
 				return;
 
-			soundUtil.Stop(SndChannel);
-			soundUtil.Play(Snd.Whoosh, SndChannel);
-
 			StateTimer.Reset();
 			AnimationSize = 1.0;
 
@@ -77,6 +74,9 @@ public:
 
 				// 종류에 맞는 키를 눌러야 부술 수 있다.
 				if (IsCorrect) {
+					soundUtil.Stop(SndChannel);
+					soundUtil.Play(Snd.Whoosh, SndChannel);
+
 					if (Item.IsUpside)
 						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 					else
@@ -105,6 +105,9 @@ public:
 
 			    // 맞는 키가 아닐 경우 엉뚱한 곳을 친다.
 				else {
+					soundUtil.Stop(SndChannel);
+					soundUtil.Play(Snd.MissWhoosh, SndChannel);
+
 					if (Item.IsUpside)
 						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 					else

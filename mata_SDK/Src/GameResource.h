@@ -23,6 +23,7 @@ public:
 class SoundResource {
 public:
 	Sound Whoosh{};
+	Sound MissWhoosh{};
 	Sound NextWhoosh{};
 
 	Sound BoxBreak[3]{}, GlassBreak[3]{}, CanBreak[3]{};
