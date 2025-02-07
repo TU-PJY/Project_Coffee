@@ -56,26 +56,10 @@ private:
 	// 사람이 추가되었는지의 여부
 	bool PeopleAdded{};
 
-	// 사람을 다음 선반에 추가할 지의 여부
-	// 현재 선반에서 사람을 쳤다면 다음 선반에는 사람을 추가하지 않는다.
-	bool CreatePeopleInNextShelf{};
-
 public:
-	Shelf(int Num, GLfloat PositionValue, bool CreatePeople) {
+	Shelf(int Num, GLfloat PositionValue) {
 		NumShelf = Num;
 		Position = PositionValue;
-
-		// false이면 현재 선반에서 사람을 추가하지 않고 다음 선반에서 추가한다.
-		if (!CreatePeople) {
-			PeopleAdded = true;
-			CreatePeopleInNextShelf = true;
-		}
-
-		// true이면 현재 선반에서 사람을 추가하고 다음 선반에는 추가하지 않는다.
-		else {
-			PeopleAdded = false;
-			CreatePeopleInNextShelf = false;
-		}
 
 		// 중간 지점 및 끝 지점 길이 계산 
 		MiddlePoint = Position + Length * (GLfloat)(Num - 1) * 0.5;
@@ -93,7 +77,7 @@ public:
 
 			// 선반이 4개가 만들어지는 시점부터 사람을 추가한다
 			// 단, 중간 지점 이후부터 추가한다
-			if (i > GenTime / 2 && !PeopleAdded) {
+			if (Glb.AblePeopleAdd && !PeopleAdded) {
 				// 하나의 위치 당 10퍼센트의 확률로 사람을 배치한다
 				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, 10);
 				if (RandNum == 1) {
@@ -132,13 +116,16 @@ public:
 			CoffeeVec.emplace_back(Coffee);
 			OtherVec.emplace_back(Other);
 		}
+
+		// 사람을 배치한 선반의 다음 선반은 사람을 배치하지 않는다.
+		EX.SwitchBool(Glb.AblePeopleAdd);
 	}
 
 	void UpdateFunc(float FrameTime) {
 		// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
 		if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
 			NextShelfGenerated = true;
-			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0, CreatePeopleInNextShelf), "shelf", LAYER2);
+			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
 
 			// 이드가 이동해야 할 다음 위치를 알린다
 			PtrED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);

@@ -59,6 +59,8 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 
 	soundUtil.Load(Snd.PeopleHit, "Assets//Sound//people-hit.mp3");
 
+	soundUtil.Load(Snd.CartCrash, "Assets//Sound//cart-crash.mp3");
+
 	return 0;
 }
 
