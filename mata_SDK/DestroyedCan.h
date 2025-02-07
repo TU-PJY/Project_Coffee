@@ -36,7 +36,7 @@ public:
 		ps.SetRebounceReduce(3.0);
 
 		// 랜덤 속도 지정
-		MoveSpeed = randomUtil.Gen(RANDOM_TYPE_REAL, 0.5, 2.0);
+		MoveSpeed = randomUtil.Gen(RANDOM_TYPE_REAL, 1.0, 3.0);
 
 		// 랜덤 회전 속도 지정
 		RotateSpeed = randomUtil.Gen(RANDOM_TYPE_REAL, 800.0, 1500.0);
@@ -51,6 +51,7 @@ public:
 			// 바닥에 튕길때마다 소리를 재생한다
 			if (ps.CheckFloorCollision(Position)) {
 				RotateSpeed *= 0.5;
+				MoveSpeed *= 0.7;
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.CanDrop, SndChannel);
 			}
