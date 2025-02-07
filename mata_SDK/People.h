@@ -4,7 +4,9 @@
 
 enum PeopleTypeEnum {
 	Listy,
-	Mayo
+	Mayo,
+	Naia,
+	EOE
 };
 
 class People : public GameObject {
@@ -53,7 +55,7 @@ public:
 		CartPosition.y = PositionValue.y - 0.3;
 
 		// 캐릭터 랜덤 선택
-		Frame = randomUtil.Gen(RANDOM_TYPE_INT, Listy, Mayo) * 2;
+		Frame = randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1) * 2;
 	}
 
 	void UpdateFunc(float FrameTime) {
@@ -93,8 +95,12 @@ public:
 		}
 
 		// 숨쉬기 애니메이션
-		else
-			LoopSize = Loop.Update(0.03, 4.0, FrameTime);
+		else {
+			if(Frame == Naia * 2)
+				LoopSize = Loop.Update(0.03, 30.0, FrameTime);
+			else
+				LoopSize = Loop.Update(0.03, 4.0, FrameTime);
+		}
 
 		// 화면 왼쪽으로 벗어나면 삭제한다.
 		if (Position.x < CameraPosition.x - ASP(1.0) - 1.2)
