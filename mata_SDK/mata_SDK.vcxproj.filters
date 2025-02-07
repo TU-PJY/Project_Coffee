@@ -151,7 +151,10 @@
     <Filter Include="[5]___________[ System ]\[ Util ]\[ Frustum Util ]">
       <UniqueIdentifier>{c0d402a3-6a02-46a7-9a5d-b38ba1216622}</UniqueIdentifier>
     </Filter>
-    <Filter Include="[2]___________[ Object ]\[ Cart ]">
+    <Filter Include="[2]___________[ Object ]\[ PlayMode Object ]">
+      <UniqueIdentifier>{80f19b14-6359-44ed-bdd6-3ba4b47e6b4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[2]___________[ Object ]\[ PlayMode Object ]\[ Cart ]">
       <UniqueIdentifier>{cd7dd326-1123-4af6-bd3d-0110c605f755}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -280,7 +283,7 @@
       <Filter>[5]___________[ System ]\[ Util ]\[ Frustum Util ]</Filter>
     </ClCompile>
     <ClCompile Include="Cart.cpp">
-      <Filter>[2]___________[ Object ]\[ Cart ]</Filter>
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Cart ]</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -422,26 +425,26 @@
     <ClInclude Include="Src\IntroMode.h">
       <Filter>[5]___________[ System ]\[ System Mode ]</Filter>
     </ClInclude>
-    <ClInclude Include="ED.h">
-      <Filter>[2]___________[ Object ]</Filter>
-    </ClInclude>
-    <ClInclude Include="Shelf.h">
-      <Filter>[2]___________[ Object ]</Filter>
-    </ClInclude>
     <ClInclude Include="PlayMode.h">
       <Filter>[1]___________[ GameMode ]</Filter>
     </ClInclude>
-    <ClInclude Include="Explode.h">
-      <Filter>[2]___________[ Object ]</Filter>
-    </ClInclude>
     <ClInclude Include="Cart.h">
-      <Filter>[2]___________[ Object ]\[ Cart ]</Filter>
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Cart ]</Filter>
     </ClInclude>
     <ClInclude Include="DestroyedCan.h">
-      <Filter>[2]___________[ Object ]</Filter>
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="ED.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Explode.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
     </ClInclude>
     <ClInclude Include="People.h">
-      <Filter>[2]___________[ Object ]</Filter>
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Shelf.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

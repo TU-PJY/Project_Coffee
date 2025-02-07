@@ -53,8 +53,11 @@ private:
 	int PlayChannel = 0;
 	int StopChannel = 2;
 
-	// 사람이 추가되었는지의 여부
-	bool PeopleAdded{};
+	// 사람을 추가할 것인지의 여부
+	bool PeopleAddActivated{};
+
+	// 사람이 추가된 자리 인덱스 번호
+	int AddedIndex{};
 
 public:
 	Shelf(int Num, GLfloat PositionValue) {
@@ -68,6 +71,20 @@ public:
 		// 이드 객체 포인터 연결
 		PtrED = scene.Find("ed");
 
+		// 50퍼센트의 확률로 사람을 배치한다
+		int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
+		if (RandNum == 1)
+			PeopleAddActivated = true;
+
+		// 여러 개의 자리 중 하나를 선택해 사람을 배치한다
+		if (PeopleAddActivated) {
+			// 맨 앞과 맨 뒤는 배치하지 않는다.
+			RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, Num * 4 - 3);
+			glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * RandNum, 0.0);
+			scene.AddObject(new People(AddPosition), "people", LAYER4);
+			AddedIndex = RandNum;
+		}
+
 		// 선반 한 칸당 4개의 커피들을 랜덤으로 배치한다.
 		// 마지막 칸은 3개만 배치한다.
 		int GenTime = Num * 4 - 1;
@@ -75,21 +92,9 @@ public:
 			ItemStruct Coffee{};
 			ItemStruct Other{};
 
-			// 선반이 4개가 만들어지는 시점부터 사람을 추가한다
-			// 단, 중간 지점 이후부터 추가한다
-			if (Glb.AblePeopleAdd && !PeopleAdded) {
-				// 하나의 위치 당 10퍼센트의 확률로 사람을 배치한다
-				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, 10);
-				if (RandNum == 1) {
-					scene.AddObject(new People(glm::vec2(PositionValue - 0.75 + 0.5 * i, 0.0)), "people", LAYER4);
-
-					// 한 번 배치한 이후에는 같은 선반에 더 이상 배치하지 않는다.
-					PeopleAdded = true;
-					
-					// 해당 변수가 활성화 되어있으면 사람과 먼제 상호작용하게 된다.
-					Coffee.IsPeopleFront = true;
-				}
-			}
+			// 사람이 배치된 자리의 커피는 별도 표시한다
+			if (PeopleAddActivated && i == AddedIndex)
+				Coffee.IsPeopleFront = true;
 
 			// 타입 결정
 			Coffee.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
@@ -113,12 +118,10 @@ public:
 			// x 위치는 커피와 다른 물건이 같도록 한다
 			Coffee.Position.x = PositionValue - 0.75 + 0.5 * i;
 			Other.Position.x = Coffee.Position.x;
+
 			CoffeeVec.emplace_back(Coffee);
 			OtherVec.emplace_back(Other);
 		}
-
-		// 사람을 배치한 선반의 다음 선반은 사람을 배치하지 않는다.
-		EX.SwitchBool(Glb.AblePeopleAdd);
 	}
 
 	void UpdateFunc(float FrameTime) {
