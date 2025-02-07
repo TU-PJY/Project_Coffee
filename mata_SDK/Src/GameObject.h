@@ -82,7 +82,7 @@ public:
 	virtual void TellNextPosition(GLfloat Position) {}
 
 	// Shelf Function
-	virtual bool GetFrontCoffee() { return {}; }
+	virtual ItemStruct GetFrontCoffee() { return {}; }
 	virtual void BreakCoffee() {}
 
 private:

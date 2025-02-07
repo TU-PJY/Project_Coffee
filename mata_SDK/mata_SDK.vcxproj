@@ -141,6 +141,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cart.cpp" />
     <ClCompile Include="Modes.cpp" />
     <ClCompile Include="Src\AnimationUtil.cpp" />
     <ClCompile Include="Src\CameraController.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Src\UiUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cart.h" />
     <ClInclude Include="Explode.h" />
     <ClInclude Include="ED.h" />
     <ClInclude Include="PlayMode.h" />

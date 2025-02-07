@@ -8,12 +8,15 @@
 class ImageResource {
 public:
 	SpriteSheet ED{};
+
 	SpriteSheet Coffee{};
 	SpriteSheet DestroyedCoffee{};
 	SpriteSheet Shelf{};
 	SpriteSheet Other{};
 	SpriteSheet Drop{};
 	Image Stick{};
+
+	SpriteSheet Cart{};
 };
 
 // Declare the sound resource here. 
@@ -67,6 +70,21 @@ enum CoffeeTypeEnum {
 	Glass,
 	Can
 };
+
+// 물건 구조체
+typedef struct {
+	// 커피 종류
+	int Type;
+
+	// 커피 위치
+	glm::vec2 Position;
+
+	// 위 아래 위치 여부
+	bool IsUpside;
+
+	// 파괴 상태
+	bool Destroyed;
+}ItemStruct;
 
 extern ImageResource Img;
 extern SoundResource Snd;

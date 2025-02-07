@@ -49,45 +49,69 @@ private:
 
 public:
 	void InputKey(KeyEvent& Event) {
-		if (Event.Type == NORMAL_KEY_DOWN && Event.NormalKey == NK_SPACE) { 
+		if (Event.Type == SPECIAL_KEY_DOWN) { 
+			if (!(Event.SpecialKey == SK_ARROW_LEFT || Event.SpecialKey == SK_ARROW_DOWN || Event.SpecialKey == SK_ARROW_RIGHT))
+				return;
+
 			soundUtil.Stop(SndChannel);
 			soundUtil.Play(Snd.Whoosh, SndChannel);
 
 			StateTimer.Reset();
-
-			DestPosition += 0.5;
 			AnimationSize = 1.0;
+
+			bool IsCorrect{};
 
 			// 가장 앞에 있는 커피를 부순다. 
 			if (auto Shelf = scene.Find("shelf"); Shelf) {
-				// 커피가 위에 있을 경우
-				if (Shelf->GetFrontCoffee()) 
-					Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
-				// 아래에 있을 경우
-				else 
-					Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+				ItemStruct Item = Shelf->GetFrontCoffee();
 
-				//  이전 프레임 갱신
-				PrevFrame = Frame;
+				if (Item.Type == Can && Event.SpecialKey == SK_ARROW_LEFT)
+					IsCorrect = true;
 
-				// 커피 파괴
-				Shelf->BreakCoffee();
-			}
+				else if (Item.Type == Box && Event.SpecialKey == SK_ARROW_DOWN)
+					IsCorrect = true;
 
-			// 부순 커피 횟수 증가
-			BreakCount++;
+				else if (Item.Type == Glass && Event.SpecialKey == SK_ARROW_RIGHT)
+					IsCorrect = true;
 
-			// 커피를 모두 부수면 다음 선반으로 이동하고 부숴야하는 개수가 4 증가한다.
-			// 앞으로 늘어나는 애니메이션을 재생한다.
-			if (BreakCount >= MaxBreak) {
-				DestPosition = NextPosition;
-				BreakCount = 0;
-				MaxBreak += 4;
 
-				TiltValue = 3.0;
+				// 종류에 맞는 키를 눌러야 부술 수 있다.
+				if (IsCorrect) {
+					if (Item.IsUpside)
+						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+					else
+						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 
-				soundUtil.Stop(SndChannel2);
-				soundUtil.Play(Snd.NextWhoosh, SndChannel2);
+					PrevFrame = Frame;
+
+					DestPosition += 0.5;
+					 
+					Shelf->BreakCoffee();
+					BreakCount++;
+
+					// 커피를 다 부수면 다음 선반으로 이동한다
+					// 부숴야할 커피는 4개 증가한다
+					if (BreakCount >= MaxBreak) {
+						DestPosition = NextPosition;
+						BreakCount = 0;
+						MaxBreak += 4;
+
+						TiltValue = 3.0;
+
+						soundUtil.Stop(SndChannel2);
+						soundUtil.Play(Snd.NextWhoosh, SndChannel2);
+					}
+				}
+
+			    // 맞는 키가 아닐 경우 엉뚱한 곳을 친다.
+				else {
+					if (Item.IsUpside)
+						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+					else
+						Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+
+					PrevFrame = Frame;
+				}
 			}
 		}
 	}

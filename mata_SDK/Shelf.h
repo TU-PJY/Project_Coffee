@@ -3,18 +3,6 @@
 
 #include "Explode.h"
 
-// 물건 구조체
-typedef struct {
-	// 커피 종류
-	int Type;
-
-	// 커피 위치
-	glm::vec2 Position;
-
-	// 파괴 상태
-	bool Destroyed;
-}ItemStruct;
-
 class Shelf : public GameObject {
 private:
 	//////////////////////// 선반
@@ -58,9 +46,6 @@ private:
 	// 커피가 아닌 다른 물건들의 렌더링을 시작하는 인덱스
 	int StartOtherIndex{};
 
-	// 커피의 위치를 저장하는 덱
-	std::deque<bool> IndexDeq{};
-
 	// 사운드 채널
 	SoundChannel SndChannel[5]{};
 	int PlayChannel = 0;
@@ -95,10 +80,12 @@ public:
 			int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
 			if (RandomNum == 1) {
 				Coffee.Position.y = 0.14;
+				Coffee.IsUpside = true;
 				Other.Position.y = -0.27;
 			}
 			else {
 				Coffee.Position.y = -0.27;
+				Coffee.IsUpside = false;
 				Other.Position.y = 0.14;
 			}
 
@@ -107,9 +94,6 @@ public:
 			Other.Position.x = Coffee.Position.x;
 			CoffeeVec.emplace_back(Coffee);
 			OtherVec.emplace_back(Other);
-
-			// 위아래 위치 여부만 별도로 저장하여 이드와 상호작용 시 사용
-			IndexDeq.emplace_back(RandomNum);
 		}
 	}
 
@@ -206,8 +190,8 @@ public:
 
 	// 가장 앞에 있는 커피의 위 또는 아래의 위치 여부를 얻는다
 	// 위에 있을 시 true,  아래에 있을 시 false
-	bool GetFrontCoffee() {
-		return IndexDeq.front();
+	ItemStruct GetFrontCoffee() {
+		return CoffeeVec[CurrentCoffeeIndex];
 	}
 
 	// 가장 앞에 있는 커피를 부순다.
@@ -236,8 +220,7 @@ public:
 		else
 			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, true), "explode", LAYER3);
 
-		// 커피는 파괴 상태가 되고 더 이상 이드와 상호작용하지 않는다. 
-		IndexDeq.erase(IndexDeq.begin());
+		// 커피는 파괴 상태가 되고 더 이상 이드와 상호작용하지 않는다.
 		CoffeeVec[CurrentCoffeeIndex].Destroyed = true;
 
 		// 참조 인덱스 증가
