@@ -27,6 +27,7 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.SetSpriteSheetSize(256, 256, 2, 1);
 	imageUtil.LoadSpriteSheetT(Img.Cart, "Assets//Sprite//sheet-cart.png");
 
+	imageUtil.SetSpriteSheetSize(256, 256, 4, 1);
 	imageUtil.LoadSpriteSheetT(Img.People, "Assets//Sprite//sheet-people.png");
 
 	return 0;

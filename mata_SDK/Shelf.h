@@ -73,14 +73,14 @@ public:
 
 		// 50퍼센트의 확률로 사람을 배치한다
 		if (NumShelf > 2) {
-			int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
-			if (RandNum == 1)
+			//int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
+			//if (RandNum == 1)
 				PeopleAddActivated = true;
 
 			// 여러 개의 자리 중 하나를 선택해 사람을 배치한다
 			if (PeopleAddActivated) {
 				// 맨 앞과 맨 뒤는 배치하지 않는다.
-				RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, Num * 4 - 3);
+				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, Num * 4 - 3);
 				glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * RandNum, 0.0);
 				scene.AddObject(new People(AddPosition), "people", LAYER4);
 				AddedIndex = RandNum;

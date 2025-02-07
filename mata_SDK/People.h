@@ -2,6 +2,11 @@
 #include <Scene.h>
 #include "Cart.h"
 
+enum PeopleTypeEnum {
+	Listy,
+	Mayo
+};
+
 class People : public GameObject {
 private:
 	// 인덱스에 따라 렌더링되는 캐릭터가 달라진다
@@ -46,7 +51,9 @@ public:
 		Position = PositionValue;
 		CartPosition.x = PositionValue.x + 1.2;
 		CartPosition.y = PositionValue.y - 0.3;
-		Frame = 0;
+
+		// 캐릭터 랜덤 선택
+		Frame = randomUtil.Gen(RANDOM_TYPE_INT, Listy, Mayo) * 2;
 	}
 
 	void UpdateFunc(float FrameTime) {

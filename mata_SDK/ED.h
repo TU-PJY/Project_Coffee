@@ -162,7 +162,7 @@ public:
 						soundUtil.Play(Snd.Whoosh, SndChannel);
 
 						StateTimer.Reset();
-						AnimationSize = 1.0;
+						AnimationSize = 2.0;
 
 						People->HitPeople();
 						Shelf->EnableCoffeeHit();
