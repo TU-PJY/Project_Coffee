@@ -53,8 +53,7 @@ public:
 // Declare the global value here.
 class GlobalResource {
 public:
-	// 선반에 사람을 추가할 수 있는지의 여부
-	bool AblePeopleAdd{};
+
 };
 
 // Declare the global text object here.
