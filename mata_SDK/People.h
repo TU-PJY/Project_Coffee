@@ -90,13 +90,13 @@ public:
 			LoopSize = Loop.Update(0.03, 4.0, FrameTime);
 
 		// 화면 왼쪽으로 벗어나면 삭제한다.
-		if (CartPosition.x < CameraPosition.x - ASP(1.0) - 0.75)
+		if (Position.x < CameraPosition.x - ASP(1.0) - 1.2)
 			scene.DeleteObject(this);
 	}
 
 	void RenderFunc() {
 		// 화면보다 오른쪽에 있을 때 랜더링을 진행하지 않는다.
-		if (Position.x > CameraPosition.x + ASP(1.0) + 1.0)
+		if (Position.x > CameraPosition.x + ASP(1.0) + 1.2)
 			return;
 
 		// 사람 렌더링

@@ -16,6 +16,9 @@ void Cart::UpdateFunc(float FrameTime) {
 }
 
 void Cart::RenderFunc() {
+	if (Position.x > CameraPosition.x + ASP(1.0) + 0.75)
+		return;
+
 	Begin();
 	transform.Move(MoveMatrix, Position);
 	transform.Scale(MoveMatrix, 1.5, 1.5);
