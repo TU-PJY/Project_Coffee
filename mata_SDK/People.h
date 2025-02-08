@@ -6,6 +6,7 @@ enum PeopleTypeEnum {
 	Listy,
 	Mayo,
 	Naia,
+	Hildae,
 	EOE
 };
 
