@@ -7,6 +7,7 @@ enum PeopleTypeEnum {
 	Mayo,
 	Naia,
 	Hildae,
+	Silphir,
 	EOE
 };
 
@@ -56,7 +57,7 @@ public:
 		CartPosition.y = PositionValue.y - 0.3;
 
 		// 캐릭터 랜덤 선택
-		Frame = randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1) * 2;
+		Frame = Silphir * 2;//randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1) * 2;
 	}
 
 	void UpdateFunc(float FrameTime) {
@@ -74,9 +75,15 @@ public:
 				// -1.3까지 이동하면 넘어짐 상태를 활성화 한다
 				if (Position.y <= -1.3) {
 					soundUtil.Play(Snd.CartCrash, SndChannel);
-					Position.y = -1.3;
+
+					if (Frame == Silphir * 2)
+						Position.y = -1.2;
+					else
+						Position.y = -1.3;
+
 					CartPosition.x += 0.5;
 					CartPosition.y = -0.35;
+
 					scene.AddObject(new Cart(true, CartPosition), "cart", LAYER3);
 
 					// 현재 프레임의 다음 프레임 넘어진 프레임
