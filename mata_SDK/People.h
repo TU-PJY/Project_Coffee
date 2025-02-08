@@ -65,10 +65,10 @@ public:
 			if (!FellDown) {
 				Rotation += 250 * FrameTime;
 				Position.x += 8.0 * FrameTime;
-				Position.y -= 1.0 * FrameTime;
+				Position.y -= 1.5 * FrameTime;
 
 				CartPosition.x += 8.0 * FrameTime;
-				CartPosition.y -= 0.5 * FrameTime;
+				CartPosition.y -= 0.75 * FrameTime;
 
 				// -1.3까지 이동하면 넘어짐 상태를 활성화 한다
 				if (Position.y <= -1.3) {
@@ -76,7 +76,7 @@ public:
 					Position.y = -1.3;
 					CartPosition.x += 0.5;
 					CartPosition.y = -0.35;
-					scene.AddObject(new Cart(true, CartPosition), "cart", LAYER4);
+					scene.AddObject(new Cart(true, CartPosition), "cart", LAYER3);
 
 					// 현재 프레임의 다음 프레임 넘어진 프레임
 					Frame++;

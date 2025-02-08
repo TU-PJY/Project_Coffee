@@ -8,9 +8,6 @@
 class Shelf : public GameObject {
 private:
 	//////////////////////// 선반
-	// 이드 객체 포인터
-	GameObject* PtrED{};
-
 	// 선반 개수
 	int NumShelf{};
 
@@ -68,9 +65,6 @@ public:
 		MiddlePoint = Position + Length * (GLfloat)(Num - 1) * 0.5;
 		EndPoint = Position + Length * (GLfloat)(Num - 1) + Length * 0.5;
 
-		// 이드 객체 포인터 연결
-		PtrED = scene.Find("ed");
-
 		// 50퍼센트의 확률로 사람을 배치한다
 		if (NumShelf > 2) {
 			//int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
@@ -82,7 +76,7 @@ public:
 				// 맨 앞과 맨 뒤는 배치하지 않는다.
 				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, Num * 4 - 3);
 				glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * RandNum, 0.0);
-				scene.AddObject(new People(AddPosition), "people", LAYER4);
+				scene.AddObject(new People(AddPosition), "people", LAYER2);
 				AddedIndex = RandNum;
 			}
 		}
@@ -130,10 +124,11 @@ public:
 		// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
 		if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
 			NextShelfGenerated = true;
-			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
+			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER1);
 
 			// 이드가 이동해야 할 다음 위치를 알린다
-			PtrED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
+			if(auto ED = scene.Find("ed"); ED)
+				ED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
 		}
 
 		// 마지막 선반이 화면에서 보이지 않게 되면 스스로 삭제한다

@@ -5,6 +5,15 @@
 #include "Shelf.h"
 #include "Cart.h"
 
+// render order
+
+// Background, Shelf
+// ED, People
+// FellDown Cart
+// Object
+// FellDown People
+// UI
+
 class Play_Mode {
 public:
 	// define mode name and mode type here
@@ -22,9 +31,9 @@ public:
 	static void Start() {
 		System.SetBackColor(0.3, 0.3, 0.3);
 
-		scene.AddObject(new ED, "ed", LAYER4);
-		scene.AddObject(new Shelf(2, 1.75), "shelf", LAYER2);
-		scene.AddObject(new Cart(true, glm::vec2(0.8, -0.35)), "cart", LAYER4);
+		scene.AddObject(new Shelf(2, 1.75), "shelf", LAYER1);
+		scene.AddObject(new ED, "ed", LAYER2);
+		scene.AddObject(new Cart(true, glm::vec2(0.8, -0.35)), "cart", LAYER3);
 
 		SetUp();
 	}
