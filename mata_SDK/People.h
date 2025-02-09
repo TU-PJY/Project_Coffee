@@ -63,6 +63,27 @@ public:
 
 		// 캐릭터 랜덤 선택
 		Frame = randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1) * 2;
+
+		// 최대 2회의 생성동안 동일한 캐릭터로 지정되지 않는다.
+		if ((Frame == Glb.PrevCharacterFrame1 && Frame == Glb.PrevCharacterFrame2) ||
+			(Frame == Glb.PrevCharacterFrame1 && Frame != Glb.PrevCharacterFrame2) ||
+			(Frame != Glb.PrevCharacterFrame1 && Frame == Glb.PrevCharacterFrame2)) {
+			if (Glb.PrevCharacterFrame1 == Listy)
+				Frame += 2;
+			else if (Glb.PrevCharacterFrame1 == Daepyo)
+				Frame -= 2;
+			else {
+				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
+				if (RandNum == 1)
+					Frame += 2;
+				else
+					Frame -= 2;
+			}
+		}
+
+		//  이전 프레임 갱신
+		Glb.PrevCharacterFrame2 = Glb.PrevCharacterFrame1;
+		Glb.PrevCharacterFrame1 = Frame;
 	}
 
 	void UpdateFunc(float FrameTime) {

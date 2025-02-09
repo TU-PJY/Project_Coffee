@@ -54,7 +54,9 @@ public:
 // Declare the global value here.
 class GlobalResource {
 public:
-
+	// 이전 캐릭터 프레임 인덱스
+	int PrevCharacterFrame1{};
+	int PrevCharacterFrame2{};
 };
 
 // Declare the global text object here.

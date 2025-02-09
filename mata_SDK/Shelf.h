@@ -56,6 +56,10 @@ private:
 	// 사람이 추가된 자리 인덱스 번호
 	int AddedIndex{};
 
+	// 최대로 추가 가능한 사람 수
+	// 전체 커피 개수 / 14로 개수를 결정한다
+	int AddCountNum{};
+
 public:
 	Shelf(int Num, GLfloat PositionValue) {
 		NumShelf = Num;
@@ -65,32 +69,37 @@ public:
 		MiddlePoint = Position + Length * (GLfloat)(Num - 1) * 0.5;
 		EndPoint = Position + Length * (GLfloat)(Num - 1) + Length * 0.5;
 
-		// 50퍼센트의 확률로 사람을 배치한다
-		if (NumShelf > 2) {
-			//int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
-			//if (RandNum == 1)
-				PeopleAddActivated = true;
-
-			// 여러 개의 자리 중 하나를 선택해 사람을 배치한다
-			if (PeopleAddActivated) {
-				// 맨 앞과 맨 뒤는 배치하지 않는다.
-				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, Num * 4 - 3);
-				glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * RandNum, 0.0);
-				scene.AddObject(new People(AddPosition), "people", LAYER2);
-				AddedIndex = RandNum;
-			}
-		}
+		//// 50퍼센트의 확률로 사람을 배치한다
+		//if (NumShelf > 2) {
+		//	int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
+		//	if (RandNum == 1)
+		//		PeopleAddActivated = true;
+		//}
 
 		// 선반 한 칸당 4개의 커피들을 랜덤으로 배치한다.
 		// 마지막 칸은 3개만 배치한다.
 		int GenTime = Num * 4 - 1;
+		AddCountNum = Num * 4 - 1 / 7;
+
 		for (int i = 0; i < GenTime; ++i) {
 			ItemStruct Coffee{};
 			ItemStruct Other{};
 
-			// 사람이 배치된 자리의 커피는 별도 표시한다
-			if (PeopleAddActivated && i == AddedIndex)
-				Coffee.IsPeopleFront = true;
+			// 최소 5칸 간격으로 배치한다
+			if ((AddedIndex == 0 || i - AddedIndex > 5) && NumShelf > 2) {
+				//각 커피 칸 마다 10퍼센트의 확률로 사람을 배치한다
+				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, 10);
+				if (RandNum == 1) {
+					glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * i, 0.0);
+					scene.AddObject(new People(AddPosition), "people", LAYER2);
+
+					// 사람이 배치된 자리의 커피는 별도 표시한다
+					Coffee.IsPeopleFront = true;
+
+					// 마지막으로 사람을 추가한 인덱스 기록
+					AddedIndex = i;
+				}
+			}
 
 			// 타입 결정
 			Coffee.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
