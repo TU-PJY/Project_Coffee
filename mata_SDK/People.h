@@ -105,9 +105,9 @@ public:
 			}
 		}
 
-		// 대표의 경우 2번 차야 한다
+		// 대표의 경우 3번 차야 한다
 		if (Frame == Daepyo * 2)
-			HitCount = 2;
+			HitCount = 3;
 	}
 
 	void UpdateFunc(float FrameTime) {
