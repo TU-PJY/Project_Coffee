@@ -15,6 +15,8 @@ int WIDTH = WINDOW_WIDTH;
 int HEIGHT = WINDOW_HEIGHT;
 int PREV_WIDTH, PREV_HEIGHT;
 
+std::wstring LocaleType;
+
 const glm::mat4 IdentityMatrix = glm::mat4(1.0f);
 
 Camera camera;

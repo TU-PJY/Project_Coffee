@@ -17,7 +17,7 @@ enum PeopleTypeEnum {
 	EOE
 };
 
-int Numbers[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+int Num;
 
 class People : public GameObject {
 private:
@@ -39,6 +39,9 @@ private:
 	// 카트 회전값
 	GLfloat CartRotation{};
 
+	// 차야 하는 횟수
+	int HitCount = 1;
+
 	// 이드 발에 차였는지의 여부
 	bool HitState{};
 
@@ -55,6 +58,9 @@ private:
 	// 넘어진 후의 애니메이션 수치
 	GLfloat FellDownSize{};
 
+	// 차인 후의 기울임 수치
+	GLfloat TiltValue{};
+
 	// 사운드 채널
 	SoundChannel SndChannel{};
 
@@ -63,6 +69,7 @@ public:
 		Position = PositionValue;
 		CartPosition.x = PositionValue.x + 1.2;
 		CartPosition.y = PositionValue.y - 0.3;
+
 
 		int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1);
 
@@ -75,16 +82,18 @@ public:
 		else {
 			std::vector<int> AvailableNum{};
 
+			// 뽑을 수 있는 캐릭터들의 프레임 번호를 벡터에 저장
 			for (int i = Listy; i < EOE; i++) {
 				if (Glb.CreateAvailable[i])
 					AvailableNum.emplace_back(i);
 			}
 
+			// 벡터의 번호 중 하나를 선택하여 캐릭터 뽑기
 			int Rand = randomUtil.Gen(RANDOM_TYPE_INT, 0, AvailableNum.size() - 1);
 			Frame = AvailableNum[Rand] * 2;
 		}
 
-		// 이전에 뽑힌적 있는 캐릭터들은 카운트 증가 
+		// 현재 뽑을 수 없는 캐릭터들은 카운트 증가 
 		for (int i = Listy; i < EOE; i++) {
 			if (!Glb.CreateAvailable[i])
 				Glb.PrevChFrame[i]++;
@@ -95,6 +104,10 @@ public:
 				Glb.PrevChFrame[i] = 0;
 			}
 		}
+
+		// 대표의 경우 2번 차야 한다
+		if (Frame == Daepyo * 2)
+			HitCount = 2;
 	}
 
 	void UpdateFunc(float FrameTime) {
@@ -104,7 +117,7 @@ public:
 			if (!FellDown) {
 				Rotation += 250 * FrameTime;
 				Position.x += 8.0 * FrameTime;
-				Position.y -= 1.5 * FrameTime;
+				Position.y -= 1.0 * FrameTime;
 
 				CartPosition.x += 8.0 * FrameTime;
 				CartPosition.y -= 0.75 * FrameTime;
@@ -129,6 +142,8 @@ public:
 						Position.y = -1.53;
 					else if (Frame == Yumimi * 2)
 						Position.y = -1.4;
+					else if (Frame == Daepyo * 2)
+						Position.y = -1.2;
 					else
 						Position.y = -1.3;
 
@@ -189,6 +204,9 @@ public:
 				LoopSize = Loop.Update(0.03, 4.0, FrameTime);
 		}
 
+		// 기울임 수치 업데이트
+		mathUtil.Lerp(TiltValue, 0.0, 10.0, FrameTime);
+
 		// 화면 왼쪽으로 벗어나면 삭제한다.
 		if (Position.x < CameraPosition.x - ASP(1.0) - 1.2)
 			scene.DeleteObject(this);
@@ -201,12 +219,14 @@ public:
 
 		// 사람 렌더링
 		Begin();
-		transform.Move(MoveMatrix, Position.x, Position.y + LoopSize * 0.5);
+		transform.Move(MoveMatrix, Position.x + TiltValue * 0.5, Position.y + LoopSize * 0.5);
 		transform.Rotate(MoveMatrix, Rotation);
 		if(Frame == Yumimi * 2 + 1)
 			transform.Scale(MoveMatrix, 3.0, 3.0 + LoopSize + FellDownSize);
 		else
 			transform.Scale(MoveMatrix, 2.0, 2.0 + LoopSize + FellDownSize);
+
+		transform.Shear(MoveMatrix, TiltValue, 0.0);
 		imageUtil.RenderStaticSpriteSheet(Img.People, Frame);
 
 		// 카트 렌더링
@@ -223,10 +243,21 @@ public:
 	void HitPeople() {
 		soundUtil.Play(Snd.PeopleHit, SndChannel);
 		// 때린 상태가 되면 프레임을 변경하고 오브젝트 태그를 지워 더 이상 상호작용하지 않도록 한다
-		HitState = true;
-		ObjectTag = "";
-		Loop.SetValue(Preset::HalfPositive);
-		Loop2.SetValue(Preset::HalfNegative);
-		LoopSize = 0.0;
+		HitCount--;
+
+		// 사람의 HitCount가 0이 될 경우 커피를 다시 부술 수 있는 상태로 전환한다 
+		if (HitCount == 0) {
+			if(auto Shelf = scene.Find("shelf"); Shelf)
+				Shelf->EnableCoffeeHit();
+			HitState = true;
+			ObjectTag = "";
+			Loop.SetValue(Preset::HalfPositive);
+			Loop2.SetValue(Preset::HalfNegative);
+			LoopSize = 0.0;
+		}
+
+		// HitCount가 남아있을 경우 기울임 수치를 추가한다
+		else 
+			TiltValue = 2.0;
 	}
 };

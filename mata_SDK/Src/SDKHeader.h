@@ -28,6 +28,8 @@ extern bool FullscreenState;
 
 extern const glm::mat4 IdentityMatrix;
 
+extern std::wstring LocaleType;
+
 typedef void(*START_MODE_PTR)(void);
 using ShaderLocation = unsigned int;
 

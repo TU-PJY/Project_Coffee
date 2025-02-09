@@ -32,7 +32,7 @@ constexpr bool USE_COMPUTE_SHADER = false;
 constexpr bool SHOW_CONSOLE = true;
 
 // FPS indicator option
-constexpr bool SHOW_FPS = true;
+constexpr bool SHOW_FPS = false;
 
 // show boundbox option
 #define SHOW_BOUND_BOX

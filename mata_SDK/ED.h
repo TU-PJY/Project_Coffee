@@ -165,7 +165,6 @@ public:
 						AnimationSize = 2.0;
 
 						People->HitPeople();
-						Shelf->EnableCoffeeHit();
 						Frame = KickPeople;
 						PrevFrame = Frame;
 					}

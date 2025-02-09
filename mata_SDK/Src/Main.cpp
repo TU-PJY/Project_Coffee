@@ -43,6 +43,10 @@ GLvoid SDKSystem::Main() {
 }
 
 void main(int argc, char** argv) {
+	WCHAR LocaleName[LOCALE_NAME_MAX_LENGTH]{};
+	int Result = GetUserDefaultLocaleName(LocaleName, LOCALE_NAME_MAX_LENGTH);
+	LocaleType = LocaleName;
+
 	std::locale::global(std::locale(""));
 	std::wcout.imbue(std::locale());
 	std::cout.imbue(std::locale());
@@ -56,6 +60,8 @@ void main(int argc, char** argv) {
 			freopen_s(&FP, "CONERR$", "w", stderr);
 
 			std::cout << "Console initialized successfully." << std::endl;
+
+			std::wcout << "Locale Type: " << LocaleType << std::endl;
 		}
 	}
 
