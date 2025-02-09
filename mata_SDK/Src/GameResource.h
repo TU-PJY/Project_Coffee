@@ -34,6 +34,7 @@ public:
 	Sound PeopleHit{};
 	
 	Sound CartCrash{};
+	Sound Explode{};
 };
 
 // Data Format list

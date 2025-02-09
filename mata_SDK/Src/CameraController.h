@@ -11,6 +11,7 @@ public:
 	void MoveCamera(GLfloat X, GLfloat Y);
 	void MoveCamera(glm::vec2& PositionValue);
 	void RotateCamera(GLfloat Degree);
+	void AddShakeValue(GLfloat Value);
 	void CameraZoom(int ZoomType, GLfloat ZoomValue);
 	void ChangeCameraZoom(GLfloat ZoomValue);
 	GLfloat ComputeNextZoom(int ZoomType, GLfloat ZoomValue);

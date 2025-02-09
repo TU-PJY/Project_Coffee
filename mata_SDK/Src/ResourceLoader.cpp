@@ -27,7 +27,7 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.SetSpriteSheetSize(256, 256, 2, 1);
 	imageUtil.LoadSpriteSheetT(Img.Cart, "Assets//Sprite//sheet-cart.png");
 
-	imageUtil.SetSpriteSheetSize(256, 256, 10, 1);
+	imageUtil.SetSpriteSheetSize(256, 256, 10, 2);
 	imageUtil.LoadSpriteSheetT(Img.People, "Assets//Sprite//sheet-people.png");
 
 	return 0;
@@ -61,6 +61,8 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.PeopleHit, "Assets//Sound//people-hit.mp3");
 
 	soundUtil.Load(Snd.CartCrash, "Assets//Sound//cart-crash.mp3");
+
+	soundUtil.Load(Snd.Explode, "Assets//Sound//explode.ogg");
 
 	return 0;
 }

@@ -8,6 +8,11 @@ enum PeopleTypeEnum {
 	Naia,
 	Hildae,
 	Silphir,
+	Balong,
+	Kidian,
+	Melloon,
+	Yumimi,
+	Daepyo,
 	EOE
 };
 
@@ -57,7 +62,7 @@ public:
 		CartPosition.y = PositionValue.y - 0.3;
 
 		// 캐릭터 랜덤 선택
-		Frame = Silphir * 2;//randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1) * 2;
+		Frame = randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1) * 2;
 	}
 
 	void UpdateFunc(float FrameTime) {
@@ -74,38 +79,78 @@ public:
 
 				// -1.3까지 이동하면 넘어짐 상태를 활성화 한다
 				if (Position.y <= -1.3) {
-					soundUtil.Play(Snd.CartCrash, SndChannel);
+					// 유미미는 폭발음을 재생한다
+					if (Frame == Yumimi * 2) {
+						soundUtil.Play(Snd.Explode, SndChannel);
+
+						// 폭발로 인한 흔들림 추가
+						cameraControl.AddShakeValue(0.8);
+					}
+					else
+						soundUtil.Play(Snd.CartCrash, SndChannel);
 
 					if (Frame == Silphir * 2)
 						Position.y = -1.2;
+					else if (Frame == Kidian * 2)
+						Position.y = -0.8;
+					else if (Frame == Melloon * 2)
+						Position.y = -1.53;
+					else if (Frame == Yumimi * 2)
+						Position.y = -1.4;
 					else
 						Position.y = -1.3;
 
 					CartPosition.x += 0.5;
 					CartPosition.y = -0.35;
+					                                    
+					// 5번 레이어로 이동
 
-					scene.AddObject(new Cart(true, CartPosition), "cart", LAYER3);
+					// 넘어진 카트 추가
+					// 유미미는 카트를 추가하지 않는다
+					if (Frame != Yumimi * 2) {
+						scene.SwapLayer(this, LAYER5);
+						scene.AddObject(new Cart(true, CartPosition), "cart", LAYER3);
+					}
+					else 
+						scene.SwapLayer(this, LAYER1);
 
 					// 현재 프레임의 다음 프레임 넘어진 프레임
 					Frame++;
 
+					// 넘어짐 상태 활성화
 					FellDown = true;
-
-					// 5번 레이어로 이동
-					scene.SwapLayer(this, LAYER5);
 				}
 			}
 			// 넘어진 후
 			else {
-				Rotation = -25.0 - Loop.Update(2.5, 20.0, FrameTime);
-				FellDownSize = Loop2.Update(0.1, 20.0, FrameTime);
+				// 키디언의 경우 축구공이 되어 굴러간다
+				if (Frame == Kidian * 2 + 1) {
+					Rotation -= 360 * FrameTime;
+					Position.x -= 4.0 * FrameTime;
+				}
+
+				// 유미미, 멜룬의 경우 가만히 있는다
+				else if (Frame == Melloon * 2 + 1) 
+					Rotation = 180.0;
+				else if (Frame == Yumimi * 2 + 1) 
+					Rotation = 0.0;
+
+				else {
+					Rotation = -25.0 - Loop.Update(2.5, 20.0, FrameTime);
+					FellDownSize = Loop2.Update(0.1, 20.0, FrameTime);
+				}
 			}
 		}
 
 		// 숨쉬기 애니메이션
 		else {
-			if(Frame == Naia * 2)
+			if (Frame == Naia * 2)
 				LoopSize = Loop.Update(0.03, 30.0, FrameTime);
+
+			// 멜룬은 가만히 있는다
+			else if (Frame == Melloon * 2) {
+				LoopSize = Loop.Update(0.0, 0.0, 0.0);
+			}
 			else
 				LoopSize = Loop.Update(0.03, 4.0, FrameTime);
 		}
@@ -124,11 +169,15 @@ public:
 		Begin();
 		transform.Move(MoveMatrix, Position.x, Position.y + LoopSize * 0.5);
 		transform.Rotate(MoveMatrix, Rotation);
-		transform.Scale(MoveMatrix, 2.0, 2.0 + LoopSize + FellDownSize);
+		if(Frame == Yumimi * 2 + 1)
+			transform.Scale(MoveMatrix, 3.0, 3.0 + LoopSize + FellDownSize);
+		else
+			transform.Scale(MoveMatrix, 2.0, 2.0 + LoopSize + FellDownSize);
 		imageUtil.RenderStaticSpriteSheet(Img.People, Frame);
 
 		// 카트 렌더링
-		if (!FellDown) {
+		// 유미미는 카트를 렌더링하지 않는다
+		if (!FellDown && Frame != Yumimi * 2) {
 			Begin();
 			transform.Move(MoveMatrix, CartPosition.x, CartPosition.y);
 			transform.Rotate(MoveMatrix, CartRotation);

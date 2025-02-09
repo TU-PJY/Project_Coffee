@@ -1,15 +1,43 @@
 #include "CameraController.h"
 #include "CameraUtil.h"
 #include "TransformUtil.h"
+#include "RandomUtil.h"
+#include "MathUtil.h"
+#include "EXUtil.h"
+#include "TimerUtil.h"
 
 glm::vec2 CameraPosition;
 GLfloat CameraRotation;
 GLfloat CameraZoom;
 
 CameraController cameraControl;
+GLfloat ShakeValue;
+
+glm::vec2 ShakePosition;
+glm::vec2 DestShakePosition;
+
+TimerUtil ShakeTimer{};
 
 void CameraController::Update(float FrameTime){
-	// add logic here
+	if (ShakeValue > 0.0) {
+		ShakeTimer.Update(FrameTime);
+		if (ShakeTimer.CheckMiliSec(0.001, 1, CHECK_AND_INTERPOLATE)) {
+			DestShakePosition.x = randomUtil.Gen(RANDOM_TYPE_REAL, -ShakeValue, ShakeValue);
+			DestShakePosition.y = randomUtil.Gen(RANDOM_TYPE_REAL, -ShakeValue, ShakeValue);
+		}
+
+		ShakeValue -= FrameTime * 0.8;
+		EX.ClampValue(ShakeValue, 0.0, CLAMP_LESS);
+	}
+	else {
+		DestShakePosition = glm::vec2(0.0, 0.0);
+		ShakeTimer.Reset();
+	}
+
+	mathUtil.Lerp(ShakePosition, DestShakePosition, 10.0, FrameTime);
+
+	CameraPosition += ShakePosition;
+	MoveCamera(CameraPosition);
 
 	ComputeCameraMatrix();
 }
@@ -29,6 +57,10 @@ void CameraController::MoveCamera(glm::vec2& PositionValue){
 void CameraController::RotateCamera(GLfloat Degree){
 	Rotation = -Degree;
 	CameraRotation = Degree;
+}
+
+void CameraController::AddShakeValue(GLfloat Value) {
+	ShakeValue += Value;
 }
 
 void CameraController::CameraZoom(int ZoomType, GLfloat ZoomValue){
