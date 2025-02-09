@@ -18,8 +18,9 @@ public:
 	Image Stick{};
 
 	SpriteSheet Cart{};
-
 	SpriteSheet People{};
+
+	Image Smoke{};
 };
 
 // Declare the sound resource here. 
@@ -54,9 +55,8 @@ public:
 // Declare the global value here.
 class GlobalResource {
 public:
-	// 이전 캐릭터 프레임 인덱스
-	int PrevCharacterFrame1{};
-	int PrevCharacterFrame2{};
+	int PrevChFrame[10]{};
+	bool CreateAvailable[10]{ true, true, true, true, true, true, true, true, true, true };
 };
 
 // Declare the global text object here.

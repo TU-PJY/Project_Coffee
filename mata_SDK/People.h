@@ -1,6 +1,7 @@
 #pragma once
 #include <Scene.h>
 #include "Cart.h"
+#include "Smoke.h"
 
 enum PeopleTypeEnum {
 	Listy,
@@ -15,6 +16,8 @@ enum PeopleTypeEnum {
 	Daepyo,
 	EOE
 };
+
+int Numbers[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
 class People : public GameObject {
 private:
@@ -61,29 +64,37 @@ public:
 		CartPosition.x = PositionValue.x + 1.2;
 		CartPosition.y = PositionValue.y - 0.3;
 
-		// 캐릭터 랜덤 선택
-		Frame = randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1) * 2;
+		int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1);
 
-		// 최대 2회의 생성동안 동일한 캐릭터로 지정되지 않는다.
-		if ((Frame == Glb.PrevCharacterFrame1 && Frame == Glb.PrevCharacterFrame2) ||
-			(Frame == Glb.PrevCharacterFrame1 && Frame != Glb.PrevCharacterFrame2) ||
-			(Frame != Glb.PrevCharacterFrame1 && Frame == Glb.PrevCharacterFrame2)) {
-			if (Glb.PrevCharacterFrame1 == Listy)
-				Frame += 2;
-			else if (Glb.PrevCharacterFrame1 == Daepyo)
-				Frame -= 2;
-			else {
-				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
-				if (RandNum == 1)
-					Frame += 2;
-				else
-					Frame -= 2;
-			}
+		// 한 번 선택된 캐릭터는 다음 2회차 동안에는 선택되지 않는다.
+		if (Glb.CreateAvailable[RandNum]) {
+			Glb.CreateAvailable[RandNum] = false;
+			Frame = RandNum * 2;
 		}
 
-		//  이전 프레임 갱신
-		Glb.PrevCharacterFrame2 = Glb.PrevCharacterFrame1;
-		Glb.PrevCharacterFrame1 = Frame;
+		else {
+			std::vector<int> AvailableNum{};
+
+			for (int i = Listy; i < EOE; i++) {
+				if (Glb.CreateAvailable[i])
+					AvailableNum.emplace_back(i);
+			}
+
+			int Rand = randomUtil.Gen(RANDOM_TYPE_INT, 0, AvailableNum.size() - 1);
+			Frame = AvailableNum[Rand] * 2;
+		}
+
+		// 이전에 뽑힌적 있는 캐릭터들은 카운트 증가 
+		for (int i = Listy; i < EOE; i++) {
+			if (!Glb.CreateAvailable[i])
+				Glb.PrevChFrame[i]++;
+
+			// 카운트가 2가 되면 다시 뽑을 수 있는 상태로 전환
+			if (Glb.PrevChFrame[i] > 2) {
+				Glb.CreateAvailable[i] = true;
+				Glb.PrevChFrame[i] = 0;
+			}
+		}
 	}
 
 	void UpdateFunc(float FrameTime) {
@@ -132,8 +143,10 @@ public:
 						scene.SwapLayer(this, LAYER5);
 						scene.AddObject(new Cart(true, CartPosition), "cart", LAYER3);
 					}
-					else 
+					else {
 						scene.SwapLayer(this, LAYER1);
+						scene.AddObject(new Smoke(Position.x), "smoke", LAYER5);
+					}
 
 					// 현재 프레임의 다음 프레임 넘어진 프레임
 					Frame++;

@@ -192,6 +192,7 @@
     <ClInclude Include="People.h" />
     <ClInclude Include="PlayMode.h" />
     <ClInclude Include="Shelf.h" />
+    <ClInclude Include="Smoke.h" />
     <ClInclude Include="Src\AnimationUtil.h" />
     <ClInclude Include="Src\CameraController.h" />
     <ClInclude Include="Src\CameraUtil.h" />

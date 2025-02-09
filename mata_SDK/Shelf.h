@@ -69,13 +69,6 @@ public:
 		MiddlePoint = Position + Length * (GLfloat)(Num - 1) * 0.5;
 		EndPoint = Position + Length * (GLfloat)(Num - 1) + Length * 0.5;
 
-		//// 50퍼센트의 확률로 사람을 배치한다
-		//if (NumShelf > 2) {
-		//	int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
-		//	if (RandNum == 1)
-		//		PeopleAddActivated = true;
-		//}
-
 		// 선반 한 칸당 4개의 커피들을 랜덤으로 배치한다.
 		// 마지막 칸은 3개만 배치한다.
 		int GenTime = Num * 4 - 1;
@@ -86,7 +79,7 @@ public:
 			ItemStruct Other{};
 
 			// 최소 5칸 간격으로 배치한다
-			if ((AddedIndex == 0 || i - AddedIndex > 5) && NumShelf > 2) {
+			if (i - AddedIndex > 5 && NumShelf > 2) {
 				//각 커피 칸 마다 10퍼센트의 확률로 사람을 배치한다
 				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, 10);
 				if (RandNum == 1) {
