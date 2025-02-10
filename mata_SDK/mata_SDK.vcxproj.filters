@@ -160,6 +160,9 @@
     <Filter Include="[2]___________[ Object ]\[ PlayMode Object ]\[ Xion ]">
       <UniqueIdentifier>{2774ed85-f041-439d-85d9-8df03c233e56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="[2]___________[ Object ]\[ PlayMode Object ]\[ Cover ]">
+      <UniqueIdentifier>{546c93b8-667e-405e-b69e-1832408660b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AnimationUtil.cpp">
@@ -290,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="Xion.cpp">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Xion ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Cover.cpp">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Cover ]</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="Floor.h">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Cover.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Cover ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

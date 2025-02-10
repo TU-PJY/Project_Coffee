@@ -389,7 +389,7 @@ void ImageUtil::RenderSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat& Frame
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-void ImageUtil::RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat Frame, GLfloat OpacityValue, bool ApplyUnitTransform, bool DisableAdjustAspect) {
+void ImageUtil::RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, int Frame, GLfloat OpacityValue, bool ApplyUnitTransform, bool DisableAdjustAspect) {
 	GLfloat Width = (GLfloat)SpriteSheetStruct.Width;
 	GLfloat Height = (GLfloat)SpriteSheetStruct.Height;
 
@@ -397,7 +397,7 @@ void ImageUtil::RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat 
 	PrepareRender(SpriteSheetStruct);
 
 	glBindVertexArray(VAO);
-	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[(int)Frame]);
+	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[Frame]);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 

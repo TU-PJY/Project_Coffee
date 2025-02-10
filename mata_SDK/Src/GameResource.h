@@ -39,6 +39,8 @@ public:
 	
 	Sound CartCrash{};
 	Sound Explode{};
+
+	Sound GameOver{};
 };
 
 // Data Format list
@@ -67,7 +69,7 @@ class TextResource {
 public:
 };
 
-// 이드 상태 열거형, 스프라이트 시트 프레임 결정에 사용한다.
+// 이드 프레임
 enum ED_StateEnum {
 	Idle,
 	HitHigh1,
@@ -78,6 +80,7 @@ enum ED_StateEnum {
 	GameOver
 };
 
+// 시온 프레임
 enum XionStateEnum {
 	Nervous,
 	Cry1,
@@ -87,7 +90,7 @@ enum XionStateEnum {
 	Hurt
 };
 
-// 커피 종류 열거형
+// 커피 종류
 enum CoffeeTypeEnum {
 	Box,
 	Glass,
@@ -110,6 +113,9 @@ typedef struct {
 
 	// 앞에 사람이 서있는지 여부
 	bool IsPeopleFront;
+
+	// 시온이 막아설 위치인지 여부
+	bool IsXionFront;
 }ItemStruct;
 
 extern ImageResource Img;

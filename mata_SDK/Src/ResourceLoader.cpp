@@ -71,6 +71,8 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 
 	soundUtil.Load(Snd.Explode, "Assets//Sound//explode.ogg");
 
+	soundUtil.Load(Snd.GameOver, "Assets//Sound//gameover.mp3");
+
 	return 0;
 }
 

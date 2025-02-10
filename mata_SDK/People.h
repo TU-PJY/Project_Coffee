@@ -155,7 +155,7 @@ public:
 					// 유미미는 카트를 추가하지 않는다
 					if (Frame != Yumimi * 2) {
 						scene.SwapLayer(this, LAYER6);
-						scene.AddObject(new Cart(true, CartPosition), "cart", LAYER3);
+						scene.AddObject(new Cart(true, CartPosition), "cart", LAYER4);
 					}
 					else {
 						scene.SwapLayer(this, LAYER2);

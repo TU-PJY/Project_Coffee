@@ -80,6 +80,8 @@ public:
 	// ED functiion
 	virtual GLfloat GetPosition() { return {}; }
 	virtual void TellNextPosition(GLfloat Position) {}
+	virtual void DisableInput() {}
+	virtual void SetFrame(int FrameValue) {}
 
 	// Shelf Function
 	virtual ItemStruct GetFrontCoffee() { return {}; }
@@ -88,6 +90,9 @@ public:
 
 	// people function
 	virtual void HitPeople() {}
+
+	// cover function
+	virtual bool GetState() { return {}; }
 
 private:
 	glm::vec4 ViewportPosition();

@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cart.cpp" />
+    <ClCompile Include="Cover.cpp" />
     <ClCompile Include="Modes.cpp" />
     <ClCompile Include="Src\AnimationUtil.cpp" />
     <ClCompile Include="Src\CameraController.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Src\UiUtil.h" />
     <ClInclude Include="Src\UtilPack.h" />
     <ClInclude Include="Xion.h" />
+    <ClInclude Include="Cover.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ModeTemplate.txt" />

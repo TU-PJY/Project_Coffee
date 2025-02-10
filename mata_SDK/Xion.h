@@ -4,7 +4,7 @@
 class Xion : public GameObject {
 private:
 	// 현재 위치
-	GLfloat Position{};
+	glm::vec2 Position{};
 
 	// 목표 이동 위치
 	GLfloat DestPosition{};
@@ -27,16 +27,31 @@ private:
 	// 떨림 타이머
 	TimerUtil ShakeTimer{};
 
+	// 회전값
+	GLfloat Rotation{};
+
 	// 움직이는 상태
 	bool MoveState{};
+
+	// 이드에게 차인 상태
+	bool HitState{};
+
+	// 넘어진 상태
+	bool FellDown{};
 
 	// 프레임
 	int Frame{};
 
+	SoundChannel SndChannel{};
+
+	// 게임오버 딜레이 타이머
+	TimerUtil GameOverTimer{};
+
 public:
 	// MoveState가 활성화된 상태로 생성되면 지정된 위치로 이동한다.
 	// MoveState가 비활성화된 상태로 생성되면 이동하지 않는다.
-	Xion(GLfloat PositionValue, bool BoolMoveState, int FrameValue);
+	Xion(GLfloat PositionValue, GLfloat DestPositionValue, bool BoolMoveState, int FrameValue);
 	void UpdateFunc(float FrameTime);
 	void RenderFunc();
+	void HitPeople();
 };

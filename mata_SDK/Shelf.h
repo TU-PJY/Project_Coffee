@@ -4,6 +4,7 @@
 #include "Explode.h"
 #include "DestroyedCan.h"
 #include "People.h"
+#include "Xion.h"
 
 class Shelf : public GameObject {
 private:
@@ -56,14 +57,32 @@ private:
 	// 사람이 추가된 자리 인덱스 번호
 	int AddedIndex{};
 
-	// 최대로 추가 가능한 사람 수
-	// 전체 커피 개수 / 14로 개수를 결정한다
-	int AddCountNum{};
+	// 시온을 배치할 것인지의 여부
+	bool XionAddActivated{};
+
+	// 시온이 등장할 위치 지정 여부
+	bool AddedXionPosition{};
+
+	// 사람 배치가 가능한지의 여부
+	bool AvailableAddPeople{};
+
+	// 시온이 등장할 자리
+	int XionIndex{};
+
+	// 시온 목표 이동 위치
+	GLfloat XionDestPosition{};
+
+	// 시온 추가 여부
+	bool XionGenerated{};
 
 public:
 	Shelf(int Num, GLfloat PositionValue) {
 		NumShelf = Num;
 		Position = PositionValue;
+
+		// 각 선반마다 50퍼센트의 확률로 시온 배치가 활성화된다
+		if (NumShelf > 2 && randomUtil.Probability(100))
+			XionAddActivated = true;
 
 		// 중간 지점 및 끝 지점 길이 계산 
 		MiddlePoint = Position + Length * (GLfloat)(Num - 1) * 0.5;
@@ -72,17 +91,36 @@ public:
 		// 선반 한 칸당 4개의 커피들을 랜덤으로 배치한다.
 		// 마지막 칸은 3개만 배치한다.
 		int GenTime = Num * 4 - 1;
-		AddCountNum = Num * 4 - 1 / 7;
 
 		for (int i = 0; i < GenTime; ++i) {
+			AvailableAddPeople = true;
+
 			ItemStruct Coffee{};
 			ItemStruct Other{};
 
 			// 최소 5칸 간격으로 배치한다
 			if (i - AddedIndex > 5 && NumShelf > 2) {
+				// 각 커피 칸마다 20퍼센트의 확률로 시온 위치를 지정한다.
+				// 시온 위치가 지정된 자리에는 사람이 배치될 수 없고 한 번 지정하면 다시 지정되지 않는다.
+				if (!AddedXionPosition && randomUtil.Probability(20)) {
+					AvailableAddPeople = false;
+					AddedXionPosition = true;
+
+					// 시온이 등장할 자리 별도 표시
+					Coffee.IsXionFront = true;
+
+					// 시온이 등장할 위치
+					XionDestPosition = PositionValue - 0.75 + 0.5 * i;
+
+					// 인덱스 기록
+					AddedIndex = i;
+
+					// 시온이 등장할 자리 기록
+					XionIndex = i;
+				}
+
 				//각 커피 칸 마다 10퍼센트의 확률로 사람을 배치한다
-				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, 10);
-				if (RandNum == 1) {
+				if(AvailableAddPeople && randomUtil.Probability(10)) {
 					glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * i, 0.0);
 					scene.AddObject(new People(AddPosition), "people", LAYER3);
 
@@ -123,14 +161,22 @@ public:
 	}
 
 	void UpdateFunc(float FrameTime) {
-		// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
-		if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
-			NextShelfGenerated = true;
-			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
+		if (auto ED = scene.Find("ed"); ED) {
+			// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
+			if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
+				NextShelfGenerated = true;
+				scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
 
-			// 이드가 이동해야 할 다음 위치를 알린다
-			if(auto ED = scene.Find("ed"); ED)
+				// 이드가 이동해야 할 다음 위치를 알린다
 				ED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
+			}
+
+			// 이드가 시온이 등장할 위치에 2칸 뒤에 있을때 빠르게 등장한다.
+			if (!XionGenerated && XionIndex != 0 && XionIndex - CurrentCoffeeIndex == 1) {
+				scene.AddObject(new Xion(CameraPosition.x + ASP(1.0) + 1.0, XionDestPosition + 0.5, true, Blocking), "xion", LAYER3);
+				XionGenerated = true;
+			}
+			
 		}
 
 		// 마지막 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
