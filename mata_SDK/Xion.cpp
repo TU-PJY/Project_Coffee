@@ -99,7 +99,7 @@ void Xion::HitPeople() {
 // 시온을 뒤로 민다
 void Xion::PushPeople() {
 	soundUtil.Play(Snd.Whoosh, SndChannel);
-	DestPosition = Position.x - 2.3;
+	DestPosition = Position.x - 2.5;
 	DestHRotation = 180.0;
 	ObjectTag = "";
 

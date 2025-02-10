@@ -34,6 +34,9 @@ private:
 	GLfloat BreatheSize{};
 	SinLoop BreatheLoop{};
 
+	// 수평회전값
+	GLfloat HRotation{};
+
 	// 상태가 변경되면 일정 시간 이후 다시 Idle 상태로 북귀하도록 한다
 	TimerUtil StateTimer{};
 
@@ -60,6 +63,9 @@ private:
 	// 키가 눌린 상태
 	// 하나라도 눌린 키가 있으면 조작할 수 없다
 	bool KeyPressed[4]{};
+
+	// 시온을 뒤로 미는 상태
+	bool PushState{};
 
 	// 조작키 입력 가능한 상태, 게임오버 되면 비활성화 되어 더 이상 키를 입력할 수 없다
 	bool InputAvailable{true};
@@ -102,30 +108,39 @@ public:
 
 				// 시온이 서있다면 커피와 상호작용 할 수 없지만 시온과 상호작용 할 수 있다.
 				else if (Item.IsXionFront) {
-						// 아무키나 누르면 시온을 때린다
-						if (auto Xion = scene.Find("xion"); Xion) {
-							if (Event.SpecialKey != SK_ARROW_UP) {
-								Xion->HitPeople();
+					// 아무키나 누르면 시온을 때린다
+					if (auto Xion = scene.Find("xion"); Xion) {
+						if (Event.SpecialKey != SK_ARROW_UP) {
+							Xion->HitPeople();
 
-								StateTimer.Reset();
-								AnimationSize = 2.0;
+							StateTimer.Reset();
+							AnimationSize = 2.0;
 
-								if (Item.IsUpside)
-									Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
-								else
-									Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
-
-								PrevFrame = Frame;
-							}
-							else {
-								// 시온을 뒤로 민다.
-								Xion->PushPeople();
-							}
+							if (Item.IsUpside)
+								Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+							else
+								Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 						}
-					
+						else {
+							StateTimer.Reset();
+							PushState = true;
+							AnimationSize = 1.0;
+
+							// 시온을 뒤로 민다.
+							Xion->PushPeople();
+
+							Frame = HitHigh2;
+						}
+					}
 				}
 
 				else {
+					if (Event.SpecialKey == SK_ARROW_UP)
+						return;
+
+					if (PushState)
+						PushState = false;
+
 					StateTimer.Reset();
 					AnimationSize = 1.0;
 
@@ -145,7 +160,6 @@ public:
 							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 						else
 							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
-						PrevFrame = Frame;
 
 						DestPosition += 0.5;
 
@@ -175,8 +189,6 @@ public:
 							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 						else
 							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
-
-						PrevFrame = Frame;
 					}
 				}
 			}
@@ -213,7 +225,18 @@ public:
 
 						People->HitPeople();
 						Frame = KickPeople;
-						PrevFrame = Frame;
+					}
+				}
+
+				else if (Item.IsXionFront) {
+					// 시온이 앞에 있을 때 스페이스를 누르면 시온을 때린다
+					if (auto Xion = scene.Find("xion"); Xion) {
+						Xion->HitPeople();
+
+						StateTimer.Reset();
+						AnimationSize = 2.0;
+
+						Frame = KickPeople;
 					}
 				}
 			}
@@ -227,20 +250,24 @@ public:
 	void UpdateFunc(float FrameTime) {
 		// 프레임
 		// 이전 프레임과 현재 프레임이 다를 경우 이전 프레임을 갱신하고 애니메이션 출력하도록 한다
-		// 단, 현재 프레임이 Idle일 경우 AnimationSize를 변경하지 않는다
 		if (Frame != GameOver) {
-			if (PrevFrame != Frame) {
-				if (Frame != Idle)
-					AnimationSize = -0.7;
+			if (PrevFrame != Frame) 
 				PrevFrame = Frame;
-			}
 
 			// 현재 상태가 Idle이 아니라면 0.3초 후 다시 Idle 상태로 복귀시킨다
 			if (Frame != Idle) {
 				StateTimer.Update(FrameTime);
-				if (StateTimer.CheckMiliSec(0.3, 2, CHECK_AND_RESET))
+				if (StateTimer.CheckMiliSec(0.3, 2, CHECK_AND_RESET)) {
 					Frame = Idle;
+					// 시온 밀기 상태 해제
+					PushState = false;
+				}
 			}
+
+			if (PushState)
+				mathUtil.Lerp(HRotation, 180.0, 8.0, FrameTime);
+			else
+				mathUtil.Lerp(HRotation, 0.0, 15.0, FrameTime);
 
 			// 애니메이션
 			// AnimationSize가 0.0보다 작다면 다시 0.0으로 복귀시킨다
@@ -296,6 +323,7 @@ public:
 		Begin();
 		transform.Move(MoveMatrix, FinalPosition);
 		transform.Scale(MoveMatrix, FinalSize);
+		transform.RotateH(MoveMatrix, HRotation);
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
 		imageUtil.RenderStaticSpriteSheet(Img.ED, Frame);
 	}
