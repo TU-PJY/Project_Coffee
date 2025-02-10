@@ -81,7 +81,7 @@ public:
 		Position = PositionValue;
 
 		// 각 선반마다 50퍼센트의 확률로 시온 배치가 활성화된다
-		if (NumShelf > 2 && randomUtil.Probability(100))
+		if (NumShelf > 2 && randomUtil.Probability(50))
 			XionAddActivated = true;
 
 		// 중간 지점 및 끝 지점 길이 계산 
@@ -98,19 +98,20 @@ public:
 			ItemStruct Coffee{};
 			ItemStruct Other{};
 
-			// 최소 5칸 간격으로 배치한다
-			if (i - AddedIndex > 5 && NumShelf > 2) {
-				// 각 커피 칸마다 20퍼센트의 확률로 시온 위치를 지정한다.
+			// 최소 4칸 간격으로 배치한다
+			if (i - AddedIndex > 4 && NumShelf > 2) {
+				// 각 커피 칸마다 10퍼센트의 확률로 시온 위치를 지정한다.
 				// 시온 위치가 지정된 자리에는 사람이 배치될 수 없고 한 번 지정하면 다시 지정되지 않는다.
-				if (!AddedXionPosition && randomUtil.Probability(20)) {
+				if (XionAddActivated && !AddedXionPosition && randomUtil.Probability(10)) {
 					AvailableAddPeople = false;
 					AddedXionPosition = true;
 
-					// 시온이 등장할 자리 별도 표시
+					// 시온이 배치된 자리 별도 표시
 					Coffee.IsXionFront = true;
 
-					// 시온이 등장할 위치
-					XionDestPosition = PositionValue - 0.75 + 0.5 * i;
+					// 시온 생성
+					GLfloat Position = PositionValue - 0.75 + 0.5 * i + 0.5;
+					scene.AddObject(new Xion(Position, 0.0, false, Blocking), "xion", LAYER3);
 
 					// 인덱스 기록
 					AddedIndex = i;
@@ -119,7 +120,7 @@ public:
 					XionIndex = i;
 				}
 
-				//각 커피 칸 마다 10퍼센트의 확률로 사람을 배치한다
+				//각 커피 칸 마다 5퍼센트의 확률로 사람을 배치한다
 				if(AvailableAddPeople && randomUtil.Probability(10)) {
 					glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * i, 0.0);
 					scene.AddObject(new People(AddPosition), "people", LAYER3);
@@ -170,13 +171,6 @@ public:
 				// 이드가 이동해야 할 다음 위치를 알린다
 				ED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
 			}
-
-			// 이드가 시온이 등장할 위치에 2칸 뒤에 있을때 빠르게 등장한다.
-			if (!XionGenerated && XionIndex != 0 && XionIndex - CurrentCoffeeIndex == 1) {
-				scene.AddObject(new Xion(CameraPosition.x + ASP(1.0) + 1.0, XionDestPosition + 0.5, true, Blocking), "xion", LAYER3);
-				XionGenerated = true;
-			}
-			
 		}
 
 		// 마지막 선반이 화면에서 보이지 않게 되면 스스로 삭제한다

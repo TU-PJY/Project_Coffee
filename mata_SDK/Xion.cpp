@@ -7,9 +7,6 @@ Xion::Xion(GLfloat PositionValue, GLfloat DestPositionValue, bool BoolMoveState,
 	VerticalLoop.SetValue(Preset::HalfNegative);
 	TiltLoop.SetValue(Preset::HalfPositive);
 	Frame = FrameValue;
-
-	if(Frame == Blocking)
-		soundUtil.Play(Snd.Whoosh, SndChannel);
 }
 
 void Xion::UpdateFunc(float FrameTime) {
