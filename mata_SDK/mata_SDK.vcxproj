@@ -190,6 +190,7 @@
     <ClInclude Include="DestroyedCan.h" />
     <ClInclude Include="Explode.h" />
     <ClInclude Include="ED.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="People.h" />
     <ClInclude Include="PlayMode.h" />
     <ClInclude Include="Shelf.h" />

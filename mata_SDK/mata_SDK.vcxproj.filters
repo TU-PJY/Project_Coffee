@@ -458,6 +458,9 @@
     <ClInclude Include="Xion.h">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Xion ]</Filter>
     </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ModeTemplate_Manual.txt">

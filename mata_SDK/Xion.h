@@ -20,10 +20,17 @@ private:
 
 	// 기울임 루프 애니메이션
 	SinLoop TiltLoop{};
+	
+	// 떨림 위치
+	glm::vec2 ShakeValue{};
+
+	// 떨림 타이머
+	TimerUtil ShakeTimer{};
 
 	// 움직이는 상태
 	bool MoveState{};
 
+	// 프레임
 	int Frame{};
 
 public:

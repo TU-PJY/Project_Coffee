@@ -23,7 +23,7 @@ public:
 		// 연기가 화면 위쪽까지 도달하면 아래쪽에 새로운 객체를 생성한다
 		if (!NewSmokeAdded && Position.y - Size * 0.5 >= -1.0) {
 			Position.y = -1.0 + Size * 0.5;
-			scene.AddObject(new Smoke(Position.x), "smoke", LAYER5);
+			scene.AddObject(new Smoke(Position.x), "smoke", LAYER6);
 			NewSmokeAdded = true;
 		}
 

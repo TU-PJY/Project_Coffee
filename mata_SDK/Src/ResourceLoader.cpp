@@ -35,6 +35,8 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 
 	imageUtil.LoadT(Img.Smoke, "Assets//Sprite//smoke.png");
 
+	imageUtil.LoadT(Img.FloorTile, "Assets//Sprite//floor.png");
+
 	return 0;
 }
 

@@ -70,7 +70,6 @@ public:
 		CartPosition.x = PositionValue.x + 1.2;
 		CartPosition.y = PositionValue.y - 0.3;
 
-
 		int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, Listy, EOE - 1);
 
 		// 한 번 선택된 캐릭터는 다음 2회차 동안에는 선택되지 않는다.
@@ -155,11 +154,11 @@ public:
 					// 넘어진 카트 추가
 					// 유미미는 카트를 추가하지 않는다
 					if (Frame != Yumimi * 2) {
-						scene.SwapLayer(this, LAYER5);
+						scene.SwapLayer(this, LAYER6);
 						scene.AddObject(new Cart(true, CartPosition), "cart", LAYER3);
 					}
 					else {
-						scene.SwapLayer(this, LAYER1);
+						scene.SwapLayer(this, LAYER2);
 						scene.AddObject(new Smoke(Position.x), "smoke", LAYER5);
 					}
 
@@ -251,7 +250,7 @@ public:
 				Shelf->EnableCoffeeHit();
 			HitState = true;
 			ObjectTag = "";
-			Loop.SetValue(Preset::HalfPositive);
+			Loop.SetValue(Preset::HalfPositive);                     
 			Loop2.SetValue(Preset::HalfNegative);
 			LoopSize = 0.0;
 		}

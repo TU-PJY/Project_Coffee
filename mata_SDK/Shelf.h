@@ -84,7 +84,7 @@ public:
 				int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 1, 10);
 				if (RandNum == 1) {
 					glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * i, 0.0);
-					scene.AddObject(new People(AddPosition), "people", LAYER2);
+					scene.AddObject(new People(AddPosition), "people", LAYER3);
 
 					// 사람이 배치된 자리의 커피는 별도 표시한다
 					Coffee.IsPeopleFront = true;
@@ -126,7 +126,7 @@ public:
 		// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
 		if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
 			NextShelfGenerated = true;
-			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER1);
+			scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
 
 			// 이드가 이동해야 할 다음 위치를 알린다
 			if(auto ED = scene.Find("ed"); ED)
@@ -247,14 +247,14 @@ public:
 
 		// 종이 커피 이외의 커피를 부수면 커피가 터져나오는 애니메이션 객체를 추가한다
 		if(CoffeeVec[CurrentCoffeeIndex].Type != Box)
-			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, false), "explode", LAYER4);
+			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, false), "explode", LAYER5);
 		// 종이 커피라면 커피 스틱이 터져나오는 애니메이션 객체를 추가한다
 		else
-			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, true), "explode", LAYER4);
+			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, true), "explode", LAYER5);
 
 		// 캔커피라면 찌그러진 캔을 추가한다
 		if (CoffeeVec[CurrentCoffeeIndex].Type == Can)
-			scene.AddObject(new DestroyedCan(CoffeeVec[CurrentCoffeeIndex].Position), "destroyed_can", LAYER4);
+			scene.AddObject(new DestroyedCan(CoffeeVec[CurrentCoffeeIndex].Position), "destroyed_can", LAYER5);
 
 		// 커피는 파괴 상태가 되고 더 이상 이드와 상호작용하지 않는다.
 		CoffeeVec[CurrentCoffeeIndex].Destroyed = true;

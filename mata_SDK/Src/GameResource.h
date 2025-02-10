@@ -22,6 +22,8 @@ public:
 	SpriteSheet People{};
 
 	Image Smoke{};
+
+	Image FloorTile{};
 };
 
 // Declare the sound resource here. 
