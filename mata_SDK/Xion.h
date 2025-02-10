@@ -30,6 +30,10 @@ private:
 	// 회전값
 	GLfloat Rotation{};
 
+	// 수평 회전값
+	GLfloat HRotation{};
+	GLfloat DestHRotation{};
+
 	// 움직이는 상태
 	bool MoveState{};
 
@@ -39,6 +43,9 @@ private:
 	// 넘어진 상태
 	bool FellDown{};
 
+	// 밀리는 상태
+	bool PushState{};
+	
 	// 프레임
 	int Frame{};
 
@@ -54,4 +61,5 @@ public:
 	void UpdateFunc(float FrameTime);
 	void RenderFunc();
 	void HitPeople();
+	void PushPeople();
 };

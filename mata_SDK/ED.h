@@ -85,6 +85,8 @@ public:
 				KeyPressed[1] = true;
 			else if (Event.SpecialKey == SK_ARROW_RIGHT)
 				KeyPressed[2] = true;
+			else if (Event.SpecialKey == SK_ARROW_UP)
+			{}
 			else
 				return;
 
@@ -100,20 +102,27 @@ public:
 
 				// 시온이 서있다면 커피와 상호작용 할 수 없지만 시온과 상호작용 할 수 있다.
 				else if (Item.IsXionFront) {
-					// 아무키나 누르면 시온을 때린다
-					if (auto Xion = scene.Find("xion"); Xion) {
-						Xion->HitPeople();
+						// 아무키나 누르면 시온을 때린다
+						if (auto Xion = scene.Find("xion"); Xion) {
+							if (Event.SpecialKey != SK_ARROW_UP) {
+								Xion->HitPeople();
 
-						StateTimer.Reset();
-						AnimationSize = 1.0;
+								StateTimer.Reset();
+								AnimationSize = 2.0;
 
-						if (Item.IsUpside)
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
-						else
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+								if (Item.IsUpside)
+									Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+								else
+									Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 
-						PrevFrame = Frame;
-					}
+								PrevFrame = Frame;
+							}
+							else {
+								// 시온을 뒤로 민다.
+								Xion->PushPeople();
+							}
+						}
+					
 				}
 
 				else {

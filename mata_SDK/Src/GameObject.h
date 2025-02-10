@@ -83,6 +83,9 @@ public:
 	virtual void DisableInput() {}
 	virtual void SetFrame(int FrameValue) {}
 
+	// xion function
+	virtual void PushPeople() {}
+
 	// Shelf Function
 	virtual ItemStruct GetFrontCoffee() { return {}; }
 	virtual void EnableCoffeeHit() {}

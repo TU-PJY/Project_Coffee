@@ -269,6 +269,7 @@ public:
 	// 커피를 부술 수 있는 상태로 전환한다
 	void EnableCoffeeHit() {
 		CoffeeVec[CurrentCoffeeIndex].IsPeopleFront = false;
+		CoffeeVec[CurrentCoffeeIndex].IsXionFront = false;
 	}
 
 

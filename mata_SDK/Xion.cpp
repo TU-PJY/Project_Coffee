@@ -9,13 +9,21 @@ Xion::Xion(GLfloat PositionValue, GLfloat DestPositionValue, bool BoolMoveState,
 	Frame = FrameValue;
 
 	if(Frame == Blocking)
-		soundUtil.Play(Snd.MissWhoosh, SndChannel);
+		soundUtil.Play(Snd.Whoosh, SndChannel);
 }
 
 void Xion::UpdateFunc(float FrameTime) {
 	// 목표 지점까지 이동 한 후 멈춘다
-	if (MoveState && !HitState) 
-		mathUtil.Lerp(Position.x, DestPosition, 15.0, FrameTime);
+	if (MoveState && !HitState && !PushState) 
+		mathUtil.Lerp(Position.x, DestPosition, 20.0, FrameTime);
+
+	else if (PushState) {
+		mathUtil.Lerp(Position.x, DestPosition, 8.0, FrameTime);
+		mathUtil.Lerp(HRotation, DestHRotation, 8.0, FrameTime);
+
+		if (HRotation >= 90.0)
+			Frame = Cry2;
+	}
 
 	if (Frame == Blocking) {
 		if (!HitState) {
@@ -51,7 +59,7 @@ void Xion::UpdateFunc(float FrameTime) {
 		}
 	}
 
-	else if (Frame == Cry1) {
+	else if (Frame == Cry1 || Frame == Cry2) {
 		ShakeTimer.Update(FrameTime);
 		if (ShakeTimer.CheckMiliSec(0.02, 2, CHECK_AND_INTERPOLATE)) {
 			ShakeValue.x = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
@@ -71,7 +79,8 @@ void Xion::RenderFunc() {
 	transform.Move(MoveMatrix, Position.x + TiltValue * 0.5 + ShakeValue.x, Position.y + VerticalSize * 0.5 + ShakeValue.y);
 	transform.Scale(MoveMatrix, 2.0, 2.0 + VerticalSize);
 	transform.Rotate(MoveMatrix, Rotation);
-	if (Frame == Blocking)
+	transform.RotateH(MoveMatrix, HRotation);
+	if (Frame == Blocking || Frame == Cry2)
 		SetFlip(FLIP_TYPE_X);
 	transform.Shear(MoveMatrix, TiltValue, 0.0);
 	imageUtil.RenderStaticSpriteSheet(Img.Xion, Frame);
@@ -85,4 +94,18 @@ void Xion::HitPeople() {
 	soundUtil.Play(Snd.PeopleHit, SndChannel);
 	HitState = true;
 	ObjectTag = "";
+}
+
+// 시온을 뒤로 민다
+void Xion::PushPeople() {
+	soundUtil.Play(Snd.Whoosh, SndChannel);
+	DestPosition = Position.x - 2.3;
+	DestHRotation = 180.0;
+	ObjectTag = "";
+
+	PushState = true;
+
+	// 커피를 다시 부술 수 있는 상태로 전환한다
+	if (auto Shelf = scene.Find("shelf"); Shelf)
+		Shelf->EnableCoffeeHit();
 }
