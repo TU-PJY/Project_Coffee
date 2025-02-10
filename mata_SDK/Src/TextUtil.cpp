@@ -113,6 +113,7 @@ void TextUtil::RenderStr(GLfloat X, GLfloat Y, GLfloat Size, std::string Str) {
 ////////////////// private
 void TextUtil::ProcessText(wchar_t* Text, glm::vec2 Position, GLfloat Size) {
 	CurrentLine = 0;
+	CurrentPosition = 0.0;
 	TextRenderSize = Size;
 	RenderPosition = Position;
 	RenderStartPosition = RenderPosition.x;
@@ -152,7 +153,7 @@ void TextUtil::ProcessText(wchar_t* Text, glm::vec2 Position, GLfloat Size) {
 
 		unsigned int CharIndex = Text[i];
 		if (CharIndex < 65536)
-			RenderPosition.x += TextGlyph[CharIndex].gmfCellIncX * (TextRenderSize / 1.0f);
+			CurrentPosition += TextGlyph[CharIndex].gmfCellIncX * (TextRenderSize / 1.0f);
 	}
 }
 
@@ -201,19 +202,24 @@ void TextUtil::NextLine() {
 
 void TextUtil::TransformText() {
 	transform.Identity(TextMatrix);
-	transform.Rotate(TextMatrix, Rotation);
+	transform.Move(TextMatrix, RenderPosition.x, RenderPosition.y + MiddleHeight);
 
 	switch (TextAlign) {
 	case ALIGN_DEFAULT:
-		transform.Move(TextMatrix, RenderPosition.x, RenderPosition.y + MiddleHeight);
+		transform.Rotate(TextMatrix, Rotation);
+		transform.Move(TextMatrix, CurrentPosition, 0.0);
 		break;
 
 	case ALIGN_MIDDLE:
-		transform.Move(TextMatrix, RenderPosition.x - (TextLength / 2.0), RenderPosition.y + MiddleHeight);
+		transform.Rotate(TextMatrix, Rotation);
+		transform.Move(TextMatrix, -TextLength / 2.0, 0.0);
+		transform.Move(TextMatrix, CurrentPosition, 0.0);
 		break;
 
 	case ALIGN_LEFT:
-		transform.Move(TextMatrix, RenderPosition.x - TextLength, RenderPosition.y + MiddleHeight);
+		transform.Rotate(TextMatrix, Rotation);
+		transform.Move(TextMatrix, -TextLength, 0.0);
+		transform.Move(TextMatrix, CurrentPosition, 0.0);
 		break;
 	}
 

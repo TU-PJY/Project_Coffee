@@ -3,6 +3,7 @@
 #include "Imageutil.h"
 #include "ScriptUtil.h"
 #include "FileUtil.h"
+#include "TextUtil.h"
 
 // Declare the sprite resource here. 
 class ImageResource {
@@ -40,6 +41,7 @@ public:
 	Sound CartCrash{};
 	Sound Explode{};
 
+	Sound AddTime{};
 	Sound GameOver{};
 };
 
@@ -62,11 +64,27 @@ class GlobalResource {
 public:
 	int PrevChFrame[10]{};
 	bool CreateAvailable[10]{ true, true, true, true, true, true, true, true, true, true };
+
+	// 게임 오버 상태
+	bool GameOver{};
+
+	// 점수
+	int Score{};
+
+	// 파괴하거나 때린 숫자
+	int BoxCoffeeBreakCount{};
+	int CanCoffeeBreakCount{};
+	int GlassCoffeeBreakCount{};
+	int PeopleHitCount{};
+
+	// 거쳐간 선반 개수
+	int ShelfCount{};
 };
 
 // Declare the global text object here.
 class TextResource {
 public:
+	TextUtil PixelText{};
 };
 
 // 이드 프레임

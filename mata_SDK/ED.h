@@ -173,6 +173,10 @@ public:
 							BreakCount = 0;
 							MaxBreak += 4;
 
+							// 하나의 선반을 지날 때마다 10초의 추가 시간을 얻는다.
+							if (auto TimeWatch = scene.Find("time_watch"); TimeWatch)
+								TimeWatch->AddTime();
+
 							TiltValue = 3.0;
 
 							soundUtil.Stop(SndChannel2);
@@ -250,7 +254,7 @@ public:
 	void UpdateFunc(float FrameTime) {
 		// 프레임
 		// 이전 프레임과 현재 프레임이 다를 경우 이전 프레임을 갱신하고 애니메이션 출력하도록 한다
-		if (Frame != GameOver) {
+		if (!Glb.GameOver) {
 			if (PrevFrame != Frame) 
 				PrevFrame = Frame;
 
@@ -292,19 +296,38 @@ public:
 		}
 
 		else {
-			ShakeTimer.Update(FrameTime);
-			if (ShakeTimer.CheckMiliSec(0.02, 2, CHECK_AND_INTERPOLATE)) {
-				ShakeValue.x = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
-				ShakeValue.y = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
-			}
-
+			// 입력 가능 상태 비활성화
+			InputAvailable = false;
 			soundUtil.PlayOnce(Snd.GameOver, SndChannel, SoundPlayed);
 
 			// 이드에 포커싱 한다.
 			mathUtil.Lerp(EDCameraPosition, Position, 5.0, FrameTime);
 			mathUtil.Lerp(EDCameraHeight, 0.4, 5.0, FrameTime);
 			cameraControl.MoveCamera(EDCameraPosition, EDCameraHeight);
-			mathUtil.Lerp(camera.ZoomValue, 1.8, 5.0, FrameTime);
+
+			// 점수가 0점일 경우 프레임에 변화를 주지 않는다.
+			if (Glb.Score > 0) {
+				TiltValue = 0.0;
+				AnimationSize = 0.0;
+				BreatheSize = 0.0;
+
+				Frame = GameOver;
+
+				ShakeTimer.Update(FrameTime);
+				if (ShakeTimer.CheckMiliSec(0.02, 2, CHECK_AND_INTERPOLATE)) {
+					ShakeValue.x = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
+					ShakeValue.y = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
+				}
+
+				mathUtil.Lerp(camera.ZoomValue, 1.8, 5.0, FrameTime);
+			}
+
+			else {
+				Frame = Idle;
+
+				// 이드의 숨쉬기 애니메이션을 업데이트 한다
+				BreatheSize = BreatheLoop.Update(0.03, 6.0, FrameTime);
+			}
 
 			// 3초 후 화면이 어두워진디
 			GameOverTimer.Update(FrameTime);
@@ -340,10 +363,5 @@ public:
 	// 조작키 입력 비활성화
 	void DisableInput() {
 		InputAvailable = false;
-	}
-
-	// 스프라이트 프레임 변경
-	void SetFrame(int FrameValue) {
-		Frame = FrameValue;
 	}
 };

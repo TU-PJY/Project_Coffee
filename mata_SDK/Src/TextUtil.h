@@ -15,6 +15,8 @@ private:
 	GLfloat                  TextRenderSize{};
 	GLfloat                  TextLineGap{};
 	GLfloat                  MiddleHeight{};
+	GLfloat                  CurrentPosition{};
+
 
 	std::vector<GLfloat>     LineLengthBuffer{};
 	std::wstring             CurrentText{};

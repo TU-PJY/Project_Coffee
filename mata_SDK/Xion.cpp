@@ -10,6 +10,16 @@ Xion::Xion(GLfloat PositionValue, GLfloat DestPositionValue, bool BoolMoveState,
 }
 
 void Xion::UpdateFunc(float FrameTime) {
+	// 점수가 0점일 경우 표정에 변화가 생긴다
+	if (Glb.GameOver && Glb.Score == 0) {
+		ShakePosition.x = 0.0;
+		ShakePosition.y = 0.0;
+
+		VerticalSize = VerticalLoop.Update(0.05, 5.0, FrameTime);
+		Position.x = -1.3;
+		Frame = Curious;
+	}
+
 	// 목표 지점까지 이동 한 후 멈춘다
 	if (MoveState && !HitState && !PushState) 
 		mathUtil.Lerp(Position.x, DestPosition, 20.0, FrameTime);
@@ -47,11 +57,8 @@ void Xion::UpdateFunc(float FrameTime) {
 			// 1초 후 게임오버 된다
 			else {
 				GameOverTimer.Update(FrameTime);
-				if (GameOverTimer.Sec() >= 1) {
-					if (auto ED = scene.Find("ed"); ED)
-						ED->SetFrame(GameOver);
-					GameOverTimer.Stop();
-				}
+				if (GameOverTimer.Sec() >= 1) 
+					Glb.GameOver = true;
 			}
 		}
 	}
@@ -62,6 +69,11 @@ void Xion::UpdateFunc(float FrameTime) {
 			ShakeValue.x = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
 			ShakeValue.y = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
 		}
+	}
+
+	else if (Frame == Curious) {
+		ShakeValue.x = 0.0;
+		ShakeValue.y = 0.0;
 	}
 	
 	if (Position.x < CameraPosition.x - ASP(1.0) - 1.0)
@@ -105,4 +117,8 @@ void Xion::PushPeople() {
 	// 커피를 다시 부술 수 있는 상태로 전환한다
 	if (auto Shelf = scene.Find("shelf"); Shelf)
 		Shelf->EnableCoffeeHit();
+}
+
+void Xion::SetFrame(int Value) {
+	Frame = Value;
 }

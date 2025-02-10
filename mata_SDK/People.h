@@ -104,9 +104,9 @@ public:
 			}
 		}
 
-		// 대표의 경우 3번 차야 한다
+		// 대표의 경우 2번 차야 한다
 		if (Frame == Daepyo * 2)
-			HitCount = 3;
+			HitCount = 2;
 	}
 
 	void UpdateFunc(float FrameTime) {
@@ -253,6 +253,15 @@ public:
 			Loop.SetValue(Preset::HalfPositive);                     
 			Loop2.SetValue(Preset::HalfNegative);
 			LoopSize = 0.0;
+
+			GameObject* Score = scene.Find("score_indicator");
+
+			if (Frame == Daepyo * 2)
+				Score->AddScore(118);
+			else
+				Score->AddScore(100);
+
+			Glb.PeopleHitCount++;
 		}
 
 		// HitCount가 남아있을 경우 기울임 수치를 추가한다

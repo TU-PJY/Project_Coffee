@@ -97,6 +97,14 @@ public:
 	// cover function
 	virtual bool GetState() { return {}; }
 
+	// time watch function
+	virtual void Stop() {}
+	virtual void Start() {}
+	virtual void AddTime() {}
+
+	// score indicator function
+	virtual void AddScore(int Value) {}
+
 private:
 	glm::vec4 ViewportPosition();
 	glm::vec4 LocalPosition();

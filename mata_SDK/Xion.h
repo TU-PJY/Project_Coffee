@@ -62,4 +62,5 @@ public:
 	void RenderFunc();
 	void HitPeople();
 	void PushPeople();
+	void SetFrame(int Value);
 };

@@ -470,6 +470,12 @@
     <ClInclude Include="Cover.h">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Cover ]</Filter>
     </ClInclude>
+    <ClInclude Include="TimeWatch.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ModeTemplate_Manual.txt">

@@ -17,8 +17,8 @@ public:
 			NewFloorGenerated = true;
 		}
 
-		// 화면을 멋어나면 삭제한다
-		if (Position < CameraPosition.x - ASP(1.0) - 0.8)
+		// 화면을 멀리 벗어나면 삭제한다
+		if (Position < CameraPosition.x - ASP(1.0) - 2.0)
 			scene.DeleteObject(this);
 	}
 

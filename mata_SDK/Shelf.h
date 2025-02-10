@@ -269,18 +269,33 @@ public:
 
 	// 가장 앞에 있는 커피를 부순다.
 	void BreakCoffee() {
+		GameObject* Score = scene.Find("score_indicator");
+
 		// 사운드 3가지 중 1가지 랜덤 선택
 		int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
 
 		// 커피 종류마다 다른 사운드를 재생한다
 		soundUtil.Stop(SndChannel[StopChannel++]);
+
+		// 실제 가격 / 100 만큼 점수 증가
 		switch (CoffeeVec[CurrentCoffeeIndex].Type) {
 		case Box:
-			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel++]);  break;
+			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel++]);  
+			Score->AddScore(10);
+			Glb.BoxCoffeeBreakCount++;
+			break;
+
 		case Glass:
-			soundUtil.Play(Snd.GlassBreak[RandomNum], SndChannel[PlayChannel++]);  break;
+			soundUtil.Play(Snd.GlassBreak[RandomNum], SndChannel[PlayChannel++]);  
+			Score->AddScore(10);
+			Glb.GlassCoffeeBreakCount++;
+			break;
+
 		case Can:
-			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel++]);  break;
+			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel++]);  
+			Score->AddScore(10);
+			Glb.CanCoffeeBreakCount++;
+			break;
 		}
 
 		EX.ClampValue(StopChannel, 0, 4, CLAMP_RETURN);

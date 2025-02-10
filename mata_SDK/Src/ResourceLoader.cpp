@@ -3,6 +3,7 @@
 
 #include "ImageUtil.h"
 #include "SoundUtil.h"
+#include "FontUtil.h"
 
 // Use LoadT(), LoadClipT(), and LoadSpriteSheetT() to load image files and sprite sheets in this thread.
 DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
@@ -64,13 +65,11 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	}
 
 	soundUtil.Load(Snd.CanDrop, "Assets//Sound//metal-drop.mp3");
-
 	soundUtil.Load(Snd.PeopleHit, "Assets//Sound//people-hit.mp3");
-
 	soundUtil.Load(Snd.CartCrash, "Assets//Sound//cart-crash.mp3");
-
 	soundUtil.Load(Snd.Explode, "Assets//Sound//explode.ogg");
 
+	soundUtil.Load(Snd.AddTime, "Assets//Sound//time-add.mp3");
 	soundUtil.Load(Snd.GameOver, "Assets//Sound//gameover.mp3");
 
 	return 0;
@@ -83,12 +82,12 @@ DWORD WINAPI DataResourceLoader(LPVOID lpParam) {
 }
 
 DWORD WINAPI FontResourceLoader(LPVOID lpParam) {
-	// Load font resources here
+	fontUtil.LoadT("Assets//Font//pixelroborobo.otf");
 
 	return 0;
 }
 
 void InitText() {
-	// Init Text objects here
+	Txt.PixelText.Init(L"픽셀로보로보체", FW_DONTCARE);
 
 }
