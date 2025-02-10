@@ -8,6 +8,7 @@
 class ImageResource {
 public:
 	SpriteSheet ED{};
+	SpriteSheet Xion{};
 
 	SpriteSheet Coffee{};
 	SpriteSheet DestroyedCoffee{};
@@ -73,6 +74,15 @@ enum ED_StateEnum {
 	HitLow2,
 	KickPeople,
 	GameOver
+};
+
+enum XionStateEnum {
+	Nervous,
+	Cry1,
+	Curious,
+	Blocking,
+	Cry2,
+	Hurt
 };
 
 // 커피 종류 열거형

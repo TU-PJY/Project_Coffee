@@ -183,6 +183,7 @@
     <ClCompile Include="Src\TimerUtil.cpp" />
     <ClCompile Include="Src\TransformUtil.cpp" />
     <ClCompile Include="Src\UiUtil.cpp" />
+    <ClCompile Include="Xion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cart.h" />
@@ -239,6 +240,7 @@
     <ClInclude Include="Src\TransformUtil.h" />
     <ClInclude Include="Src\UiUtil.h" />
     <ClInclude Include="Src\UtilPack.h" />
+    <ClInclude Include="Xion.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ModeTemplate.txt" />

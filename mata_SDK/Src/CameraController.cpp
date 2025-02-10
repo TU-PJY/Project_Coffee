@@ -21,7 +21,7 @@ TimerUtil ShakeTimer{};
 void CameraController::Update(float FrameTime){
 	if (ShakeValue > 0.0) {
 		ShakeTimer.Update(FrameTime);
-		if (ShakeTimer.CheckMiliSec(0.001, 1, CHECK_AND_INTERPOLATE)) {
+		if (ShakeTimer.CheckMiliSec(0.01, 2, CHECK_AND_INTERPOLATE)) {
 			DestShakePosition.x = randomUtil.Gen(RANDOM_TYPE_REAL, -ShakeValue, ShakeValue);
 			DestShakePosition.y = randomUtil.Gen(RANDOM_TYPE_REAL, -ShakeValue, ShakeValue);
 		}

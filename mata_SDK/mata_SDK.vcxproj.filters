@@ -157,6 +157,9 @@
     <Filter Include="[2]___________[ Object ]\[ PlayMode Object ]\[ Cart ]">
       <UniqueIdentifier>{cd7dd326-1123-4af6-bd3d-0110c605f755}</UniqueIdentifier>
     </Filter>
+    <Filter Include="[2]___________[ Object ]\[ PlayMode Object ]\[ Xion ]">
+      <UniqueIdentifier>{2774ed85-f041-439d-85d9-8df03c233e56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AnimationUtil.cpp">
@@ -284,6 +287,9 @@
     </ClCompile>
     <ClCompile Include="Cart.cpp">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Cart ]</Filter>
+    </ClCompile>
+    <ClCompile Include="Xion.cpp">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Xion ]</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -448,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="Smoke.h">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="Xion.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]\[ Xion ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

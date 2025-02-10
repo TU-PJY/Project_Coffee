@@ -9,6 +9,9 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.SetSpriteSheetSize(256, 256, 7, 1);
 	imageUtil.LoadSpriteSheetT(Img.ED, "Assets//Sprite//sheet-ed.png");
 
+	imageUtil.SetSpriteSheetSize(256, 256, 6, 1);
+	imageUtil.LoadSpriteSheetT(Img.Xion, "Assets//Sprite//sheet-xion.png");
+
 	imageUtil.SetSpriteSheetSize(256, 256, 3, 1);
 	imageUtil.LoadSpriteSheetT(Img.Shelf, "Assets//Sprite//sheet-shelf.png");
 
