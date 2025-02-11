@@ -1,6 +1,7 @@
 #pragma once
-
 #include <Scene.h>
+
+#include "Cover.h"
 
 class GameOverScreen : public GameObject {
 private:
@@ -35,6 +36,9 @@ private:
 	SoundChannel SndChannel1{};
 	SoundChannel SndChannel2{};
 
+	GLfloat Volume = 1.0;
+	bool ExitState{};
+
 public:
 	GameOverScreen() {
 		System.SetBackColorRGB(74, 78, 101);
@@ -46,6 +50,15 @@ public:
 			CheekInterval = 0.25;
 
 		soundUtil.Play(Snd.GameEnd[Glb.Ending], SndChannel1);
+	}
+
+	void InputKey(KeyEvent& Event) {
+		// 나가는 상태를 활성화하고 dj 이상 입력을 받지 않도록 한다
+		if (Event.Type == NORMAL_KEY_DOWN && Event.NormalKey == NK_ENTER) {
+			ExitState = true;
+			scene.AddObject(new Cover, "cover", LAYER7);
+			scene.DeleteInputObject(this);
+		}
 	}
 
 	void UpdateFunc(float FrameTime) {
@@ -81,6 +94,13 @@ public:
 			}
 
 			TextSize = TextSizeLoop.Update(0.01, 6.0, FrameTime);
+		}
+
+		if (ExitState) {
+			Volume -= FrameTime * 0.5;
+			EX.ClampValue(Volume, 0.0, CLAMP_LESS);
+			SndChannel1->setVolume(Volume);
+			SndChannel2->setVolume(Volume);
 		}
 	}
 
