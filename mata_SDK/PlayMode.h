@@ -8,8 +8,8 @@
 #include "Floor.h"
 #include "TimeWatch.h"
 #include "Score.h"
+#include "CountDown.h"
 #include "PlayModeManager.h"
-
 // render order
 
 // floor, Background
@@ -47,6 +47,7 @@ public:
 
 		scene.AddObject(new TimeWatch, "time_watch", LAYER7);
 		scene.AddObject(new ScoreIndicator, "score_indicator", LAYER7);
+		scene.AddObject(new CountDown, "countdown", LAYER7);
 
 		SetUp();
 	}

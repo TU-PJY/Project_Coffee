@@ -488,6 +488,9 @@
     <ClInclude Include="PlayModeManager.h">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
     </ClInclude>
+    <ClInclude Include="CountDown.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ModeTemplate_Manual.txt">

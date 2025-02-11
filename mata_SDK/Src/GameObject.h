@@ -82,6 +82,7 @@ public:
 	virtual void TellNextPosition(GLfloat Position) {}
 	virtual void DisableInput() {}
 	virtual void SetFrame(int FrameValue) {}
+	virtual void EnableInput() {}
 
 	// xion function
 	virtual void PushPeople() {}

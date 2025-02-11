@@ -74,8 +74,9 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.CartCrash, "Assets//Sound//cart-crash.mp3");
 	soundUtil.Load(Snd.Explode, "Assets//Sound//explode.ogg");
 
+	soundUtil.Load(Snd.CountDownReady, "Assets//Sound//countdown-ready.mp3");
+	soundUtil.Load(Snd.CountDownGo, "Assets//Sound//countdown-go.mp3");
 	soundUtil.Load(Snd.AddTime, "Assets//Sound//time-add.mp3");
-
 	soundUtil.Load(Snd.GameOver, "Assets//Sound//gameover.mp3");
 	soundUtil.Load(Snd.HitCheek, "Assets//Sound//hit-cheek.mp3");
 

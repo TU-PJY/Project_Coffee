@@ -58,7 +58,7 @@ private:
 	GLfloat Time = 10;
 	GLfloat AddValue{};
 
-	bool Running{true};
+	bool Running{};
 
 	SinLoop Loop{};
 	GLfloat Size{};

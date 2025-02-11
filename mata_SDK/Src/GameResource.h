@@ -44,6 +44,8 @@ public:
 	Sound CartCrash{};
 	Sound Explode{};
 
+	Sound CountDownReady{};
+	Sound CountDownGo{};
 	Sound AddTime{};
 	Sound GameOver{};
 	Sound HitCheek{};

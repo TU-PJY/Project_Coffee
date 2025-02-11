@@ -70,7 +70,7 @@ private:
 	bool PushState{};
 
 	// 조작키 입력 가능한 상태, 게임오버 되면 비활성화 되어 더 이상 키를 입력할 수 없다
-	bool InputAvailable{true};
+	bool InputAvailable{false};
 
 	// 게임오버 사운드 재생 여부
 	bool SoundPlayed{};
@@ -370,5 +370,10 @@ public:
 	// 조작키 입력 비활성화
 	void DisableInput() {
 		InputAvailable = false;
+	}
+
+	// 조작키 입력 활성화
+	void EnableInput() {
+		InputAvailable = true;
 	}
 };
