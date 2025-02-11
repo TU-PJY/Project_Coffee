@@ -37,6 +37,7 @@ public:
 	}
 
 	static void SetUp() {
+
 		M_Inst->InputObject.clear();
 
 		for (auto const& Tag : M_Inst->InputObjectTag) {
@@ -44,10 +45,10 @@ public:
 				M_Inst->InputObject.emplace_back(Object);
 		}
 
-		scene.RegisterModeName(M_Inst->ModeName);
 		scene.RegisterDestructor(Destructor);
 		scene.RegisterInputObjectList(M_Inst->InputObject);
 		scene.RegisterController(Controller, M_Inst->ModeType);
+		scene.RegisterModeName(M_Inst->ModeName);
 	}
 
 	static void ProcessKeyEvent(KeyEvent& Event) {
