@@ -235,7 +235,7 @@ typedef struct {
 typedef struct {
 	std::vector<unsigned int> Texture;
 	int                Width, Height;
-	int                ChloeFrame;
+	int                Frame;
 }SpriteSheet;
 
 // pre load image struct

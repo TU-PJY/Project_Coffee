@@ -6,7 +6,7 @@ Cart::Cart(bool Fell, glm::vec2 PositionValue) {
 
 	// 넘어진 상태일 경우 1번 프레임을 렌더링한다
 	if (Fell)
-		ChloeFrame = 1;
+		Frame = 1;
 }
 
 void Cart::UpdateFunc(float FrameTime) {
@@ -22,5 +22,5 @@ void Cart::RenderFunc() {
 	Begin();
 	transform.Move(MoveMatrix, Position);
 	transform.Scale(MoveMatrix, 1.5, 1.5);
-	imageUtil.RenderStaticSpriteSheet(Img.Cart, ChloeFrame);
+	imageUtil.RenderStaticSpriteSheet(Img.Cart, Frame);
 }

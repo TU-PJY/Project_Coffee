@@ -1,6 +1,7 @@
 #pragma once
 #include <ModeHeader.h>
 
+#include <CameraController.h>
 #include "GameOverScreen.h"
 
 class GameOver_Mode {
@@ -16,6 +17,8 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
+		cameraControl.MoveCamera(0.0, 0.0);
+		cameraControl.ChangeCameraZoom(1.0);
 		scene.AddObject(new GameOverScreen, "game_over_screen", LAYER1);
 		SetUp();
 	}
@@ -139,4 +142,4 @@ public:
 	}
 #pragma endregion
 };
-extern GameOver_Mode TemplateMode;
+extern GameOver_Mode GameOverMode;

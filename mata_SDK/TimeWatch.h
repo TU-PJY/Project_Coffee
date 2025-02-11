@@ -92,10 +92,16 @@ public:
 		EX.ClampValue(Time, 0.0, CLAMP_LESS);
 
 		// 시간이 끝나면 게임오버 된다
-		if (Time <= 0.0) 
+		if (Time <= 0.0) {
 			Glb.GameOver = true;
-		
 
+			// 게임오버 엔딩 지정
+			if(Glb.Score > 0)
+				Glb.Ending = TimeOut;
+			else
+				Glb.Ending = Suppress;
+		}
+		
 		if (Glb.GameOver) {
 			Timer.Update(FrameTime);
 			if (Timer.CheckMiliSec(0.3, 1, CHECK_AND_INTERPOLATE))

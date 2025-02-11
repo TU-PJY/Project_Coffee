@@ -4,6 +4,8 @@
 
 #include "Cover.h"
 
+#include "GameOverMode.h"
+
 class ED : public GameObject {
 private:
 	// 현재 위치, 커피를 부술 때 마다 오른쪽으로 이동한다.
@@ -17,12 +19,12 @@ private:
 	GLfloat EDCameraHeight{};
 
 	// 각 상태마다 다른 프레임을 출력한다
-	int ChloeFrame = Idle;
+	int Frame = Idle;
 
 	GLfloat PrevGeneratedFrame{};
 
 	// 현재 프레임과 이전 프레임
-	int PrevFrame = ChloeFrame;
+	int PrevFrame = Frame;
 
 	// 앞뒤로 늘어나는 효과를 준다
 	GLfloat AnimationSize{};
@@ -112,14 +114,15 @@ public:
 					if (auto Xion = scene.Find("xion"); Xion) {
 						if (Event.SpecialKey != SK_ARROW_UP) {
 							Xion->HitPeople();
+							InputAvailable = false;
 
 							StateTimer.Reset();
 							AnimationSize = 2.0;
 
 							if (Item.IsUpside)
-								ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+								Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 							else
-								ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+								Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 						}
 						else {
 							StateTimer.Reset();
@@ -132,7 +135,7 @@ public:
 							if (auto Score = scene.Find("score_indicator"); Score)
 								Score->AddScore(100);
 
-							ChloeFrame = HitHigh2;
+							Frame = HitHigh2;
 						}
 					}
 				}
@@ -160,9 +163,9 @@ public:
 						soundUtil.Play(Snd.Whoosh, SndChannel);
 
 						if (Item.IsUpside)
-							ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 						else
-							ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 
 						DestPosition += 0.5;
 
@@ -198,9 +201,9 @@ public:
 						soundUtil.Play(Snd.MissWhoosh, SndChannel);
 
 						if (Item.IsUpside)
-							ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 						else
-							ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 					}
 				}
 			}
@@ -236,7 +239,7 @@ public:
 						AnimationSize = 2.0;
 
 						People->HitPeople();
-						ChloeFrame = KickPeople;
+						Frame = KickPeople;
 					}
 				}
 
@@ -248,7 +251,7 @@ public:
 						StateTimer.Reset();
 						AnimationSize = 2.0;
 
-						ChloeFrame = KickPeople;
+						Frame = KickPeople;
 					}
 				}
 			}
@@ -263,14 +266,14 @@ public:
 		// 프레임
 		// 이전 프레임과 현재 프레임이 다를 경우 이전 프레임을 갱신하고 애니메이션 출력하도록 한다
 		if (!Glb.GameOver) {
-			if (PrevFrame != ChloeFrame) 
-				PrevFrame = ChloeFrame;
+			if (PrevFrame != Frame) 
+				PrevFrame = Frame;
 
 			// 현재 상태가 Idle이 아니라면 0.3초 후 다시 Idle 상태로 복귀시킨다
-			if (ChloeFrame != Idle) {
+			if (Frame != Idle) {
 				StateTimer.Update(FrameTime);
 				if (StateTimer.CheckMiliSec(0.3, 2, CHECK_AND_RESET)) {
-					ChloeFrame = Idle;
+					Frame = Idle;
 					// 시온 밀기 상태 해제
 					PushState = false;
 				}
@@ -308,7 +311,7 @@ public:
 			InputAvailable = false;
 			soundUtil.PlayOnce(Snd.GameOver, SndChannel, SoundPlayed);
 
-			// 이드에 포커싱 한다.
+			//// 이드에 포커싱 한다.
 			mathUtil.Lerp(EDCameraPosition, Position, 5.0, FrameTime);
 			mathUtil.Lerp(EDCameraHeight, 0.4, 5.0, FrameTime);
 			cameraControl.MoveCamera(EDCameraPosition, EDCameraHeight);
@@ -319,7 +322,7 @@ public:
 				AnimationSize = 0.0;
 				BreatheSize = 0.0;
 
-				ChloeFrame = GameOver;
+				Frame = GameOver;
 
 				ShakeTimer.Update(FrameTime);
 				if (ShakeTimer.CheckMiliSec(0.02, 2, CHECK_AND_INTERPOLATE)) {
@@ -331,18 +334,10 @@ public:
 			}
 
 			else {
-				ChloeFrame = Idle;
+				Frame = Idle;
 
 				// 이드의 숨쉬기 애니메이션을 업데이트 한다
 				BreatheSize = BreatheLoop.Update(0.03, 6.0, FrameTime);
-			}
-
-			// 3초 후 화면이 어두워진디
-			GameOverTimer.Update(FrameTime);
-			if (GameOverTimer.Sec() >= 4) {
-				scene.AddObject(new Cover, "cover", LAYER7);
-				GameOverTimer.Reset();
-				GameOverTimer.Stop();
 			}
 		}
 	}
@@ -356,7 +351,7 @@ public:
 		transform.Scale(MoveMatrix, FinalSize);
 		transform.RotateH(MoveMatrix, HRotation);
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
-		imageUtil.RenderStaticSpriteSheet(Img.ED, ChloeFrame);
+		imageUtil.RenderStaticSpriteSheet(Img.ED, Frame);
 	}
 
 	GLfloat GetPosition() {

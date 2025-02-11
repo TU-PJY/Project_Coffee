@@ -5,7 +5,7 @@
 #include "MathUtil.h"
 #include "EXUtil.h"
 #include "TimerUtil.h"
-
+#include "Scene.h"
 glm::vec2 CameraPosition;
 GLfloat CameraRotation;
 GLfloat CameraZoom;
@@ -19,27 +19,36 @@ glm::vec2 DestShakePosition;
 TimerUtil ShakeTimer{};
 
 void CameraController::Update(float FrameTime){
-	if (ShakeValue > 0.0) {
-		ShakeTimer.Update(FrameTime);
-		if (ShakeTimer.CheckMiliSec(0.01, 2, CHECK_AND_INTERPOLATE)) {
-			DestShakePosition.x = randomUtil.Gen(RANDOM_TYPE_REAL, -ShakeValue, ShakeValue);
-			DestShakePosition.y = randomUtil.Gen(RANDOM_TYPE_REAL, -ShakeValue, ShakeValue);
+	if (scene.Mode() == "PlayMode") {
+		if (ShakeValue > 0.0) {
+			ShakeTimer.Update(FrameTime);
+			if (ShakeTimer.CheckMiliSec(0.01, 2, CHECK_AND_INTERPOLATE)) {
+				DestShakePosition.x = randomUtil.Gen(RANDOM_TYPE_REAL, -ShakeValue, ShakeValue);
+				DestShakePosition.y = randomUtil.Gen(RANDOM_TYPE_REAL, -ShakeValue, ShakeValue);
+			}
+
+			ShakeValue -= FrameTime * 0.8;
+			EX.ClampValue(ShakeValue, 0.0, CLAMP_LESS);
+		}
+		else {
+			DestShakePosition = glm::vec2(0.0, 0.0);
+			ShakeTimer.Reset();
 		}
 
-		ShakeValue -= FrameTime * 0.8;
-		EX.ClampValue(ShakeValue, 0.0, CLAMP_LESS);
-	}
-	else {
-		DestShakePosition = glm::vec2(0.0, 0.0);
-		ShakeTimer.Reset();
+		mathUtil.Lerp(ShakePosition, DestShakePosition, 10.0, FrameTime);
+
+		CameraPosition += ShakePosition;
+		MoveCamera(CameraPosition);
 	}
 
-	mathUtil.Lerp(ShakePosition, DestShakePosition, 10.0, FrameTime);
-
-	CameraPosition += ShakePosition;
-	MoveCamera(CameraPosition);
+	else if (scene.Mode() == "GameOverMode") {
+		MoveCamera(0.0, 0.0);
+		ChangeCameraZoom(1.0);
+	}
 
 	ComputeCameraMatrix();
+
+	std::cout << "Position: " << Position.x << " " << Position.y << " Zoom: " << camera.ZoomValue << std::endl;
 }
 
 void CameraController::MoveCamera(GLfloat X, GLfloat Y){

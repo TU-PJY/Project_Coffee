@@ -8,6 +8,7 @@
 #include "Floor.h"
 #include "TimeWatch.h"
 #include "Score.h"
+#include "PlayModeManager.h"
 
 // render order
 
@@ -44,6 +45,7 @@ public:
 
 		scene.AddObject(new TimeWatch, "time_watch", LAYER7);
 		scene.AddObject(new ScoreIndicator, "score_indicator", LAYER7);
+		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER7);
 
 		SetUp();
 	}
@@ -170,4 +172,4 @@ public:
 	}
 #pragma endregion
 };
-extern Play_Mode Mode1;
+extern Play_Mode PlayMode;

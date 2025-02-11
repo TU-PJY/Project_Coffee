@@ -5,7 +5,7 @@ class Cart : public GameObject {
 private:
 	bool FellDown{};
 	glm::vec2 Position{};
-	GLfloat ChloeFrame{};
+	GLfloat Frame{};
 
 public:
 	Cart(bool Fell, glm::vec2 PositionValue);

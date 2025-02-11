@@ -12,7 +12,7 @@ void Cover::RenderFunc(){
 }
 
 bool Cover::GetState() {
-	if (Opacity == 1.0)
+	if (Opacity >= 1.0)
 		return true;
 	
 	return false;

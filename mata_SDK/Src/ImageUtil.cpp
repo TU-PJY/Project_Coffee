@@ -141,9 +141,9 @@ void ImageUtil::LoadSpriteSheet(SpriteSheet& SpriteSheetStruct, std::string File
 	SpriteSheetStruct.Texture.assign(NumRow * NumCol, {});
 
 	if (BlankLocation != 0) 
-		SpriteSheetStruct.ChloeFrame = NumRow * NumCol - (NumRow - BlankLocation);
+		SpriteSheetStruct.Frame = NumRow * NumCol - (NumRow - BlankLocation);
 	else 
-		SpriteSheetStruct.ChloeFrame = NumRow * NumCol;
+		SpriteSheetStruct.Frame = NumRow * NumCol;
 
 	int CurrentIndex{};
 	int CurrentXPosition = 0;
@@ -211,9 +211,9 @@ void ImageUtil::LoadSpriteSheetT(SpriteSheet& SpriteSheetStruct, std::string Fil
 	SpriteSheetStruct.Texture.assign(NumRow * NumCol, {});
 
 	if (BlankLocation != 0)
-		SpriteSheetStruct.ChloeFrame = NumRow * NumCol - (NumRow - BlankLocation);
+		SpriteSheetStruct.Frame = NumRow * NumCol - (NumRow - BlankLocation);
 	else
-		SpriteSheetStruct.ChloeFrame = NumRow * NumCol;
+		SpriteSheetStruct.Frame = NumRow * NumCol;
 
 	int CurrentXPosition = 0;
 	int CurrentYPosition = Height - ClipHeight * StartLocation;
@@ -374,9 +374,9 @@ void ImageUtil::Render(Image& ImageStruct, GLfloat OpacityValue, bool ApplyUnitT
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-void ImageUtil::RenderSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat& ChloeFrame, GLfloat OpacityValue, bool ApplyUnitTransform, bool DisableAdjustAspect) {
-	if ((int)ChloeFrame >= SpriteSheetStruct.ChloeFrame)
-		ChloeFrame = 0.0;
+void ImageUtil::RenderSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat& Frame, GLfloat OpacityValue, bool ApplyUnitTransform, bool DisableAdjustAspect) {
+	if ((int)Frame >= SpriteSheetStruct.Frame)
+		Frame = 0.0;
 
 	GLfloat Width = (GLfloat)SpriteSheetStruct.Width;
 	GLfloat Height = (GLfloat)SpriteSheetStruct.Height;
@@ -385,11 +385,11 @@ void ImageUtil::RenderSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat& Chloe
 	PrepareRender(SpriteSheetStruct);
 
 	glBindVertexArray(VAO);
-	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[(int)ChloeFrame]);
+	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[(int)Frame]);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-void ImageUtil::RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, int ChloeFrame, GLfloat OpacityValue, bool ApplyUnitTransform, bool DisableAdjustAspect) {
+void ImageUtil::RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, int Frame, GLfloat OpacityValue, bool ApplyUnitTransform, bool DisableAdjustAspect) {
 	GLfloat Width = (GLfloat)SpriteSheetStruct.Width;
 	GLfloat Height = (GLfloat)SpriteSheetStruct.Height;
 
@@ -397,7 +397,7 @@ void ImageUtil::RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, int Chlo
 	PrepareRender(SpriteSheetStruct);
 
 	glBindVertexArray(VAO);
-	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[ChloeFrame]);
+	glBindTexture(GL_TEXTURE_2D, SpriteSheetStruct.Texture[Frame]);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 

@@ -22,7 +22,7 @@ int Num;
 class People : public GameObject {
 private:
 	// 인덱스에 따라 렌더링되는 캐릭터가 달라진다
-	int ChloeFrame{};
+	int Frame{};
 
 	// 위치
 	glm::vec2 Position{};
@@ -75,7 +75,7 @@ public:
 		// 한 번 선택된 캐릭터는 다음 2회차 동안에는 선택되지 않는다.
 		if (Glb.CreateAvailable[RandNum]) {
 			Glb.CreateAvailable[RandNum] = false;
-			ChloeFrame = RandNum * 2;
+			Frame = RandNum * 2;
 		}
 
 		else {
@@ -89,7 +89,7 @@ public:
 
 			// 벡터의 번호 중 하나를 선택하여 캐릭터 뽑기
 			int Rand = randomUtil.Gen(RANDOM_TYPE_INT, 0, AvailableNum.size() - 1);
-			ChloeFrame = AvailableNum[Rand] * 2;
+			Frame = AvailableNum[Rand] * 2;
 		}
 
 		// 현재 뽑을 수 없는 캐릭터들은 카운트 증가 
@@ -105,7 +105,7 @@ public:
 		}
 
 		// 대표의 경우 2번 차야 한다
-		if (ChloeFrame == Daepyo * 2)
+		if (Frame == Daepyo * 2)
 			HitCount = 2;
 	}
 
@@ -124,7 +124,7 @@ public:
 				// -1.3까지 이동하면 넘어짐 상태를 활성화 한다
 				if (Position.y <= -1.3) {
 					// 유미미는 폭발음을 재생한다
-					if (ChloeFrame == Yumimi * 2) {
+					if (Frame == Yumimi * 2) {
 						soundUtil.Play(Snd.Explode, SndChannel);
 
 						// 폭발로 인한 흔들림 추가
@@ -133,15 +133,15 @@ public:
 					else
 						soundUtil.Play(Snd.CartCrash, SndChannel);
 
-					if (ChloeFrame == Silphir * 2)
+					if (Frame == Silphir * 2)
 						Position.y = -1.2;
-					else if (ChloeFrame == Kidian * 2)
+					else if (Frame == Kidian * 2)
 						Position.y = -0.8;
-					else if (ChloeFrame == Melloon * 2)
+					else if (Frame == Melloon * 2)
 						Position.y = -1.53;
-					else if (ChloeFrame == Yumimi * 2)
+					else if (Frame == Yumimi * 2)
 						Position.y = -1.4;
-					else if (ChloeFrame == Daepyo * 2)
+					else if (Frame == Daepyo * 2)
 						Position.y = -1.2;
 					else
 						Position.y = -1.3;
@@ -153,7 +153,7 @@ public:
 
 					// 넘어진 카트 추가
 					// 유미미는 카트를 추가하지 않는다
-					if (ChloeFrame != Yumimi * 2) {
+					if (Frame != Yumimi * 2) {
 						scene.SwapLayer(this, LAYER6);
 						scene.AddObject(new Cart(true, CartPosition), "cart", LAYER4);
 					}
@@ -163,7 +163,7 @@ public:
 					}
 
 					// 현재 프레임의 다음 프레임 넘어진 프레임
-					ChloeFrame++;
+					Frame++;
 
 					// 넘어짐 상태 활성화
 					FellDown = true;
@@ -172,15 +172,15 @@ public:
 			// 넘어진 후
 			else {
 				// 키디언의 경우 축구공이 되어 굴러간다
-				if (ChloeFrame == Kidian * 2 + 1) {
+				if (Frame == Kidian * 2 + 1) {
 					Rotation -= 360 * FrameTime;
 					Position.x -= 4.0 * FrameTime;
 				}
 
 				// 유미미, 멜룬의 경우 가만히 있는다
-				else if (ChloeFrame == Melloon * 2 + 1) 
+				else if (Frame == Melloon * 2 + 1) 
 					Rotation = 180.0;
-				else if (ChloeFrame == Yumimi * 2 + 1) 
+				else if (Frame == Yumimi * 2 + 1) 
 					Rotation = 0.0;
 
 				else {
@@ -192,11 +192,11 @@ public:
 
 		// 숨쉬기 애니메이션
 		else {
-			if (ChloeFrame == Naia * 2)
+			if (Frame == Naia * 2)
 				LoopSize = Loop.Update(0.03, 30.0, FrameTime);
 
 			// 멜룬은 가만히 있는다
-			else if (ChloeFrame == Melloon * 2) {
+			else if (Frame == Melloon * 2) {
 				LoopSize = Loop.Update(0.0, 0.0, 0.0);
 			}
 			else
@@ -220,17 +220,17 @@ public:
 		Begin();
 		transform.Move(MoveMatrix, Position.x + TiltValue * 0.5, Position.y + LoopSize * 0.5);
 		transform.Rotate(MoveMatrix, Rotation);
-		if(ChloeFrame == Yumimi * 2 + 1)
+		if(Frame == Yumimi * 2 + 1)
 			transform.Scale(MoveMatrix, 3.0, 3.0 + LoopSize + FellDownSize);
 		else
 			transform.Scale(MoveMatrix, 2.0, 2.0 + LoopSize + FellDownSize);
 
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
-		imageUtil.RenderStaticSpriteSheet(Img.People, ChloeFrame);
+		imageUtil.RenderStaticSpriteSheet(Img.People, Frame);
 
 		// 카트 렌더링
 		// 유미미는 카트를 렌더링하지 않는다
-		if (!FellDown && ChloeFrame != Yumimi * 2) {
+		if (!FellDown && Frame != Yumimi * 2) {
 			Begin();
 			transform.Move(MoveMatrix, CartPosition.x, CartPosition.y);
 			transform.Rotate(MoveMatrix, CartRotation);
@@ -256,7 +256,7 @@ public:
 
 			GameObject* Score = scene.Find("score_indicator");
 
-			if (ChloeFrame == Daepyo * 2)
+			if (Frame == Daepyo * 2)
 				Score->AddScore(118);
 			else
 				Score->AddScore(100);

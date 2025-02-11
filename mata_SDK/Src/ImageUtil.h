@@ -21,8 +21,8 @@ public:
 	void LoadT(Image& ImageStruct, std::string FilePath, int Type=IMAGE_TYPE_NEAREST);
 	void LoadClipT(Image& ImageStruct, std::string FilePath, int X, int Y, int ClipWidth, int ClipHeight, int Type=IMAGE_TYPE_NEAREST);
 	void Render(Image& ImageStruct, GLfloat OpacityValue=1.0, bool ApplyUnitTransform=false, bool DisableAdjustAspect=false);
-	void RenderSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat& ChloeFrame, GLfloat OpacityValue= 1.0, bool ApplyUnitTransform=false, bool DisableAdjustAspect=false);
-	void RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, int ChloeFrame, GLfloat OpacityValue=1.0, bool ApplyUnitTransform=false, bool DisableAdjustAspect=false);
+	void RenderSpriteSheet(SpriteSheet& SpriteSheetStruct, GLfloat& Frame, GLfloat OpacityValue= 1.0, bool ApplyUnitTransform=false, bool DisableAdjustAspect=false);
+	void RenderStaticSpriteSheet(SpriteSheet& SpriteSheetStruct, int Frame, GLfloat OpacityValue=1.0, bool ApplyUnitTransform=false, bool DisableAdjustAspect=false);
 	void RenderRaw();
 	void Release(Image& ImageStruct);
 	void ReleaseSpriteSheet(SpriteSheet& SpriteSheetStruct);

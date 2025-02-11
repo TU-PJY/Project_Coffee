@@ -39,10 +39,6 @@ public:
 	GameOverScreen() {
 		System.SetBackColorRGB(74, 78, 101);
 
-		// 카메라 위치 및 줌 초기화
-		cameraControl.MoveCamera(0.0, 0.0);
-		cameraControl.ChangeCameraZoom(1.0);
-
 		if (Glb.Ending == TimeOut) 
 			CheekInterval = 0.7;
 
