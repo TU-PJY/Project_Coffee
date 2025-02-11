@@ -47,7 +47,7 @@ private:
 	bool PushState{};
 	
 	// га╥╧юс
-	int Frame{};
+	int ChloeFrame{};
 
 	SoundChannel SndChannel{};
 

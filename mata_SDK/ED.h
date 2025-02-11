@@ -17,12 +17,12 @@ private:
 	GLfloat EDCameraHeight{};
 
 	// 각 상태마다 다른 프레임을 출력한다
-	int Frame = Idle;
+	int ChloeFrame = Idle;
 
 	GLfloat PrevGeneratedFrame{};
 
 	// 현재 프레임과 이전 프레임
-	int PrevFrame = Frame;
+	int PrevFrame = ChloeFrame;
 
 	// 앞뒤로 늘어나는 효과를 준다
 	GLfloat AnimationSize{};
@@ -117,9 +117,9 @@ public:
 							AnimationSize = 2.0;
 
 							if (Item.IsUpside)
-								Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+								ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 							else
-								Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+								ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 						}
 						else {
 							StateTimer.Reset();
@@ -132,7 +132,7 @@ public:
 							if (auto Score = scene.Find("score_indicator"); Score)
 								Score->AddScore(100);
 
-							Frame = HitHigh2;
+							ChloeFrame = HitHigh2;
 						}
 					}
 				}
@@ -160,9 +160,9 @@ public:
 						soundUtil.Play(Snd.Whoosh, SndChannel);
 
 						if (Item.IsUpside)
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+							ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 						else
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+							ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 
 						DestPosition += 0.5;
 
@@ -198,9 +198,9 @@ public:
 						soundUtil.Play(Snd.MissWhoosh, SndChannel);
 
 						if (Item.IsUpside)
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+							ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
 						else
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+							ChloeFrame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
 					}
 				}
 			}
@@ -236,7 +236,7 @@ public:
 						AnimationSize = 2.0;
 
 						People->HitPeople();
-						Frame = KickPeople;
+						ChloeFrame = KickPeople;
 					}
 				}
 
@@ -248,7 +248,7 @@ public:
 						StateTimer.Reset();
 						AnimationSize = 2.0;
 
-						Frame = KickPeople;
+						ChloeFrame = KickPeople;
 					}
 				}
 			}
@@ -263,14 +263,14 @@ public:
 		// 프레임
 		// 이전 프레임과 현재 프레임이 다를 경우 이전 프레임을 갱신하고 애니메이션 출력하도록 한다
 		if (!Glb.GameOver) {
-			if (PrevFrame != Frame) 
-				PrevFrame = Frame;
+			if (PrevFrame != ChloeFrame) 
+				PrevFrame = ChloeFrame;
 
 			// 현재 상태가 Idle이 아니라면 0.3초 후 다시 Idle 상태로 복귀시킨다
-			if (Frame != Idle) {
+			if (ChloeFrame != Idle) {
 				StateTimer.Update(FrameTime);
 				if (StateTimer.CheckMiliSec(0.3, 2, CHECK_AND_RESET)) {
-					Frame = Idle;
+					ChloeFrame = Idle;
 					// 시온 밀기 상태 해제
 					PushState = false;
 				}
@@ -319,7 +319,7 @@ public:
 				AnimationSize = 0.0;
 				BreatheSize = 0.0;
 
-				Frame = GameOver;
+				ChloeFrame = GameOver;
 
 				ShakeTimer.Update(FrameTime);
 				if (ShakeTimer.CheckMiliSec(0.02, 2, CHECK_AND_INTERPOLATE)) {
@@ -331,7 +331,7 @@ public:
 			}
 
 			else {
-				Frame = Idle;
+				ChloeFrame = Idle;
 
 				// 이드의 숨쉬기 애니메이션을 업데이트 한다
 				BreatheSize = BreatheLoop.Update(0.03, 6.0, FrameTime);
@@ -356,7 +356,7 @@ public:
 		transform.Scale(MoveMatrix, FinalSize);
 		transform.RotateH(MoveMatrix, HRotation);
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
-		imageUtil.RenderStaticSpriteSheet(Img.ED, Frame);
+		imageUtil.RenderStaticSpriteSheet(Img.ED, ChloeFrame);
 	}
 
 	GLfloat GetPosition() {

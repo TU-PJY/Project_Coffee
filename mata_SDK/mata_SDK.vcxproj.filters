@@ -163,6 +163,9 @@
     <Filter Include="[2]___________[ Object ]\[ PlayMode Object ]\[ Cover ]">
       <UniqueIdentifier>{546c93b8-667e-405e-b69e-1832408660b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="[2]___________[ Object ]\[ GameOverMode Object ]">
+      <UniqueIdentifier>{8e62460c-31d1-477e-967f-97f4c8471e45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AnimationUtil.cpp">
@@ -475,6 +478,12 @@
     </ClInclude>
     <ClInclude Include="Score.h">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverMode.h">
+      <Filter>[1]___________[ GameMode ]</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScreen.h">
+      <Filter>[2]___________[ Object ]\[ GameOverMode Object ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

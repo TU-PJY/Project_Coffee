@@ -193,6 +193,7 @@ void TextUtil::CalculateTextLength(const wchar_t* Text) {
 void TextUtil::NextLine() {
 	RenderPosition.y -= (TextLineGap + TextRenderSize);
 	RenderPosition.x = RenderStartPosition;
+	CurrentPosition = 0.0;
 
 	if (TextAlign != ALIGN_DEFAULT) {
 		++CurrentLine;

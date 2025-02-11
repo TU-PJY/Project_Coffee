@@ -10,6 +10,8 @@ class ImageResource {
 public:
 	SpriteSheet ED{};
 	SpriteSheet Xion{};
+	SpriteSheet ED_GameOver{};
+	SpriteSheet Chloe{};
 
 	SpriteSheet Coffee{};
 	SpriteSheet DestroyedCoffee{};
@@ -23,8 +25,9 @@ public:
 	SpriteSheet People{};
 
 	Image Smoke{};
-
 	Image FloorTile{};
+
+	Image GameOverBackGround{};
 };
 
 // Declare the sound resource here. 
@@ -43,6 +46,9 @@ public:
 
 	Sound AddTime{};
 	Sound GameOver{};
+	Sound HitCheek{};
+
+	Sound GameEnd[3]{};
 };
 
 // Data Format list
@@ -79,6 +85,9 @@ public:
 
 	// 거쳐간 선반 개수
 	int ShelfCount{};
+
+	// 게임오버 엔딩
+	int Ending{};
 };
 
 // Declare the global text object here.
@@ -113,6 +122,12 @@ enum CoffeeTypeEnum {
 	Box,
 	Glass,
 	Can
+};
+
+enum GameOverEndingEnum {
+	TimeOut,
+	HitXion,
+	Suppress
 };
 
 // 물건 구조체

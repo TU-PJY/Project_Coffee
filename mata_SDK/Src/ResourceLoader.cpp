@@ -13,6 +13,10 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.SetSpriteSheetSize(256, 256, 6, 1);
 	imageUtil.LoadSpriteSheetT(Img.Xion, "Assets//Sprite//sheet-xion.png");
 
+	imageUtil.SetSpriteSheetSize(256, 256, 2, 1);
+	imageUtil.LoadSpriteSheetT(Img.ED_GameOver, "Assets//Sprite//sheet-ed-gameover.png");
+	imageUtil.LoadSpriteSheetT(Img.Chloe, "Assets//Sprite//sheet-chloe.png");
+
 	imageUtil.SetSpriteSheetSize(256, 256, 3, 1);
 	imageUtil.LoadSpriteSheetT(Img.Shelf, "Assets//Sprite//sheet-shelf.png");
 
@@ -35,8 +39,9 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.LoadSpriteSheetT(Img.People, "Assets//Sprite//sheet-people.png");
 
 	imageUtil.LoadT(Img.Smoke, "Assets//Sprite//smoke.png");
-
 	imageUtil.LoadT(Img.FloorTile, "Assets//Sprite//floor.png");
+
+	imageUtil.LoadT(Img.GameOverBackGround, "Assets//Sprite//background-gameover.png");
 
 	return 0;
 }
@@ -70,7 +75,13 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.Explode, "Assets//Sound//explode.ogg");
 
 	soundUtil.Load(Snd.AddTime, "Assets//Sound//time-add.mp3");
+
 	soundUtil.Load(Snd.GameOver, "Assets//Sound//gameover.mp3");
+	soundUtil.Load(Snd.HitCheek, "Assets//Sound//hit-cheek.mp3");
+
+	soundUtil.Load(Snd.GameEnd[0], "Assets//Sound//gameover-timeout.mp3");
+	soundUtil.Load(Snd.GameEnd[1], "Assets//Sound//gameover-hit-xion.mp3");
+	soundUtil.Load(Snd.GameEnd[2], "Assets//Sound//gameover-suppress.mp3");
 
 	return 0;
 }

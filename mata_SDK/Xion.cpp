@@ -6,7 +6,7 @@ Xion::Xion(GLfloat PositionValue, GLfloat DestPositionValue, bool BoolMoveState,
 	MoveState = BoolMoveState;
 	VerticalLoop.SetValue(Preset::HalfNegative);
 	TiltLoop.SetValue(Preset::HalfPositive);
-	Frame = FrameValue;
+	ChloeFrame = FrameValue;
 }
 
 void Xion::UpdateFunc(float FrameTime) {
@@ -17,7 +17,7 @@ void Xion::UpdateFunc(float FrameTime) {
 
 		VerticalSize = VerticalLoop.Update(0.05, 5.0, FrameTime);
 		Position.x = -1.3;
-		Frame = Curious;
+		ChloeFrame = Curious;
 	}
 
 	// 목표 지점까지 이동 한 후 멈춘다
@@ -29,10 +29,10 @@ void Xion::UpdateFunc(float FrameTime) {
 		mathUtil.Lerp(HRotation, DestHRotation, 8.0, FrameTime);
 
 		if (HRotation >= 90.0)
-			Frame = Cry2;
+			ChloeFrame = Cry2;
 	}
 
-	if (Frame == Blocking) {
+	if (ChloeFrame == Blocking) {
 		if (!HitState) {
 			VerticalSize = VerticalLoop.Update(0.05, 20.0, FrameTime);
 			TiltValue = TiltLoop.Update(0.1, 20.0, FrameTime);
@@ -63,7 +63,7 @@ void Xion::UpdateFunc(float FrameTime) {
 		}
 	}
 
-	else if (Frame == Cry1 || Frame == Cry2) {
+	else if (ChloeFrame == Cry1 || ChloeFrame == Cry2) {
 		ShakeTimer.Update(FrameTime);
 		if (ShakeTimer.CheckMiliSec(0.02, 2, CHECK_AND_INTERPOLATE)) {
 			ShakeValue.x = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
@@ -71,7 +71,7 @@ void Xion::UpdateFunc(float FrameTime) {
 		}
 	}
 
-	else if (Frame == Curious) {
+	else if (ChloeFrame == Curious) {
 		ShakeValue.x = 0.0;
 		ShakeValue.y = 0.0;
 	}
@@ -89,16 +89,19 @@ void Xion::RenderFunc() {
 	transform.Scale(MoveMatrix, 2.0, 2.0 + VerticalSize);
 	transform.Rotate(MoveMatrix, Rotation);
 	transform.RotateH(MoveMatrix, HRotation);
-	if (Frame == Blocking || Frame == Cry2)
+	if (ChloeFrame == Blocking || ChloeFrame == Cry2)
 		SetFlip(FLIP_TYPE_X);
 	transform.Shear(MoveMatrix, TiltValue, 0.0);
-	imageUtil.RenderStaticSpriteSheet(Img.Xion, Frame);
+	imageUtil.RenderStaticSpriteSheet(Img.Xion, ChloeFrame);
 }
 
 void Xion::HitPeople() {
 	// 이드의 컨트롤러를 비활성화한다
 	if (auto ED = scene.Find("ed"); ED)
 		ED->DisableInput();
+
+	if (auto TimeWatch = scene.Find("time_watch"); TimeWatch)
+		TimeWatch->Stop();
 
 	soundUtil.Play(Snd.PeopleHit, SndChannel);
 	HitState = true;
@@ -120,5 +123,5 @@ void Xion::PushPeople() {
 }
 
 void Xion::SetFrame(int Value) {
-	Frame = Value;
+	ChloeFrame = Value;
 }
