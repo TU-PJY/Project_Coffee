@@ -311,7 +311,7 @@ public:
 			InputAvailable = false;
 			soundUtil.PlayOnce(Snd.GameOver, SndChannel, SoundPlayed);
 
-			//// 이드에 포커싱 한다.
+			// 이드에 포커싱 한다.
 			mathUtil.Lerp(EDCameraPosition, Position, 5.0, FrameTime);
 			mathUtil.Lerp(EDCameraHeight, 0.4, 5.0, FrameTime);
 			cameraControl.MoveCamera(EDCameraPosition, EDCameraHeight);

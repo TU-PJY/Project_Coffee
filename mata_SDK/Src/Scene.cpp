@@ -32,10 +32,17 @@ void Scene::Update() {
 	for (int i = 0; i < Layers; ++i) {
 		for (auto& Object : ObjectList[i]) {
 			if (UpdateActivateCommand) {
-				if (FloatingFocusCommand && Object->FloatingCommand)
-					Object->UpdateFunc(FrameTime);
-				else
-					Object->UpdateFunc(FrameTime);
+				if (!Object->DeleteCommand) {
+					if (FloatingFocusCommand && Object->FloatingCommand)
+						Object->UpdateFunc(FrameTime);
+					else
+						Object->UpdateFunc(FrameTime);
+				}
+			}
+
+			if (LoopEscapeCommand) {
+				LoopEscapeCommand = false;
+				return;
 			}
 
 			if (Object->DeleteCommand)
@@ -53,7 +60,8 @@ void Scene::Update() {
 void Scene::Render() {
 	for (int i = 0; i < Layers; ++i) {
 		for (auto& Object : ObjectList[i]) {
-			Object->RenderFunc();
+			if(!Object->DeleteCommand)
+				Object->RenderFunc();
 		}
 	}
 }
@@ -76,6 +84,8 @@ void Scene::SwitchMode(Function ModeFunction) {
 		FloatingActivateCommand = false;
 		FloatingFocusCommand = false;
 	}
+
+	LoopEscapeCommand = true;
 }
 
 void Scene::RegisterDestructor(Function DestructorFunction) {

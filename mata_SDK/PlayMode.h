@@ -37,6 +37,8 @@ public:
 	static void Start() {
 		System.SetBackColor(0.3, 0.3, 0.3);
 
+		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER1);
+
 		scene.AddObject(new Floor(CameraPosition.x - ASP(1.0) - 1.6), "floor", LAYER1);
 		scene.AddObject(new Shelf(2, 1.75), "shelf", LAYER2);
 		scene.AddObject(new Xion(-1.0, 0.0, false, Cry1), "xion", LAYER3);
@@ -45,7 +47,6 @@ public:
 
 		scene.AddObject(new TimeWatch, "time_watch", LAYER7);
 		scene.AddObject(new ScoreIndicator, "score_indicator", LAYER7);
-		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER7);
 
 		SetUp();
 	}

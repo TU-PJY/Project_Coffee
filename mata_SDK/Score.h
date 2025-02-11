@@ -31,7 +31,7 @@ public:
 		Txt.PixelText.Render((ASP(-1.0) + 0.07) + 0.015, (-1.0 + 0.1 + FeedbackHeight) - 0.015, 0.15, L"SCORE %d", Glb.Score);
 
 		Txt.PixelText.SetOpacity(1.0);
-		Txt.PixelText.SetColorRGB(255, 245, 0);
+		Txt.PixelText.SetColorRGB(255, 213, 80);
 		Txt.PixelText.Render((ASP(-1.0) + 0.07), (-1.0 + 0.1 + FeedbackHeight), 0.15, L"SCORE %d", Glb.Score);
 
 		if (FeedbackOpacity > 0.0) {
@@ -40,7 +40,7 @@ public:
 			Txt.PixelText.Render((ASP(-1.0) + 0.07) + 0.01, (-1.0 + 0.3 + FeedbackHeight) - 0.01, 0.1, L"+%d", AddedScore);
 
 			Txt.PixelText.SetOpacity(FeedbackOpacity);
-			Txt.PixelText.SetColorRGB(255, 245, 0);
+			Txt.PixelText.SetColorRGB(255, 213, 80);
 			Txt.PixelText.Render((ASP(-1.0) + 0.07), (-1.0 + 0.3 + FeedbackHeight), 0.1, L"+%d", AddedScore);
 		}
 	}

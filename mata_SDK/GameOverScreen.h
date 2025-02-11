@@ -91,7 +91,7 @@ public:
 		Txt.PixelText.SetColor(1.0, 1.0, 1.0);
 		Txt.PixelText.Rotate(-10.0);
 
-		if (Glb.Ending == TimeOut || Glb.Ending == HitXion) {
+		if (Glb.Ending == TimeOut || Glb.Ending == HitXion || Glb.Ending == Suppress) {
 			// ¹è°æ ·»´õ¸µ
 			Begin();
 			transform.Scale(MoveMatrix, 3.0, 3.0);
@@ -123,18 +123,39 @@ public:
 
 			// ÅØ½ºÆ® ·»´õ¸µ
 			if (Glb.Ending == HitXion) {
+				Txt.PixelText.SetColor(0.0, 0.0, 0.0);
+				Txt.PixelText.SetOpacity(0.8);
+				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.2 + TextSize) * 0.1, 0.75 - (0.2 + TextSize) * 0.1, 0.2 + TextSize, L"ÁøÂ¥ À¯ÁË!!!");
+				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.1 + TextSize) * 0.1, 0.55 - (0.1 + TextSize) * 0.1, 0.1 + TextSize, L"¾ð´Ï¸¦ °È¾î Â÷?!!");
+
+				Txt.PixelText.SetColor(1.0, 1.0, 1.0);
+				Txt.PixelText.SetOpacity(1.0);
 				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.75, 0.2 + TextSize, L"ÁøÂ¥ À¯ÁË!!!");
 				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.55, 0.1 + TextSize, L"¾ð´Ï¸¦ °È¾î Â÷?!!");
 			}
 
 			else if (Glb.Ending == TimeOut) {
+				Txt.PixelText.SetColor(0.0, 0.0, 0.0);
+				Txt.PixelText.SetOpacity(0.8);
+				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.2 + TextSize) * 0.1, 0.75 - (0.2 + TextSize) * 0.1, 0.2 + TextSize, L"À¯ÁË!!!");
+				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.1 + TextSize) * 0.1, 0.55 - (0.1 + TextSize) * 0.1, 0.1 + TextSize, L"¹ÌÃÆ¾î?!!");
+
+				Txt.PixelText.SetColor(1.0, 1.0, 1.0);
+				Txt.PixelText.SetOpacity(1.0);
 				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.75, 0.2 + TextSize, L"À¯ÁË!!!");
-				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.55, 0.1 + TextSize, L"Àú°Å ´Ù ¾îÂ¿°Å¾ß?!!");
+				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.55, 0.1 + TextSize, L"¹ÌÃÆ¾î?!!");
 			}
 
 			else if (Glb.Ending == Suppress) {
+				Txt.PixelText.SetColor(0.0, 0.0, 0.0);
+				Txt.PixelText.SetOpacity(0.8);
+				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.2 + TextSize) * 0.1, 0.75 - (0.2 + TextSize) * 0.1, 0.2 + TextSize, L"¹«ÁË!!!");
+				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.1 + TextSize) * 0.1, 0.55 - (0.1 + TextSize) * 0.1, 0.1 + TextSize, L"ÀÌµå! ÇØ³Â±¸³ª!");
+
+				Txt.PixelText.SetColor(1.0, 1.0, 1.0);
+				Txt.PixelText.SetOpacity(1.0);
 				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.75, 0.2 + TextSize, L"¹«ÁË!!!");
-				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.55, 0.1 + TextSize, L"Âü¾Æ³Â±¸³ª ÀÌµå!!");
+				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.55, 0.1 + TextSize, L"ÀÌµå! ÇØ³Â±¸³ª!");
 			}
 		}
 	}

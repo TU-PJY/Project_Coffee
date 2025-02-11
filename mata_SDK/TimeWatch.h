@@ -123,8 +123,12 @@ public:
 			Txt.PixelText.SetOpacity(1.0);
 			if(Time < 6.0)
 				Txt.PixelText.SetColor(1.0, 0.0, 0.0);
-			else
-				Txt.PixelText.SetColorRGB(255, 245, 0);
+			else {
+				if(AddValue > 0.0)
+					Txt.PixelText.SetColor(0.0, 1.0, 0.0);
+				else
+					Txt.PixelText.SetColorRGB(255, 213, 80);
+			}
 			Txt.PixelText.Render(0.0, 1.0, 0.25, L"%d", (int)Time);
 		}
 
@@ -139,7 +143,7 @@ public:
 					Txt.PixelText.Render(0.0 + 0.03, 1.0 - 0.03, 0.3, L"GAME OVER");
 
 				Txt.PixelText.SetOpacity(1.0);
-				Txt.PixelText.SetColorRGB(255, 245, 0);
+				Txt.PixelText.SetColorRGB(255, 213, 80);
 
 				if (Glb.GameOver && Time <= 0.0)
 					Txt.PixelText.Render(0.0, 1.0, 0.3, L"TIME OUT!");

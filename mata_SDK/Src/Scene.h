@@ -30,6 +30,8 @@ private:
 
 	bool                              UpdateActivateCommand{ true };
 
+	bool                              LoopEscapeCommand{};
+
 	bool                              ErrorOccured{};
 	bool                              ErrorScreenState{};
 	int								  ErrorTypeBuffer{};

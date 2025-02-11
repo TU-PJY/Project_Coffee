@@ -41,14 +41,10 @@ void CameraController::Update(float FrameTime){
 		MoveCamera(CameraPosition);
 	}
 
-	else if (scene.Mode() == "GameOverMode") {
-		MoveCamera(0.0, 0.0);
-		ChangeCameraZoom(1.0);
-	}
+	else if (scene.Mode() == "GameOverMode") 
+		ShakePosition = glm::vec2(0.0, 0.0);
 
 	ComputeCameraMatrix();
-
-	std::cout << "Position: " << Position.x << " " << Position.y << " Zoom: " << camera.ZoomValue << std::endl;
 }
 
 void CameraController::MoveCamera(GLfloat X, GLfloat Y){
