@@ -22,9 +22,17 @@ private:
 	std::wstring             CurrentText{};
 	std::wstring             PrevText{};
 	int                      CurrentLine{};
-
+            
 	GLfloat                  Opacity{ 1.0f };
+	GLfloat                  RenderOpacity{ 1.0f };
+
+	glm::vec3                RenderColor{ glm::vec3(1.0, 1.0, 1.0) };
 	glm::vec3                TextColor{ glm::vec3(1.0, 1.0, 1.0) };
+
+	bool                     RenderShadowCommand{};
+	GLfloat                  ShadowOpacity{};
+	GLfloat                  ShadowOffset{};
+	glm::vec3                ShadowColor{ glm::vec3(0.0, 0.0, 0.0) };
 
 	HDC                      hDC{};
 	HFONT                    Font{};
@@ -44,6 +52,8 @@ public:
 	void SetColor(GLfloat R, GLfloat G, GLfloat B);
 	void SetColor(glm::vec3& Color);
 	void SetColorRGB(int R, int G, int B);
+	void SetUseShadow(bool Flag);
+	void SetShadow(GLfloat Offset, glm::vec3 ShadowColorValue, GLfloat ShadowOpacityValue);
 	void SetAlign(int AlignOpt);
 	void SetLineGap(GLfloat Value);
 	void SetFixMiddle(bool Flag);

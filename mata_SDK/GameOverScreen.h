@@ -161,6 +161,8 @@ public:
 		Txt.PixelText.Reset();
 		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
 		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
+		Txt.PixelText.SetUseShadow(true);
+		Txt.PixelText.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.7);
 		Txt.PixelText.Rotate(-10.0);
 
 		glm::vec2 NormalPosition{};
@@ -180,11 +182,6 @@ public:
 		SmallShadowPosition.x = ASP(-1.0) + 0.8 + (0.1 + TextSize) * 0.1;
 		SmallShadowPosition.y = 0.65 - (0.1 + TextSize) * 0.1;
 
-		// 텍스트 렌더링
-		SetShadowMode();
-		Txt.PixelText.Render(NormalShadowPosition, 0.2 + TextSize, Str.c_str());
-		Txt.PixelText.Render(SmallShadowPosition, 0.1 + TextSize, Str2.c_str());
-
 		SetDefaultMode();
 		Txt.PixelText.Render(NormalPosition, 0.2 + TextSize, Str.c_str());
 		Txt.PixelText.Render(SmallPosition, 0.1 + TextSize, Str2.c_str());
@@ -194,13 +191,9 @@ public:
 		Txt.PixelText.Reset();
 		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
 		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
+		Txt.PixelText.SetUseShadow(true);
+		Txt.PixelText.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.7);
 
-		Txt.PixelText.SetColor(0.0, 0.0, 0.0);
-		Txt.PixelText.SetOpacity(0.8);
-		Txt.PixelText.Render(0.0 + 0.015, 0.5 - 0.015, 0.15, L"SCORE: %d", Glb.Score);
-
-		Txt.PixelText.SetColor(1.0, 1.0, 1.0);
-		Txt.PixelText.SetOpacity(1.0);
 		Txt.PixelText.Render(0.0, 0.5, 0.15, L"SCORE: %d", Glb.Score);
 	}
 

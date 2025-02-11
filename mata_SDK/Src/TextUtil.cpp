@@ -24,6 +24,10 @@ void TextUtil::Reset(int RenderTypeFlag) {
 	TextLineGap = 0.0;
 	Rotation = 0.0;
 	Opacity = 1.0;
+
+	TextColor = glm::vec3(1.0, 1.0, 1.0);
+	SetShadow(0.0, glm::vec3(0.0, 0.0, 0.0), 1.0);
+	RenderShadowCommand = false;
 }
 
 void TextUtil::SetRenderType(int Type) {
@@ -64,6 +68,16 @@ void TextUtil::SetColorRGB(int R, int G, int B) {
 	TextColor.b = (1.0f / 255.0f) * (GLfloat)B;
 }
 
+void TextUtil::SetUseShadow(bool Flag) {
+	RenderShadowCommand = Flag;
+}
+
+void TextUtil::SetShadow(GLfloat Offset, glm::vec3 ShadowColorValue, GLfloat ShadowOpacityValue) {
+	ShadowOffset = Offset;
+	ShadowColor = ShadowColorValue;
+	ShadowOpacity = ShadowOpacityValue;
+}
+
 void TextUtil::Rotate(GLfloat RotationValue) {
 	Rotation = RotationValue;
 }
@@ -84,7 +98,21 @@ void TextUtil::Render(glm::vec2& Position, GLfloat Size, const wchar_t* Fmt, ...
 	if (Fmt == NULL)
 		return;
 
-	ProcessText(Text, Position, Size);
+	if (RenderShadowCommand) {
+		RenderColor = ShadowColor;
+		RenderOpacity = Opacity * ShadowOpacity;
+		ProcessText(Text, glm::vec2(Position.x + Size * ShadowOffset, Position.y - Size * ShadowOffset), Size);
+
+		RenderColor = TextColor;
+		RenderOpacity = Opacity;
+		ProcessText(Text, Position, Size);
+	}
+
+	else {
+		RenderColor = TextColor;
+		RenderOpacity = Opacity;
+		ProcessText(Text, Position, Size);
+	}
 }
 
 void TextUtil::Render(GLfloat X, GLfloat Y, GLfloat Size, const wchar_t* Fmt, ...) {
@@ -99,7 +127,21 @@ void TextUtil::Render(GLfloat X, GLfloat Y, GLfloat Size, const wchar_t* Fmt, ..
 	if (Fmt == NULL)
 		return;
 
-	ProcessText(Text, glm::vec2(X, Y), Size);
+	if (RenderShadowCommand) {
+		RenderColor = ShadowColor;
+		RenderOpacity = Opacity * ShadowOpacity;
+		ProcessText(Text, glm::vec2(X + Size * ShadowOffset, Y - Size * ShadowOffset), Size);
+
+		RenderColor = TextColor;
+		RenderOpacity = Opacity;
+		ProcessText(Text, glm::vec2(X, Y), Size);
+	}
+
+	else {
+		RenderColor = TextColor;
+		RenderOpacity = Opacity;
+		ProcessText(Text, glm::vec2(X, Y), Size);
+	}
 }
 
 void TextUtil::RenderStr(glm::vec2& Position, GLfloat Size, std::string Str) {
@@ -252,8 +294,8 @@ void TextUtil::PrepareRender() {
 	glUseProgram(TEXT_SHADER);
 	camera.PrepareRender(SHADER_TYPE_TEXT);
 
-	glUniform1f(TEXT_OPACITY_LOCATION, Opacity);
-	glUniform3f(TEXT_COLOR_LOCATION, TextColor.r, TextColor.g, TextColor.b);
+	glUniform1f(TEXT_OPACITY_LOCATION, RenderOpacity);
+	glUniform3f(TEXT_COLOR_LOCATION, RenderColor.r, RenderColor.g, RenderColor.b);
 	glUniformMatrix4fv(TEXT_MODEL_LOCATION, 1, GL_FALSE, value_ptr(TextMatrix));
 }
 

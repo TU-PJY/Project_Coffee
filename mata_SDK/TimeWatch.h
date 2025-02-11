@@ -52,14 +52,11 @@ public:
 		Txt.PixelText.Reset();
 		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
 		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
+		Txt.PixelText.SetUseShadow(true);
+		Txt.PixelText.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.8);
+		Txt.PixelText.SetColorRGB(255, 213, 80);
+
 		Txt.PixelText.Rotate(Rotation);
-
-		Txt.PixelText.SetColor(0.0, 0.0, 0.0);
-		Txt.PixelText.SetOpacity(Opacity * 0.8);
-		Txt.PixelText.Render(ASP(1.0) - 0.6 + 0.02, 0.3 - 0.02, Size, L"+10");
-
-		Txt.PixelText.SetColorRGB(255, 245, 0);
-		Txt.PixelText.SetOpacity(Opacity);
 		Txt.PixelText.Render(ASP(1.0) - 0.6, 0.3, Size, L"+10");
 	}
 };
@@ -113,40 +110,32 @@ public:
 		Txt.PixelText.Reset();
 		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
 		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_UNDER);
+		Txt.PixelText.SetUseShadow(true);
+		Txt.PixelText.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.7);
+		Txt.PixelText.SetColorRGB(255, 213, 80);
 		
 		// 시간 출력
 		if (!Glb.GameOver) {
-			Txt.PixelText.SetOpacity(0.8);
-			Txt.PixelText.SetColor(0.0, 0.0, 0.0);
-			Txt.PixelText.Render(0.0 + 0.025, 1.0 - 0.025, 0.25, L"%d", (int)Time);
-
-			Txt.PixelText.SetOpacity(1.0);
 			if(Time < 6.0)
 				Txt.PixelText.SetColor(1.0, 0.0, 0.0);
+
 			else {
 				if(AddValue > 0.0)
 					Txt.PixelText.SetColor(0.0, 1.0, 0.0);
 				else
 					Txt.PixelText.SetColorRGB(255, 213, 80);
 			}
+
 			Txt.PixelText.Render(0.0, 1.0, 0.25, L"%d", (int)Time);
 		}
 
 		else {
 			if (RenderState) {
-				Txt.PixelText.SetOpacity(0.8);
-				Txt.PixelText.SetColor(0.0, 0.0, 0.0);
-
-				if(Glb.GameOver && Time <= 0.0)
-					Txt.PixelText.Render(0.0 + 0.03, 1.0 - 0.03, 0.3, L"TIME OUT!");
-				else if(Glb.GameOver && Time > 0.0)
-					Txt.PixelText.Render(0.0 + 0.03, 1.0 - 0.03, 0.3, L"GAME OVER");
-
-				Txt.PixelText.SetOpacity(1.0);
 				Txt.PixelText.SetColorRGB(255, 213, 80);
 
 				if (Glb.GameOver && Time <= 0.0)
 					Txt.PixelText.Render(0.0, 1.0, 0.3, L"TIME OUT!");
+
 				else if (Glb.GameOver && Time > 0.0)
 					Txt.PixelText.Render(0.0, 1.0, 0.3, L"GAME OVER");
 			}
