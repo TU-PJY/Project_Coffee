@@ -39,15 +39,29 @@ private:
 	GLfloat Volume = 1.0;
 	bool ExitState{};
 
+	std::wstring Str{};
+	std::wstring Str2{};
+
 public:
 	GameOverScreen() {
 		System.SetBackColorRGB(74, 78, 101);
 
-		if (Glb.Ending == TimeOut) 
+		if (Glb.Ending == TimeOut) {
 			CheekInterval = 0.7;
+			Str = L"À¯ÁË!!!";
+			Str2 = L"¹ÌÃÆ¾î?!!";
+		}
 
-		else if (Glb.Ending == HitXion) 
+		else if (Glb.Ending == HitXion) {
 			CheekInterval = 0.25;
+			Str = L"ÂðÂ¥ À¯ÁË!!!";
+			Str2 = L"¾ð´Ï¸¦ °È¾î Â÷?!!";
+		}
+
+		else if (Glb.Ending == Suppress) {
+			Str = L"¹«ÁË!!!";
+			Str2 = L"ÀÌµå! ÇØ³Â±¸³ª!";
+		}
 
 		soundUtil.Play(Snd.GameEnd[Glb.Ending], SndChannel1);
 	}
@@ -105,12 +119,6 @@ public:
 	}
 
 	void RenderFunc() {
-		Txt.PixelText.Reset();
-		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
-		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
-		Txt.PixelText.SetColor(1.0, 1.0, 1.0);
-		Txt.PixelText.Rotate(-10.0);
-
 		if (Glb.Ending == TimeOut || Glb.Ending == HitXion || Glb.Ending == Suppress) {
 			// ¹è°æ ·»´õ¸µ
 			Begin();
@@ -140,43 +148,69 @@ public:
 			transform.Scale(MoveMatrix, 2.2 + VerticalSize, 2.2 - VerticalSize);
 			transform.Shear(MoveMatrix, -VerticalSize * 0.5, 0.0);
 			imageUtil.RenderStaticSpriteSheet(Img.Chloe, ChloeFrame);
+			
+			// ÅØ½ºÆ® Ãâ·Â
+			RenderText();
 
-			// ÅØ½ºÆ® ·»´õ¸µ
-			if (Glb.Ending == HitXion) {
-				Txt.PixelText.SetColor(0.0, 0.0, 0.0);
-				Txt.PixelText.SetOpacity(0.8);
-				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.2 + TextSize) * 0.1, 0.75 - (0.2 + TextSize) * 0.1, 0.2 + TextSize, L"ÁøÂ¥ À¯ÁË!!!");
-				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.1 + TextSize) * 0.1, 0.55 - (0.1 + TextSize) * 0.1, 0.1 + TextSize, L"¾ð´Ï¸¦ °È¾î Â÷?!!");
-
-				Txt.PixelText.SetColor(1.0, 1.0, 1.0);
-				Txt.PixelText.SetOpacity(1.0);
-				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.75, 0.2 + TextSize, L"ÁøÂ¥ À¯ÁË!!!");
-				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.55, 0.1 + TextSize, L"¾ð´Ï¸¦ °È¾î Â÷?!!");
-			}
-
-			else if (Glb.Ending == TimeOut) {
-				Txt.PixelText.SetColor(0.0, 0.0, 0.0);
-				Txt.PixelText.SetOpacity(0.8);
-				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.2 + TextSize) * 0.1, 0.75 - (0.2 + TextSize) * 0.1, 0.2 + TextSize, L"À¯ÁË!!!");
-				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.1 + TextSize) * 0.1, 0.55 - (0.1 + TextSize) * 0.1, 0.1 + TextSize, L"¹ÌÃÆ¾î?!!");
-
-				Txt.PixelText.SetColor(1.0, 1.0, 1.0);
-				Txt.PixelText.SetOpacity(1.0);
-				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.75, 0.2 + TextSize, L"À¯ÁË!!!");
-				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.55, 0.1 + TextSize, L"¹ÌÃÆ¾î?!!");
-			}
-
-			else if (Glb.Ending == Suppress) {
-				Txt.PixelText.SetColor(0.0, 0.0, 0.0);
-				Txt.PixelText.SetOpacity(0.8);
-				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.2 + TextSize) * 0.1, 0.75 - (0.2 + TextSize) * 0.1, 0.2 + TextSize, L"¹«ÁË!!!");
-				Txt.PixelText.Render(ASP(-1.0) + 0.8 + (0.1 + TextSize) * 0.1, 0.55 - (0.1 + TextSize) * 0.1, 0.1 + TextSize, L"ÀÌµå! ÇØ³Â±¸³ª!");
-
-				Txt.PixelText.SetColor(1.0, 1.0, 1.0);
-				Txt.PixelText.SetOpacity(1.0);
-				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.75, 0.2 + TextSize, L"¹«ÁË!!!");
-				Txt.PixelText.Render(ASP(-1.0) + 0.8, 0.55, 0.1 + TextSize, L"ÀÌµå! ÇØ³Â±¸³ª!");
-			}
+			// Á¡¼ö Ãâ·Â
+			RenderScore();
 		}
+	}
+
+	void RenderText() {
+		Txt.PixelText.Reset();
+		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
+		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
+		Txt.PixelText.Rotate(-10.0);
+
+		glm::vec2 NormalPosition{};
+		glm::vec2 NormalShadowPosition{};
+		glm::vec2 SmallPosition{};
+		glm::vec2 SmallShadowPosition{};
+
+		NormalPosition.x = ASP(-1.0) + 0.8;
+		NormalPosition.y = 0.85;
+
+		NormalShadowPosition.x = ASP(-1.0) + 0.8 + (0.2 + TextSize) * 0.1;
+		NormalShadowPosition.y = 0.85 - (0.2 + TextSize) * 0.1;
+
+		SmallPosition.x = ASP(-1.0) + 0.8;
+		SmallPosition.y = 0.65;
+
+		SmallShadowPosition.x = ASP(-1.0) + 0.8 + (0.1 + TextSize) * 0.1;
+		SmallShadowPosition.y = 0.65 - (0.1 + TextSize) * 0.1;
+
+		// ÅØ½ºÆ® ·»´õ¸µ
+		SetShadowMode();
+		Txt.PixelText.Render(NormalShadowPosition, 0.2 + TextSize, Str.c_str());
+		Txt.PixelText.Render(SmallShadowPosition, 0.1 + TextSize, Str2.c_str());
+
+		SetDefaultMode();
+		Txt.PixelText.Render(NormalPosition, 0.2 + TextSize, Str.c_str());
+		Txt.PixelText.Render(SmallPosition, 0.1 + TextSize, Str2.c_str());
+	}
+
+	void RenderScore() {
+		Txt.PixelText.Reset();
+		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
+		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
+
+		Txt.PixelText.SetColor(0.0, 0.0, 0.0);
+		Txt.PixelText.SetOpacity(0.8);
+		Txt.PixelText.Render(0.0 + 0.015, 0.5 - 0.015, 0.15, L"SCORE: %d", Glb.Score);
+
+		Txt.PixelText.SetColor(1.0, 1.0, 1.0);
+		Txt.PixelText.SetOpacity(1.0);
+		Txt.PixelText.Render(0.0, 0.5, 0.15, L"SCORE: %d", Glb.Score);
+	}
+
+	void SetShadowMode() {
+		Txt.PixelText.SetColor(0.0, 0.0, 0.0);
+		Txt.PixelText.SetOpacity(0.8);
+	}
+
+	void SetDefaultMode() {
+		Txt.PixelText.SetColor(1.0, 1.0, 1.0);
+		Txt.PixelText.SetOpacity(1.0);;
 	}
 };
