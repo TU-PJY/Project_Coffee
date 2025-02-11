@@ -13,51 +13,42 @@ private:
 
 	SoundChannel SndChannel{};
 
+	TextUtil Text{};
+
 public:
 	TimeAdded() {
 		soundUtil.Play(Snd.AddTime, SndChannel);
+
+		Text.Init(L"픽셀로보로보체", FW_DONTCARE);
+		Text.SetAlign(ALIGN_MIDDLE);
+		Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
+		Text.SetUseShadow(true);
+		Text.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.7);
+		Text.SetColorRGB(255, 213, 80);
 	}
 
 	void UpdateFunc(float FrameTime) {
 		if (Seq == 1) {
-			Rotation += FrameTime * 200.0;
-			EX.ClampValue(Rotation, 25.0, CLAMP_GREATER);
+			mathUtil.Lerp(Rotation, 25.0, 10.0, FrameTime);
+			mathUtil.Lerp(Opacity, 1.0, 10.0, FrameTime);
+			mathUtil.Lerp(Size, 0.25, 10.0, FrameTime);
 
-			Opacity += FrameTime * 4.0;
-			EX.ClampValue(Opacity, 1.0, CLAMP_GREATER);
-
-			Size += 0.8 * FrameTime;
-			EX.ClampValue(Size, 0.25, CLAMP_GREATER);
-
-			if (Rotation >= 25.0)
+			if (Rotation >= 24.999)
 				Seq++;
 		}
 
 		else if (Seq == 2) {
-			Timer.Update(FrameTime);
-			if (Timer.Sec() >= 1) {
-				Size -= 0.5 * FrameTime;
-				EX.ClampValue(Size, 0.0, CLAMP_LESS);
+			mathUtil.Lerp(Opacity, 0.0, 10.0, FrameTime);
+			mathUtil.Lerp(Size, 0.0, 10.0, FrameTime);
 
-				Opacity -= FrameTime * 2.0;
-				EX.ClampValue(Opacity, 0.0, CLAMP_LESS);
-
-				if (Opacity <= 0)
-					scene.DeleteObject(this);
-			}
+			if (Opacity <= 0.001)
+				scene.DeleteObject(this);
 		}
 	}
 
 	void RenderFunc() {
-		Txt.PixelText.Reset();
-		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
-		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
-		Txt.PixelText.SetUseShadow(true);
-		Txt.PixelText.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.8);
-		Txt.PixelText.SetColorRGB(255, 213, 80);
-
-		Txt.PixelText.Rotate(Rotation);
-		Txt.PixelText.Render(ASP(1.0) - 0.6, 0.3, Size, L"+10");
+		Text.Rotate(Rotation);
+		Text.Render(ASP(1.0) - 0.6, 0.3, Size, L"+10");
 	}
 };
 
@@ -69,24 +60,33 @@ private:
 
 	bool Running{true};
 
-	TimerUtil Timer{};
+	SinLoop Loop{};
+	GLfloat Size{};
+
 	bool RenderState{true};
 
+	TextUtil Text{};
+
 public:
+	TimeWatch() {
+		Text.Init(L"픽셀로보로보체", FW_DONTCARE);
+		Text.SetAlign(ALIGN_MIDDLE);
+		Text.SetHeightAlign(HEIGHT_ALIGN_UNDER);
+		Text.SetUseShadow(true);
+		Text.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.7);
+	}
+
 	void UpdateFunc(float FrameTime) {
 		// 시간 감소
 		if(Running)
 			Time -= FrameTime;
+		EX.ClampValue(Time, 0.0, CLAMP_LESS);
 
 		if (AddValue > 0.0) {
 			Time += FrameTime * 20.0;
 			AddValue -= FrameTime * 20.0;
+			EX.ClampValue(AddValue, 0.0, CLAMP_LESS);
 		}
-
-		else
-			AddValue = 0.0;
-
-		EX.ClampValue(Time, 0.0, CLAMP_LESS);
 
 		// 시간이 끝나면 게임오버 된다
 		if (Time <= 0.0) {
@@ -94,50 +94,40 @@ public:
 
 			// 게임오버 엔딩 지정
 			if(Glb.Score > 0)
-				Glb.Ending = TimeOut;
+				Glb.Ending = GameOver_TimeOut;
 			else
-				Glb.Ending = Suppress;
+				Glb.Ending = GameOver_Suppressed;
 		}
 		
-		if (Glb.GameOver) {
-			Timer.Update(FrameTime);
-			if (Timer.CheckMiliSec(0.3, 1, CHECK_AND_INTERPOLATE))
-				EX.SwitchBool(RenderState);
-		}
+		if (Glb.GameOver) 
+			Size = Loop.Update(0.025, 5.0, FrameTime);
 	}
 
 	void RenderFunc() {
-		Txt.PixelText.Reset();
-		Txt.PixelText.SetAlign(ALIGN_MIDDLE);
-		Txt.PixelText.SetHeightAlign(HEIGHT_ALIGN_UNDER);
-		Txt.PixelText.SetUseShadow(true);
-		Txt.PixelText.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.7);
-		Txt.PixelText.SetColorRGB(255, 213, 80);
-		
 		// 시간 출력
 		if (!Glb.GameOver) {
 			if(Time < 6.0)
-				Txt.PixelText.SetColor(1.0, 0.0, 0.0);
+				Text.SetColor(1.0, 0.0, 0.0);
 
 			else {
 				if(AddValue > 0.0)
-					Txt.PixelText.SetColor(0.0, 1.0, 0.0);
+					Text.SetColor(0.0, 1.0, 0.0);
 				else
-					Txt.PixelText.SetColorRGB(255, 213, 80);
+					Text.SetColorRGB(255, 213, 80);
 			}
 
-			Txt.PixelText.Render(0.0, 1.0, 0.25, L"%d", (int)Time);
+			Text.Render(0.0, 1.0, 0.25, L"%d", (int)Time);
 		}
 
 		else {
 			if (RenderState) {
-				Txt.PixelText.SetColorRGB(255, 213, 80);
+				Text.SetColorRGB(255, 213, 80);
 
 				if (Glb.GameOver && Time <= 0.0)
-					Txt.PixelText.Render(0.0, 1.0, 0.3, L"TIME OUT!");
+					Text.Render(0.0, 1.0, 0.3 + Size, L"TIME OUT!");
 
 				else if (Glb.GameOver && Time > 0.0)
-					Txt.PixelText.Render(0.0, 1.0, 0.3, L"GAME OVER");
+					Text.Render(0.0, 1.0, 0.3 + Size, L"GAME OVER");
 			}
 		}
 	}

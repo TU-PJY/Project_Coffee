@@ -9,7 +9,15 @@ private:
 
 	TimerUtil Timer{};
 
+	TextUtil Text{};
+
 public:
+	ScoreIndicator() {
+		Text.Init(L"픽셀로보로보체", FW_DONTCARE);
+		Text.SetUseShadow(true);
+		Text.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.7);
+	}
+
 	void UpdateFunc(float FrameTime) {
 		mathUtil.Lerp(FeedbackHeight, 0.0, 8.0, FrameTime);
 
@@ -24,16 +32,12 @@ public:
 	}
 
 	void RenderFunc() {
-		Txt.PixelText.Reset();
-		Txt.PixelText.SetUseShadow(true);
-		Txt.PixelText.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.7);
-		Txt.PixelText.SetColorRGB(255, 213, 80);
-
-		Txt.PixelText.Render((ASP(-1.0) + 0.07), (-1.0 + 0.1 + FeedbackHeight), 0.15, L"SCORE %d", Glb.Score);
-
+		Text.SetColorRGB(255, 213, 80);
+		Text.SetOpacity(1.0);
+		Text.Render((ASP(-1.0) + 0.07), (-1.0 + 0.1 + FeedbackHeight), 0.15, L"SCORE %d", Glb.Score);
 		if (FeedbackOpacity > 0.0) {
-			Txt.PixelText.SetOpacity(FeedbackOpacity);
-			Txt.PixelText.Render((ASP(-1.0) + 0.07), (-1.0 + 0.3 + FeedbackHeight), 0.1, L"+%d", AddedScore);
+			Text.SetOpacity(FeedbackOpacity);
+			Text.Render((ASP(-1.0) + 0.07), (-1.0 + 0.3 + FeedbackHeight), 0.1, L"+%d", AddedScore);
 		}
 	}
 

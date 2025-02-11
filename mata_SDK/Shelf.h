@@ -111,7 +111,7 @@ public:
 
 					// 시온 생성
 					GLfloat Position = PositionValue - 0.75 + 0.5 * i + 0.5;
-					scene.AddObject(new Xion(Position, 0.0, false, Blocking), "xion", LAYER3);
+					scene.AddObject(new Xion(Position, 0.0, false, Xion_Blocking), "xion", LAYER3);
 
 					// 인덱스 기록
 					AddedIndex = i;
@@ -266,10 +266,11 @@ public:
 		CoffeeVec[CurrentCoffeeIndex].IsXionFront = false;
 	}
 
-
 	// 가장 앞에 있는 커피를 부순다.
 	void BreakCoffee() {
-		GameObject* Score = scene.Find("score_indicator");
+		// 점수 추가
+		if(auto Score = scene.Find("score_indicator"); Score)
+			Score->AddScore(10);
 
 		// 사운드 3가지 중 1가지 랜덤 선택
 		int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
@@ -277,39 +278,31 @@ public:
 		// 커피 종류마다 다른 사운드를 재생한다
 		soundUtil.Stop(SndChannel[StopChannel++]);
 
-		// 실제 가격 / 100 만큼 점수 증가
-		switch (CoffeeVec[CurrentCoffeeIndex].Type) {
-		case Box:
-			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel++]);  
-			Score->AddScore(10);
-			Glb.BoxCoffeeBreakCount++;
-			break;
+		if(CoffeeVec[CurrentCoffeeIndex].Type == Coffee_Box)
+			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel++]);
 
-		case Glass:
-			soundUtil.Play(Snd.GlassBreak[RandomNum], SndChannel[PlayChannel++]);  
-			Score->AddScore(10);
-			Glb.GlassCoffeeBreakCount++;
-			break;
+		else if(CoffeeVec[CurrentCoffeeIndex].Type == Coffee_Bottle)
+			soundUtil.Play(Snd.Bottle[RandomNum], SndChannel[PlayChannel++]);
 
-		case Can:
-			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel++]);  
-			Score->AddScore(10);
-			Glb.CanCoffeeBreakCount++;
-			break;
-		}
+		else if(CoffeeVec[CurrentCoffeeIndex].Type == Coffee_Can)
+			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel++]);
+
 
 		EX.ClampValue(StopChannel, 0, 4, CLAMP_RETURN);
 		EX.ClampValue(PlayChannel, 0, 4, CLAMP_RETURN);
 
+		// 파괴한 품목 수 업데이트
+		Glb.DestroyedItems[CoffeeVec[CurrentCoffeeIndex].Type]++;
+
 		// 종이 커피 이외의 커피를 부수면 커피가 터져나오는 애니메이션 객체를 추가한다
-		if(CoffeeVec[CurrentCoffeeIndex].Type != Box)
+		if(CoffeeVec[CurrentCoffeeIndex].Type != Coffee_Box)
 			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, false), "explode", LAYER5);
 		// 종이 커피라면 커피 스틱이 터져나오는 애니메이션 객체를 추가한다
 		else
 			scene.AddObject(new Explode(CoffeeVec[CurrentCoffeeIndex].Position, true), "explode", LAYER5);
 
 		// 캔커피라면 찌그러진 캔을 추가한다
-		if (CoffeeVec[CurrentCoffeeIndex].Type == Can)
+		if (CoffeeVec[CurrentCoffeeIndex].Type == Coffee_Can)
 			scene.AddObject(new DestroyedCan(CoffeeVec[CurrentCoffeeIndex].Position), "destroyed_can", LAYER5);
 
 		// 커피는 파괴 상태가 되고 더 이상 이드와 상호작용하지 않는다.

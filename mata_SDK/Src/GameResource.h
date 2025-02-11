@@ -37,7 +37,7 @@ public:
 	Sound MissWhoosh{};
 	Sound NextWhoosh{};
 
-	Sound BoxBreak[3]{}, GlassBreak[3]{}, CanBreak[3]{};
+	Sound BoxBreak[3]{}, Bottle[3]{}, CanBreak[3]{};
 	Sound CanDrop{};
 	Sound PeopleHit{};
 	
@@ -49,6 +49,8 @@ public:
 	Sound HitCheek{};
 
 	Sound GameEnd[3]{};
+	Sound Rep{};
+	Sound RepTotal{};
 };
 
 // Data Format list
@@ -78,10 +80,7 @@ public:
 	int Score{};
 
 	// 파괴하거나 때린 숫자
-	int BoxCoffeeBreakCount{};
-	int CanCoffeeBreakCount{};
-	int GlassCoffeeBreakCount{};
-	int PeopleHitCount{};
+	int DestroyedItems[6]{};
 
 	// 거쳐간 선반 개수
 	int ShelfCount{};
@@ -93,41 +92,50 @@ public:
 // Declare the global text object here.
 class TextResource {
 public:
-	TextUtil PixelText{};
+
 };
 
 // 이드 프레임
 enum ED_StateEnum {
-	Idle,
-	HitHigh1,
-	HitHigh2,
-	HitLow1,
-	HitLow2,
-	KickPeople,
-	GameOver
+	ED_Idle,
+	ED_HitHigh1,
+	ED_HitHigh2,
+	ED_HitLow1,
+	ED_HitLow2,
+	ED_KickPeople,
+	ED_GameOver
 };
 
 // 시온 프레임
 enum XionStateEnum {
-	Nervous,
-	Cry1,
-	Curious,
-	Blocking,
-	Cry2,
-	Hurt
+	Xion_Nervous,
+	Xion_Cry1,
+	Xion_Curious,
+	Xion_Blocking,
+	Xion_Cry2,
+	Xion_Hurt
 };
 
 // 커피 종류
 enum CoffeeTypeEnum {
-	Box,
-	Glass,
-	Can
+	Coffee_Box,
+	Coffee_Bottle,
+	Coffee_Can
+};
+
+enum DestroyedTypeEnum {
+	Item_BoxCoffee,
+	Item_BottleCoffee,
+	Item_CanCoffee,
+	Item_People,
+	Item_Xion,
+	Item_HouseDoc
 };
 
 enum GameOverEndingEnum {
-	TimeOut,
-	HitXion,
-	Suppress
+	GameOver_TimeOut,
+	GameOver_HitXion,
+	GameOver_Suppressed
 };
 
 // 물건 구조체

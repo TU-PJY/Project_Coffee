@@ -41,7 +41,7 @@ public:
 
 		scene.AddObject(new Floor(CameraPosition.x - ASP(1.0) - 1.6), "floor", LAYER1);
 		scene.AddObject(new Shelf(2, 1.75), "shelf", LAYER2);
-		scene.AddObject(new Xion(-1.0, 0.0, false, Cry1), "xion", LAYER3);
+		scene.AddObject(new Xion(-1.0, 0.0, false, Xion_Cry1), "xion", LAYER3);
 		scene.AddObject(new ED, "ed", LAYER3);
 		scene.AddObject(new Cart(true, glm::vec2(0.8, -0.35)), "cart", LAYER4);
 

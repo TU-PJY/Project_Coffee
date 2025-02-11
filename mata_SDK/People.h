@@ -248,6 +248,7 @@ public:
 		if (HitCount == 0) {
 			if(auto Shelf = scene.Find("shelf"); Shelf)
 				Shelf->EnableCoffeeHit();
+
 			HitState = true;
 			ObjectTag = "";
 			Loop.SetValue(Preset::HalfPositive);                     
@@ -256,12 +257,15 @@ public:
 
 			GameObject* Score = scene.Find("score_indicator");
 
-			if (Frame == Daepyo * 2)
+			// 대표의 경우 파괴된 집문서 개수를 증가시킨다
+			if (Frame == Daepyo * 2) {
 				Score->AddScore(118);
+				Glb.DestroyedItems[Item_HouseDoc]++;
+			}
 			else
 				Score->AddScore(100);
 
-			Glb.PeopleHitCount++;
+			Glb.DestroyedItems[Item_People]++;
 		}
 
 		// HitCount가 남아있을 경우 기울임 수치를 추가한다

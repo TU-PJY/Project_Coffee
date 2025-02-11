@@ -60,7 +60,7 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	for (int i = 0; i < 3; ++i) {
 		std::string FileName = "Assets//Sound//glass-hit-";
 		FileName += std::to_string(i + 1) + ".mp3";
-		soundUtil.Load(Snd.GlassBreak[i], FileName);
+		soundUtil.Load(Snd.Bottle[i], FileName);
 	}
 
 	for (int i = 0; i < 3; ++i) {
@@ -83,6 +83,9 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.GameEnd[1], "Assets//Sound//gameover-hit-xion.mp3");
 	soundUtil.Load(Snd.GameEnd[2], "Assets//Sound//gameover-suppress.mp3");
 
+	soundUtil.Load(Snd.Rep, "Assets//Sound//rep.mp3");
+	soundUtil.Load(Snd.RepTotal, "Assets//Sound//rep-total.mp3");
+
 	return 0;
 }
 
@@ -99,6 +102,4 @@ DWORD WINAPI FontResourceLoader(LPVOID lpParam) {
 }
 
 void InitText() {
-	Txt.PixelText.Init(L"픽셀로보로보체", FW_DONTCARE);
-
 }

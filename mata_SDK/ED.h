@@ -19,7 +19,7 @@ private:
 	GLfloat EDCameraHeight{};
 
 	// 각 상태마다 다른 프레임을 출력한다
-	int Frame = Idle;
+	int Frame = ED_Idle;
 
 	GLfloat PrevGeneratedFrame{};
 
@@ -120,9 +120,9 @@ public:
 							AnimationSize = 2.0;
 
 							if (Item.IsUpside)
-								Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+								Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitLow1, ED_HitLow2);
 							else
-								Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+								Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitHigh1, ED_HitHigh2);
 						}
 						else {
 							StateTimer.Reset();
@@ -135,7 +135,7 @@ public:
 							if (auto Score = scene.Find("score_indicator"); Score)
 								Score->AddScore(100);
 
-							Frame = HitHigh2;
+							Frame = ED_HitHigh2;
 						}
 					}
 				}
@@ -150,12 +150,16 @@ public:
 					StateTimer.Reset();
 					AnimationSize = 1.0;
 
-					if (Item.Type == Can && Event.SpecialKey == SK_ARROW_LEFT)
+					std::cout << Item.Type << std::endl;
+
+					if (Item.Type == Coffee_Box && Event.SpecialKey == SK_ARROW_DOWN)
 						IsCorrect = true;
-					else if (Item.Type == Box && Event.SpecialKey == SK_ARROW_DOWN)
+					else if (Item.Type == Coffee_Bottle && Event.SpecialKey == SK_ARROW_RIGHT)
 						IsCorrect = true;
-					else if (Item.Type == Glass && Event.SpecialKey == SK_ARROW_RIGHT)
+					else if (Item.Type == Coffee_Can && Event.SpecialKey == SK_ARROW_LEFT)
 						IsCorrect = true;
+
+					
 
 					// 종류에 맞는 키를 눌러야 부술 수 있다.
 					if (IsCorrect) {
@@ -163,9 +167,9 @@ public:
 						soundUtil.Play(Snd.Whoosh, SndChannel);
 
 						if (Item.IsUpside)
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitHigh1, ED_HitHigh2);
 						else
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitLow1, ED_HitLow2);
 
 						DestPosition += 0.5;
 
@@ -201,9 +205,9 @@ public:
 						soundUtil.Play(Snd.MissWhoosh, SndChannel);
 
 						if (Item.IsUpside)
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitLow1, HitLow2);
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitLow1, ED_HitLow2);
 						else
-							Frame = randomUtil.Gen(RANDOM_TYPE_INT, HitHigh1, HitHigh2);
+							Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitHigh1, ED_HitHigh2);
 					}
 				}
 			}
@@ -239,7 +243,7 @@ public:
 						AnimationSize = 2.0;
 
 						People->HitPeople();
-						Frame = KickPeople;
+						Frame = ED_KickPeople;
 					}
 				}
 
@@ -251,7 +255,7 @@ public:
 						StateTimer.Reset();
 						AnimationSize = 2.0;
 
-						Frame = KickPeople;
+						Frame = ED_KickPeople;
 					}
 				}
 			}
@@ -270,10 +274,10 @@ public:
 				PrevFrame = Frame;
 
 			// 현재 상태가 Idle이 아니라면 0.3초 후 다시 Idle 상태로 복귀시킨다
-			if (Frame != Idle) {
+			if (Frame != ED_Idle) {
 				StateTimer.Update(FrameTime);
 				if (StateTimer.CheckMiliSec(0.3, 2, CHECK_AND_RESET)) {
-					Frame = Idle;
+					Frame = ED_Idle;
 					// 시온 밀기 상태 해제
 					PushState = false;
 				}
@@ -322,7 +326,7 @@ public:
 				AnimationSize = 0.0;
 				BreatheSize = 0.0;
 
-				Frame = GameOver;
+				Frame = ED_GameOver;
 
 				ShakeTimer.Update(FrameTime);
 				if (ShakeTimer.CheckMiliSec(0.02, 2, CHECK_AND_INTERPOLATE)) {
@@ -334,7 +338,7 @@ public:
 			}
 
 			else {
-				Frame = Idle;
+				Frame = ED_Idle;
 
 				// 이드의 숨쉬기 애니메이션을 업데이트 한다
 				BreatheSize = BreatheLoop.Update(0.03, 6.0, FrameTime);
