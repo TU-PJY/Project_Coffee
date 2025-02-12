@@ -169,6 +169,9 @@
     <Filter Include="[2]___________[ Object ]\[ PauseMode Object ]">
       <UniqueIdentifier>{2e2a3d4b-175f-4203-94f7-b5c20bf76dc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="[2]___________[ Object ]\[ TitleMode Object ]">
+      <UniqueIdentifier>{a03f34a7-6728-4e96-8881-a779d24aaaf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AnimationUtil.cpp">
@@ -499,6 +502,12 @@
     </ClInclude>
     <ClInclude Include="PauseScreen.h">
       <Filter>[2]___________[ Object ]\[ PauseMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleMode.h">
+      <Filter>[1]___________[ GameMode ]</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScreen.h">
+      <Filter>[2]___________[ Object ]\[ TitleMode Object ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

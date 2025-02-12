@@ -18,12 +18,12 @@ private:
 	bool QuestionToDesktop{};
 
 	// 메인화면으로 나가기 묻기
-	bool QuestionToMain{};
+	bool QuestionToTitle{};
 
 	// 메뉴 항목
 	std::wstring MenuItems[3] = {
 		L"계속하기",
-		L"메인화면으로 나가기",
+		L"타이틀로 나가기",
 		L"바탕화면으로 나가기"
 	};
 
@@ -66,7 +66,7 @@ public:
 				else {
 					QuestionState = false;
 					QuestionToDesktop = false;
-					QuestionToMain = false;
+					QuestionToTitle = false;
 					QuestionIndex = 0;
 					QuestionFocused[0] = true;
 					QuestionFocused[1] = false;
@@ -84,7 +84,7 @@ public:
 						break;
 					case 1:
 						QuestionState = true;
-						QuestionToMain = true;
+						QuestionToTitle = true;
 						break;
 					case 2:
 						QuestionState = true;
@@ -96,7 +96,7 @@ public:
 				else {
 					switch (QuestionIndex) {
 					case 0:
-						if (QuestionToMain) 
+						if (QuestionToTitle) 
 						{}
 						else if (QuestionToDesktop)
 							System.Exit();
@@ -108,8 +108,8 @@ public:
 						QuestionFocused[0] = true;
 						QuestionFocused[1] = false;
 
-						if (QuestionToMain) 
-							QuestionToMain = false;
+						if (QuestionToTitle) 
+							QuestionToTitle = false;
 
 						else if (QuestionToDesktop) 
 							QuestionToDesktop = false;
@@ -173,8 +173,8 @@ public:
 
 		else {
 			Text.SetColor(1.0, 1.0, 1.0);
-			if (QuestionToMain) 
-				Text.Render(0.0, 0.8, 0.15, L"메인화면으로 나갈까요?");
+			if (QuestionToTitle) 
+				Text.Render(0.0, 0.8, 0.15, L"타이틀로 나갈까요?");
 			else if(QuestionToDesktop)
 				Text.Render(0.0, 0.8, 0.15, L" 바탕화면으로 나갈까요?");
 

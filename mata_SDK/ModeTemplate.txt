@@ -24,9 +24,9 @@ public:
 	// Fold here
 #pragma region FoldRegion 
 	std::vector<GameObject*> InputObject{};
-	static GameMode1* M_Inst;
+	static Template* M_Inst;
 
-	GameMode1() {
+	Template() {
 		M_Inst = this;
 	}
 

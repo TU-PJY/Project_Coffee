@@ -1,5 +1,6 @@
 #include "PlayMode.h"
 #include "GameOverMode.h"
+#include "TitleMode.h"
 
 //////////////////////////////////// Start Mode Option
 // Specifies the mode to run first when the program starts.
@@ -13,4 +14,7 @@ GameOver_Mode* GameOver_Mode::M_Inst;
 Pause_Mode PauseMode;
 Pause_Mode* Pause_Mode::M_Inst;
 
-START_MODE_PTR START_MODE = PlayMode.Start;
+Title_Mode TitleMode;
+Title_Mode* Title_Mode::M_Inst;
+
+START_MODE_PTR START_MODE = TitleMode.Start;

@@ -1,39 +1,37 @@
 #pragma once
 #include <ModeHeader.h>
 
-class Template {
-public:
-	// define mode name and mode type here
-	std::string ModeName { "Template" };
-	int         ModeType { MODE_TYPE_DEFAULT };
+#include "TitleScreen.h"
 
-	// type object tag to input device event
+class Title_Mode {
+public:
+	std::string ModeName{ "TitleMode" };
+	int         ModeType{ MODE_TYPE_DEFAULT };
+
 	std::vector<std::string> InputObjectTag
 	{
-
+		"title_screen"
 	};
 
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
-		// Add task here
-
+		// 타이틀 화면 인트로는 최소 실행 시에만 재생한다
+		scene.AddObject(new TitleScreen(Glb.TitleIntroPlayed), "title_screen", LAYER1);
+		Glb.TitleIntroPlayed = true;
 		SetUp();
 	}
 
 	static void Destructor() {
-		// Add task here
 	}
 
 	/////////////////////////////////////////////////////////////
 	// Fold here
 #pragma region FoldRegion 
-	// this is a container that stores object pointers for accessing object controllers.
-	// a pointer to the object corresponding to the tag entered in InputObjectTag is added when the mode starts.
 	std::vector<GameObject*> InputObject{};
-	static Template* M_Inst;
+	static Title_Mode* M_Inst;
 
-	Template() {
+	Title_Mode() {
 		M_Inst = this;
 	}
 
@@ -44,7 +42,7 @@ public:
 			if (auto Object = scene.Find(Tag); Object)
 				M_Inst->InputObject.emplace_back(Object);
 		}
-		
+
 		scene.RegisterModeName(M_Inst->ModeName);
 		scene.RegisterDestructor(Destructor);
 		scene.RegisterInputObjectList(M_Inst->InputObject);
@@ -126,7 +124,7 @@ public:
 			}
 			break;
 		}
-	
+
 		for (auto const& Object : M_Inst->InputObject)
 			if (Object)  Object->InputMouse(ButtonEvent);
 	}
@@ -143,4 +141,4 @@ public:
 	}
 #pragma endregion
 };
-extern Template TemplateMode;
+extern Title_Mode TitleMode;

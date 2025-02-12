@@ -75,8 +75,12 @@ public:
 // Declare the global value here.
 class GlobalResource {
 public:
+	// 이전 캐릭터 프레임 및 캐릭터 프레임 사용 가능 여부
 	int PrevChFrame[10]{};
 	bool CreateAvailable[10]{ true, true, true, true, true, true, true, true, true, true };
+
+	// 타이틀 인트로 재생 여부
+	bool TitleIntroPlayed{};
 
 	// 게임 오버 상태
 	bool GameOver{};
@@ -95,6 +99,11 @@ public:
 
 	// Bgm 채널
 	SoundChannel BGMChannel{};
+
+	// 유저 설정
+	float BGMVolume{};
+	float SFXVolume{};
+	bool FullscreenAcvivated{};
 };
 
 // Declare the global text object here.
