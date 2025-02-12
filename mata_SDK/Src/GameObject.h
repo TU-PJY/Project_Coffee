@@ -109,6 +109,7 @@ public:
 	// PlayManagerFunction
 	virtual void PlayBGM() {}
 	virtual void StopBGM() {}
+	virtual void SetGoToTitle() {}
 
 private:
 	glm::vec4 ViewportPosition();

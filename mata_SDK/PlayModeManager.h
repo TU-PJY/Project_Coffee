@@ -1,14 +1,20 @@
 #pragma once
 #include <Scene.h>
-#include "Cover.h"
-#include "GameOverMode.h"
 
+#include "TitleMode.h"
+#include "GameOverMode.h"
 #include "PauseMode.h"
+
+#include "Cover.h"
 
 class PlayModeManager : public GameObject {
 private:
 	TimerUtil Timer1{}, Timer2{};
 	bool GameStart{};
+
+	// 타이틀 화면으로 돌아가기
+	bool GoToTitle{};
+	bool CoverAdded{};
 
 public:
 	// 일시정지 모드로 전환
@@ -39,6 +45,25 @@ public:
 				}
 			}
 		}
+
+		else if (GoToTitle) {
+			if (!CoverAdded) {
+				scene.AddObject(new Cover, "cover", LAYER7);
+				CoverAdded = true;
+			}
+
+			//  화면이 완전히 어두워진 후 1초 뒤 타이틀 화면으로 전환한다
+			if (auto Cover = scene.Find("cover"); Cover) {
+				if (Cover->GetState()) {
+					Timer2.Update(FrameTime);
+
+					if (Timer2.Sec() >= 1) {
+						// 타이틀 모드로 전환
+						scene.SwitchMode(TitleMode.Start);
+					}
+				}
+			}
+		}
 	}
 
 	// Bgm 재생
@@ -53,5 +78,9 @@ public:
 	void StopBGM() {
 		soundUtil.Stop(Glb.BGMChannel);
 		GameStart = false;
+	}
+
+	void SetGoToTitle() {
+		GoToTitle = true;
 	}
 };

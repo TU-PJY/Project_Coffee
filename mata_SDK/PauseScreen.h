@@ -96,8 +96,18 @@ public:
 				else {
 					switch (QuestionIndex) {
 					case 0:
-						if (QuestionToTitle) 
-						{}
+						if (QuestionToTitle) {
+							if (auto ED = scene.Find("ed"); ED)
+								ED->DisableInput();
+							if (auto TimeWatch = scene.Find("time_watch"); TimeWatch)
+								TimeWatch->Stop();
+							if (auto Manager = scene.Find("play_mode_manager"); Manager) {
+								Manager->StopBGM();
+								Manager->SetGoToTitle();
+							}
+							scene.EndFloatingMode();
+						}
+						
 						else if (QuestionToDesktop)
 							System.Exit();
 						break;

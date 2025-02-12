@@ -1,8 +1,6 @@
 #pragma once
 #include <Scene.h>
 
-#include "PlayMode.h"
-
 class TitleScreen : public GameObject {
 private:
 	// 인트로 끝 여부
@@ -97,7 +95,7 @@ public:
 				if (!SettingState && !QuestionToDesktop) {
 					switch (MenuIndex) {
 					case 0:
-						scene.SwitchMode(PlayMode.Start);
+						scene.SwitchMode(PlayModePtr);
 						break;
 					case 1:
 						SettingState = true;
@@ -178,7 +176,7 @@ public:
 			}
 		}
 
-		if (SettingState) {
+		else if (SettingState) {
 			Text.SetColor(1.0, 1.0, 1.0);
 			Text.SetAlign(ALIGN_MIDDLE);
 			Text.Render(0.0, 0.8, 0.15, L"환경설정");
@@ -213,7 +211,7 @@ public:
 			}
 		}
 
-		if (QuestionToDesktop) {
+		else if (QuestionToDesktop) {
 			Text.SetColor(1.0, 1.0, 1.0);
 			Text.SetAlign(ALIGN_MIDDLE);
 			Text.Render(0.0, 0.8, 0.15, L" 바탕화면으로 나갈까요?");

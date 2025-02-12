@@ -31,6 +31,7 @@ extern const glm::mat4 IdentityMatrix;
 extern std::wstring LocaleType;
 
 typedef void(*START_MODE_PTR)(void);
+typedef void(*MODE_PTR)(void);
 using ShaderLocation = unsigned int;
 
 using Sound          = FMOD::Sound*;
@@ -276,6 +277,8 @@ extern glm::vec3 BackColor;
 
 // start mode function ptr
 extern START_MODE_PTR START_MODE;
+
+extern MODE_PTR PlayModePtr;
 
 // global scope shader
 extern GLuint IMAGE_SHADER;
