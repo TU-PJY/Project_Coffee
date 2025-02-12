@@ -1,5 +1,6 @@
 #pragma once
 #include <ModeHeader.h>
+#include <CameraController.h>
 
 #include "ED.h"
 #include "Shelf.h"
@@ -36,7 +37,8 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
-		System.SetBackColor(0.3, 0.3, 0.3);
+		cameraControl.MoveCamera(0.5, 0.0);
+		cameraControl.ChangeCameraZoom(1.0);
 
 		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER1);
 

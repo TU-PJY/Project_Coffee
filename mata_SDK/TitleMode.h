@@ -1,5 +1,6 @@
 #pragma once
 #include <ModeHeader.h>
+#include <CameraController.h>
 
 #include "TitleScreen.h"
 
@@ -17,6 +18,8 @@ public:
 
 	static void Start() {
 		// 타이틀 화면 인트로는 최소 실행 시에만 재생한다
+		cameraControl.MoveCamera(0.0, 0.0);
+		cameraControl.ChangeCameraZoom(1.0);
 		scene.AddObject(new TitleScreen(Glb.TitleIntroPlayed), "title_screen", LAYER1);
 		Glb.TitleIntroPlayed = true;
 		SetUp();

@@ -2,6 +2,7 @@
 #include <Scene.h>
 
 #include "Cover.h"
+#include "TitleMode.h"
 
 struct Reparations {
 	int DestroyedType;
@@ -75,6 +76,10 @@ private:
 	SoundChannel SndChannel2{};
 	SoundChannel SndChannel3{};
 	GLfloat Volume = 1.0;
+
+
+	// 타이틀로 나가기 지연 타이머
+	TimerUtil DeleteTimer{};
 
 public:
 	GameOverScreen() {
@@ -226,6 +231,13 @@ public:
 			EX.ClampValue(Volume, 0.0, CLAMP_LESS);
 			SndChannel1->setVolume(Volume);
 			SndChannel2->setVolume(Volume);
+
+			if(auto Cover = scene.Find("cover"); Cover)
+				if (Cover->GetState()) {
+					DeleteTimer.Update(FrameTime);
+					if (DeleteTimer.Sec() >= 1)
+						scene.SwitchMode(TitleMode.Start);
+				}
 		}
 	}
 
