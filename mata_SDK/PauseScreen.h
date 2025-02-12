@@ -36,6 +36,8 @@ private:
 
 	bool QuestionFocused[2]{};
 
+	SoundChannel SndChannel{};
+
 public:
 	PauseScreen() {
 		Text.Init(L"픽셀로보로보체", FW_DONTCARE);
@@ -43,12 +45,22 @@ public:
 		Text.SetAlign(ALIGN_MIDDLE);
 		Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 
+		soundUtil.Play(Snd.MenuSelect, SndChannel);
+		soundUtil.SetFreqCutOff(Glb.BGMChannel, 200);
+
 		MenuFocused[0] = true;
+	}
+
+	~PauseScreen() {
+		soundUtil.DisableFreqCutOff(Glb.BGMChannel);
 	}
 
 	void InputKey(KeyEvent& Event) {
 		if (Event.Type == NORMAL_KEY_DOWN) {
 			if (Event.NormalKey == NK_ESCAPE) {
+				soundUtil.Stop(SndChannel);
+				soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 				if (!QuestionState)
 					scene.EndFloatingMode();
 				else {
@@ -62,6 +74,9 @@ public:
 			}
 
 			else if (Event.NormalKey == NK_ENTER) {
+				soundUtil.Stop(SndChannel);
+				soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 				if (!QuestionState) {
 					switch (MenuIndex) {
 					case 0:
@@ -106,11 +121,17 @@ public:
 
 		else if (Event.Type == SPECIAL_KEY_DOWN) {
 			if (Event.SpecialKey == SK_ARROW_UP) {
+				soundUtil.Stop(SndChannel);
+				soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 				if (!QuestionState)  MenuIndex--;
 				else  QuestionIndex--;
 			}
 
 			else if (Event.SpecialKey == SK_ARROW_DOWN) {
+				soundUtil.Stop(SndChannel);
+				soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 				if (!QuestionState)  MenuIndex++;
 				else  QuestionIndex++;
 			}
@@ -135,7 +156,7 @@ public:
 		// 텍스트 출력
 		if (!QuestionState) {
 			Text.SetColor(1.0, 1.0, 1.0);
-			Text.Render(0.0, 0.8, 0.2, L"일시정지");
+			Text.Render(0.0, 0.8, 0.15, L"일시정지");
 
 			GLfloat RenderHeight = 0.25;
 			for (int i = 0; i < 3; i++) {
@@ -145,7 +166,7 @@ public:
 				else
 					Text.SetColor(1.0, 1.0, 1.0);
 
-				Text.Render(0.0, RenderHeight, 0.15, MenuItems[i].c_str());
+				Text.Render(0.0, RenderHeight, 0.1, MenuItems[i].c_str());
 				RenderHeight -= 0.25;
 			}
 		}
@@ -153,9 +174,9 @@ public:
 		else {
 			Text.SetColor(1.0, 1.0, 1.0);
 			if (QuestionToMain) 
-				Text.Render(0.0, 0.8, 0.2, L"메인화면으로 나갈까요?");
+				Text.Render(0.0, 0.8, 0.15, L"메인화면으로 나갈까요?");
 			else if(QuestionToDesktop)
-				Text.Render(0.0, 0.8, 0.2, L" 바탕화면으로 나갈까요?");
+				Text.Render(0.0, 0.8, 0.15, L" 바탕화면으로 나갈까요?");
 
 			GLfloat RenderHeight = 0.125;
 			for (int i = 0; i < 2; i++) {
@@ -164,7 +185,7 @@ public:
 				else
 					Text.SetColor(1.0, 1.0, 1.0);
 
-				Text.Render(0.0, RenderHeight, 0.15, QuestionItems[i].c_str());
+				Text.Render(0.0, RenderHeight, 0.1, QuestionItems[i].c_str());
 				RenderHeight -= 0.25;
 			}
 		}

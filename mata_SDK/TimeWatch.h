@@ -107,6 +107,9 @@ public:
 	}
 
 	void RenderFunc() {
+		if (scene.Mode() != "PlayMode")
+			return;
+
 		// 시간 출력
 		if (!Glb.GameOver) {
 			if(Time < 6.0)

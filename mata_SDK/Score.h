@@ -32,6 +32,9 @@ public:
 	}
 
 	void RenderFunc() {
+		if (scene.Mode() != "PlayMode")
+			return;
+
 		Text.SetColorRGB(255, 213, 80);
 		Text.SetOpacity(1.0);
 		Text.Render((ASP(-1.0) + 0.07), (-1.0 + 0.1 + FeedbackHeight), 0.15, L"SCORE %d", Glb.Score);

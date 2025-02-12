@@ -61,6 +61,9 @@ public:
 	}
 
 	void RenderFunc() {
+		if (scene.Mode() != "PlayMode")
+			return;
+
 		if (0 < Count && Count < 4)
 			Text.Render(0.0, 0.0, 0.4 + Size, L"%d", Count);
 		else if (Count == 0) {
