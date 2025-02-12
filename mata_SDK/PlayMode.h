@@ -37,8 +37,21 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
-		cameraControl.MoveCamera(0.5, 0.0);
-		cameraControl.ChangeCameraZoom(1.0);
+		// 이전에 파괴했던 개수 초기화
+		for (int i = 0; i < 6; i++)
+			Glb.DestroyedItems[i] = 0;
+
+		// 점수 초기화
+		Glb.Score = 0;
+
+		// 사람 생성 가능 여부 초기화
+		for (int i = 0; i < 10; i++) {
+			Glb.PrevChFrame[i] = 0;
+			Glb.CreateAvailable[i] = true;
+		}
+
+		// 게임 오버 상태 초기화
+		Glb.GameOver = false;
 
 		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER1);
 

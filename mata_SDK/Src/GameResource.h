@@ -91,9 +91,6 @@ public:
 	// 파괴하거나 때린 숫자
 	int DestroyedItems[6]{};
 
-	// 거쳐간 선반 개수
-	int ShelfCount{};
-
 	// 게임오버 엔딩
 	int Ending{};
 

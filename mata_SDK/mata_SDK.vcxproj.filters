@@ -25,9 +25,6 @@
     <Filter Include="[5]___________[ System ]\[ Header ]">
       <UniqueIdentifier>{2f35df9f-153e-4b4a-906d-058f259a0979}</UniqueIdentifier>
     </Filter>
-    <Filter Include="[5]___________[ System ]\[ Scene ]">
-      <UniqueIdentifier>{f7b86d35-cb50-4352-9482-a8fb321f19f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="[5]___________[ System ]\[ System Mode ]">
       <UniqueIdentifier>{9d92d68b-96f8-4a78-90d4-bd16df8b7372}</UniqueIdentifier>
     </Filter>
@@ -171,6 +168,9 @@
     </Filter>
     <Filter Include="[2]___________[ Object ]\[ TitleMode Object ]">
       <UniqueIdentifier>{a03f34a7-6728-4e96-8881-a779d24aaaf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="[5]___________[ System ]\[ Scene ]">
+      <UniqueIdentifier>{f7b86d35-cb50-4352-9482-a8fb321f19f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
