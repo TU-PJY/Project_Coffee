@@ -181,8 +181,6 @@ public:
 							BreakCount = 0;
 							MaxBreak += 4;
 
-							Glb.ShelfCount++;
-
 							// 하나의 선반을 지날 때마다 10초의 추가 시간을 얻는다.
 							if (auto TimeWatch = scene.Find("time_watch"); TimeWatch)
 								TimeWatch->AddTime();

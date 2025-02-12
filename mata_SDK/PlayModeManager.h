@@ -27,7 +27,7 @@ public:
 		// 3초 후 화면이 어두워진다
 		if (Glb.GameOver) {
 			Timer1.Update(FrameTime);
-			if (Timer1.Sec() >= 4) {
+			if (Timer1.Sec() >= 3) {
 				scene.AddObject(new Cover, "cover", LAYER7);
 				Timer1.Reset();
 				Timer1.Stop();

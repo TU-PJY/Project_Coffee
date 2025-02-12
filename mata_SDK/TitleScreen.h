@@ -194,15 +194,15 @@ public:
 					break;
 				case 1:
 					if(Glb.FullscreenAcvivated)
-						Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"화면 모드: 전체화면");
+						Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   화면 모드: 전체화면   >");
 					else
-						Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"화면 모드: 창");
+						Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   화면 모드: 창   >");
 					break;
 				case 2:
-					Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"배경음악 볼륨: %.1f", Glb.BGMVolume);
+					Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   배경음악 볼륨: %.1f   >", Glb.BGMVolume);
 					break;
 				case 3:
-					Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"효과음 볼륨: %.1f", Glb.SFXVolume);
+					Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   효과음 볼륨: %.1f   >", Glb.SFXVolume);
 					break;
 				case 4:
 					Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"크래딧");
