@@ -55,7 +55,18 @@ public:
 
 		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER1);
 
-		scene.AddObject(new Floor(CameraPosition.x - ASP(1.0) - 1.6), "floor", LAYER1);
+		// 타일 추가
+		GLfloat Position = ASP(-1.0) - 1.6;
+		while (true) {
+			scene.AddObject(new Floor(Position, true), "floor", LAYER1);
+			Position += 0.8;
+
+			if (Position > ASP(1.0) + 0.8) {
+				scene.AddObject(new Floor(Position, false), "floor", LAYER1);
+				break;
+			}
+		}
+
 		scene.AddObject(new Shelf(2, 1.75), "shelf", LAYER2);
 		scene.AddObject(new Xion(-1.0, 0.0, false, Xion_Cry1), "xion", LAYER3);
 		scene.AddObject(new ED, "ed", LAYER3);
