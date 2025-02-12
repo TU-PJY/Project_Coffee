@@ -193,6 +193,8 @@
     <ClInclude Include="Explode.h" />
     <ClInclude Include="ED.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="PauseMode.h" />
+    <ClInclude Include="PauseScreen.h" />
     <ClInclude Include="PlayModeManager.h" />
     <ClInclude Include="GameOverMode.h" />
     <ClInclude Include="GameOverScreen.h" />

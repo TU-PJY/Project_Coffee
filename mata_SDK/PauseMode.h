@@ -1,39 +1,35 @@
 #pragma once
 #include <ModeHeader.h>
 
-class Template {
-public:
-	// define mode name and mode type here
-	std::string ModeName { "Template" };
-	int         ModeType { MODE_TYPE_DEFAULT };
+#include "PauseScreen.h"
 
-	// type object tag to input device event
+class Pause_Mode {
+public:
+	std::string ModeName{ "PauseMode" };
+	int         ModeType{ MODE_TYPE_FLOATING };
+
 	std::vector<std::string> InputObjectTag
 	{
-
+		"pause_screen"
 	};
 
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
-		// Add task here
-
+		scene.AddObject(new PauseScreen, "pause_screen", LAYER7, OBJECT_TYPE_FLOATING);
 		SetUp();
 	}
 
 	static void Destructor() {
-		// Add task here
 	}
 
 	/////////////////////////////////////////////////////////////
 	// Fold here
 #pragma region FoldRegion 
-	// this is a container that stores object pointers for accessing object controllers.
-	// a pointer to the object corresponding to the tag entered in InputObjectTag is added when the mode starts.
 	std::vector<GameObject*> InputObject{};
-	static GameMode1* M_Inst;
+	static Pause_Mode* M_Inst;
 
-	GameMode1() {
+	Pause_Mode() {
 		M_Inst = this;
 	}
 
@@ -44,7 +40,7 @@ public:
 			if (auto Object = scene.Find(Tag); Object)
 				M_Inst->InputObject.emplace_back(Object);
 		}
-		
+
 		scene.RegisterModeName(M_Inst->ModeName);
 		scene.RegisterDestructor(Destructor);
 		scene.RegisterInputObjectList(M_Inst->InputObject);
@@ -126,7 +122,7 @@ public:
 			}
 			break;
 		}
-	
+
 		for (auto const& Object : M_Inst->InputObject)
 			if (Object)  Object->InputMouse(ButtonEvent);
 	}
@@ -143,4 +139,4 @@ public:
 	}
 #pragma endregion
 };
-extern Template TemplateMode;
+extern Pause_Mode PauseMode;

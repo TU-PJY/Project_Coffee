@@ -37,8 +37,6 @@ public:
 			if (auto Object = scene.Find(Tag); Object)
 				M_Inst->InputObject.emplace_back(Object);
 		}
-
-		InputObjectListPtr = &M_Inst->InputObject;
 		
 		scene.RegisterModeName(M_Inst->ModeName);
 		scene.RegisterDestructor(Destructor);

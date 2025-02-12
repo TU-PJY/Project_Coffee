@@ -166,6 +166,9 @@
     <Filter Include="[2]___________[ Object ]\[ GameOverMode Object ]">
       <UniqueIdentifier>{8e62460c-31d1-477e-967f-97f4c8471e45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="[2]___________[ Object ]\[ PauseMode Object ]">
+      <UniqueIdentifier>{2e2a3d4b-175f-4203-94f7-b5c20bf76dc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AnimationUtil.cpp">
@@ -490,6 +493,12 @@
     </ClInclude>
     <ClInclude Include="CountDown.h">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMode.h">
+      <Filter>[1]___________[ GameMode ]</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseScreen.h">
+      <Filter>[2]___________[ Object ]\[ PauseMode Object ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -33,8 +33,10 @@ void Scene::Update() {
 		for (auto& Object : ObjectList[i]) {
 			if (UpdateActivateCommand) {
 				if (!Object->DeleteCommand) {
-					if (FloatingFocusCommand && Object->FloatingCommand)
-						Object->UpdateFunc(FrameTime);
+					if (FloatingFocusCommand) {
+						if(Object->FloatingCommand)
+							Object->UpdateFunc(FrameTime);
+					}
 					else
 						Object->UpdateFunc(FrameTime);
 				}

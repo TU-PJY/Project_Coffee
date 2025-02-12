@@ -29,7 +29,8 @@ public:
 	// type object tag to input device event
 	std::vector<std::string> InputObjectTag
 	{
-		"ed"
+		"ed",
+		"play_mode_manager"
 	};
 
 	/////////////////////////////////////////////////////////////

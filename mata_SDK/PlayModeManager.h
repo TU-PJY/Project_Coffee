@@ -3,9 +3,19 @@
 #include "Cover.h"
 #include "GameOverMode.h"
 
+#include "PauseMode.h"
+
 class PlayModeManager : public GameObject {
 private:
 	TimerUtil Timer1{}, Timer2{};
+	bool GameStart{};
+
+public:
+	// 일시정지 모드로 전환
+	void InputKey(KeyEvent& Event) {
+		if (GameStart && Event.Type == NORMAL_KEY_DOWN && Event.NormalKey == NK_ESCAPE)
+			scene.StartFloatingMode(PauseMode.Start, true);
+	}
 
 	void UpdateFunc(float FrameTime) {
 		// 3초 후 화면이 어두워진다
@@ -36,10 +46,12 @@ private:
 		// 2가지 bgm중 하나를 선택해 플레이 한다
 		int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
 		soundUtil.Play(Snd.PlayBgm[RandNum], Glb.BGMChannel);
+		GameStart = true;
 	}
 
 	// Bgm 정지
 	void StopBGM() {
 		soundUtil.Stop(Glb.BGMChannel);
+		GameStart = false;
 	}
 };

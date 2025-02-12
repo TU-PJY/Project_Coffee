@@ -10,4 +10,7 @@ Play_Mode* Play_Mode::M_Inst;
 GameOver_Mode GameOverMode;
 GameOver_Mode* GameOver_Mode::M_Inst;
 
+Pause_Mode PauseMode;
+Pause_Mode* Pause_Mode::M_Inst;
+
 START_MODE_PTR START_MODE = PlayMode.Start;
