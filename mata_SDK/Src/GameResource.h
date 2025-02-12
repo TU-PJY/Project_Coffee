@@ -55,6 +55,7 @@ public:
 	Sound RepTotal{};
 
 	Sound PlayBgm[2]{};
+	Sound TitleBgm{};
 	Sound MenuSelect{};
 };
 

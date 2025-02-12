@@ -148,7 +148,7 @@ public:
 				ShowRep = true;
 				ScoreText.SetUseShadow(false);
 			}
-			else {
+			else if(ShowTotalRep){
 				ExitState = true;
 				scene.AddObject(new Cover, "cover", LAYER7);
 				// 나가는 상태를 활성화하고 더 이상 입력을 받지 않도록 한다

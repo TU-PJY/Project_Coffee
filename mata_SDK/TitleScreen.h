@@ -29,6 +29,8 @@ private:
 		L"¾Æ´Ï¿À"
 	};
 
+	SoundChannel SndChannel{};
+
 public:
 	TitleScreen(bool IntroFlag) {
 		if (IntroFlag)
@@ -45,12 +47,17 @@ public:
 		Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 		Text.SetUseShadow(true);
 		Text.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.8);
+
+		soundUtil.Play(Snd.TitleBgm, Glb.BGMChannel);
 	}
 
 	void InputKey(KeyEvent& Event) {
 		if (Event.Type == SPECIAL_KEY_DOWN) {
 			switch (Event.SpecialKey) {
 			case SK_ARROW_UP:
+				soundUtil.Stop(SndChannel);
+				soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 				if (!SettingState && !QuestionToDesktop)
 					MenuIndex--;
 				else if(SettingState || QuestionToDesktop)
@@ -58,6 +65,9 @@ public:
 				break;
 
 			case SK_ARROW_DOWN:
+				soundUtil.Stop(SndChannel);
+				soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 				if (!SettingState && !QuestionToDesktop) 
 					MenuIndex++;
 				else if (SettingState || QuestionToDesktop)
@@ -92,9 +102,13 @@ public:
 		else if (Event.Type == NORMAL_KEY_DOWN) {
 			switch (Event.NormalKey) {
 			case NK_ENTER:
+				soundUtil.Stop(SndChannel);
+				soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 				if (!SettingState && !QuestionToDesktop) {
 					switch (MenuIndex) {
 					case 0:
+						soundUtil.Stop(Glb.BGMChannel);
 						scene.SwitchMode(PlayModePtr);
 						break;
 					case 1:
@@ -137,6 +151,9 @@ public:
 				break;
 
 			case NK_ESCAPE:
+				soundUtil.Stop(SndChannel);
+				soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 				if (!SettingState && !QuestionToDesktop) 
 					QuestionToDesktop = true;
 
