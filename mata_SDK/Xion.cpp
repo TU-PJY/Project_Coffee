@@ -99,6 +99,9 @@ void Xion::HitPeople() {
 	if (auto TimeWatch = scene.Find("time_watch"); TimeWatch)
 		TimeWatch->Stop();
 
+	if (auto Manager = scene.Find("play_mode_manager"); Manager)
+		Manager->StopBGM();
+
 	Glb.DestroyedItems[Item_Xion]++;
 
 	// 게임오버 엔딩 지정

@@ -87,6 +87,9 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.Rep, "Assets//Sound//rep.mp3");
 	soundUtil.Load(Snd.RepTotal, "Assets//Sound//rep-total.mp3");
 
+	soundUtil.Load(Snd.PlayBgm[0], "Assets//Sound//play-bgm-1.mp3", FMOD_LOOP_NORMAL);
+	soundUtil.Load(Snd.PlayBgm[1], "Assets//Sound//play-bgm-2.mp3", FMOD_LOOP_NORMAL);
+
 	return 0;
 }
 

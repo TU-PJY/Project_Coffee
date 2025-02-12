@@ -53,6 +53,8 @@ public:
 	Sound GameEnd[3]{};
 	Sound Rep{};
 	Sound RepTotal{};
+
+	Sound PlayBgm[2]{};
 };
 
 // Data Format list
@@ -89,6 +91,9 @@ public:
 
 	// 게임오버 엔딩
 	int Ending{};
+
+	// Bgm 채널
+	SoundChannel BGMChannel{};
 };
 
 // Declare the global text object here.

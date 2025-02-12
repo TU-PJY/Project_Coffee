@@ -106,6 +106,10 @@ public:
 	// score indicator function
 	virtual void AddScore(int Value) {}
 
+	// PlayManagerFunction
+	virtual void PlayBGM() {}
+	virtual void StopBGM() {}
+
 private:
 	glm::vec4 ViewportPosition();
 	glm::vec4 LocalPosition();

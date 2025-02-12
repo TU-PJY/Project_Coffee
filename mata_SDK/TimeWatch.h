@@ -92,6 +92,9 @@ public:
 		if (Time <= 0.0) {
 			Glb.GameOver = true;
 
+			if (auto Manager = scene.Find("play_mode_manager"); Manager)
+				Manager->StopBGM();
+
 			// 게임오버 엔딩 지정
 			if(Glb.Score > 0)
 				Glb.Ending = GameOver_TimeOut;

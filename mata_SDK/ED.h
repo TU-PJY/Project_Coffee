@@ -150,8 +150,6 @@ public:
 					StateTimer.Reset();
 					AnimationSize = 1.0;
 
-					std::cout << Item.Type << std::endl;
-
 					if (Item.Type == Coffee_Box && Event.SpecialKey == SK_ARROW_DOWN)
 						IsCorrect = true;
 					else if (Item.Type == Coffee_Bottle && Event.SpecialKey == SK_ARROW_RIGHT)

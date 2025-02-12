@@ -41,6 +41,10 @@ public:
 				if (auto ED = scene.Find("ed"); ED)
 					ED->EnableInput();
 
+				// bgm Àç»ý
+				if (auto Manager = scene.Find("play_mode_manager"); Manager)
+					Manager->PlayBGM();
+
 				Timer.Stop();
 				Timer.Reset();
 			}
