@@ -11,6 +11,7 @@
 #include "Score.h"
 #include "CountDown.h"
 #include "PlayModeManager.h"
+#include "BackgroundShelf.h"
 // render order
 
 // floor, Background
@@ -37,6 +38,10 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
+		System.SetBackColorRGB(112, 128, 144);
+
+		cameraControl.MoveCamera(0.0, 0.0);
+
 		// 이전에 파괴했던 개수 초기화
 		for (int i = 0; i < 6; i++)
 			Glb.DestroyedItems[i] = 0;
@@ -53,19 +58,22 @@ public:
 		// 게임 오버 상태 초기화
 		Glb.GameOver = false;
 
+
 		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER1);
 
 		// 타일 추가
 		GLfloat Position = ASP(-1.0) - 1.6;
 		while (true) {
-			scene.AddObject(new Floor(Position, true), "floor", LAYER1);
+			scene.AddObject(new Floor(Position, true), "floor", LAYER_BG);
 			Position += 0.8;
 
 			if (Position > ASP(1.0) + 0.8) {
-				scene.AddObject(new Floor(Position, false), "floor", LAYER1);
+				scene.AddObject(new Floor(Position, false), "floor", LAYER_BG);
 				break;
 			}
 		}
+
+		scene.AddObject(new BackgroundShelf(0.0), "background_shelf", LAYER1);
 
 		scene.AddObject(new Shelf(2, 1.75), "shelf", LAYER2);
 		scene.AddObject(new Xion(-1.0, 0.0, false, Xion_Cry1), "xion", LAYER3);

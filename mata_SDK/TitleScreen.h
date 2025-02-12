@@ -3,8 +3,12 @@
 
 class TitleScreen : public GameObject {
 private:
+	bool RenderStart{};
+
 	// 인트로 끝 여부
 	bool IntroEnd{};
+
+	bool RenderText{};
 
 	// 메뉴 텍스트 및 현재 선택된 텍스트
 	TextUtil Text{};
@@ -32,12 +36,31 @@ private:
 		L"아니오"
 	};
 
+	GLfloat TextOpacity{};
+
 	SoundChannel SndChannel{};
+
+	TimerUtil MoveDelayTimer{};
+	GLfloat TitleCameraPosition = -2.0;
+	GLfloat TitleCameraZoom = 1.3;
+
+	SinLerp CamLerp{};
+	SinLerp ZoomLerp{};
+
+	SinLoop XionLoop{};
+	SinLoop EDLoop{};
+	GLfloat XionSize{};
+	GLfloat EDSize{};
+	TimerUtil ShakeTimer{};
+	glm::vec2 ShakePosition{};
 
 public:
 	TitleScreen(bool IntroFlag) {
-		if (IntroFlag)
+		if (IntroFlag) {
 			IntroEnd = true;
+			RenderText = true;
+			TextOpacity = 1.0;
+		}
 		else
 			IntroEnd = false;
 
@@ -48,13 +71,15 @@ public:
 		Text.Init(L"픽셀로보로보체", FW_DONTCARE);
 		Text.SetAlign(ALIGN_LEFT);
 		Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
-		Text.SetUseShadow(true);
 		Text.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.8);
 
 		soundUtil.Play(Snd.TitleBgm, Glb.BGMChannel);
 	}
 
 	void InputKey(KeyEvent& Event) {
+		if (!RenderText)
+			return;
+
 		if (Event.Type == SPECIAL_KEY_DOWN) {
 			switch (Event.SpecialKey) {
 			case SK_ARROW_UP:
@@ -149,6 +174,9 @@ public:
 				}
 
 				if (QuestionToDesktop) {
+					soundUtil.Stop(SndChannel);
+					soundUtil.Play(Snd.MenuSelect, SndChannel);
+
 					switch (MenuIndex2) {
 					case 0:
 						System.Exit();
@@ -197,78 +225,144 @@ public:
 			if (StartTimer.MiliSec() >= 1)
 				scene.SwitchMode(PlayModePtr);
 		}
+
+		if (!IntroEnd) {
+			MoveDelayTimer.Update(FrameTime);
+			if (MoveDelayTimer.Sec() >= 2) {
+				if(TitleCameraPosition < 1.0)
+					TitleCameraPosition = CamLerp.Update(TitleCameraPosition, 1.0, 0.025, FrameTime);
+				if(TitleCameraZoom > 1.0)
+					TitleCameraZoom = ZoomLerp.Update(TitleCameraZoom, 1.0, 0.025, FrameTime);
+			}
+			cameraControl.MoveCamera(TitleCameraPosition, 0.0);
+			cameraControl.ChangeCameraZoom(TitleCameraZoom);
+
+			if (TitleCameraPosition > 0.7)
+				RenderText = true;
+		}
+
+		if(RenderText) {
+			TextOpacity += FrameTime;
+			EX.ClampValue(TextOpacity, 1.0, CLAMP_GREATER);
+		}
+
+		XionSize = XionLoop.Update(0.03, 15.0, FrameTime);
+	//	EDSize = EDLoop.Update(0.03, 4.0, FrameTime);
+		ShakeTimer.Update(FrameTime);
+		if (ShakeTimer.CheckMiliSec(0.02, 2, CHECK_AND_INTERPOLATE)) {
+			ShakePosition.x = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
+			ShakePosition.y = randomUtil.Gen(RANDOM_TYPE_REAL, -0.01, 0.01);
+		}
 	}
 
 	void RenderFunc() {
 		if (GameStart) {
-			Begin();
+			Begin(RENDER_TYPE_STATIC);
 			transform.Scale(MoveMatrix, ASP(2.0), 2.0);
 			imageUtil.Render(SysRes.COLOR_TEXTURE);
 		}
 
 		else {
-			// 메뉴 표시
-			if (!SettingState && !QuestionToDesktop) {
-				for (int i = 0; i < 3; i++) {
-					if (MenuFocused[i])
-						Text.SetColorRGB(255, 213, 80);
-					else
+			if (RenderStart) {
+				// 시온
+				Begin();
+				transform.Move(MoveMatrix, -2.0, -0.5 + XionSize * 0.5);
+				transform.Scale(MoveMatrix, 3.0, 3.0 + XionSize);
+				imageUtil.RenderStaticSpriteSheet(Img.Xion, Xion_Nervous);
+
+				// 이드
+				Begin();
+				transform.Move(MoveMatrix, ShakePosition.x, -0.5 + EDSize * 0.5 + ShakePosition.y);
+				transform.Scale(MoveMatrix, 3.0, 3.0 + EDSize);
+				imageUtil.RenderStaticSpriteSheet(Img.ED, ED_Title);
+
+				// 카트
+				Begin();
+				transform.Move(MoveMatrix, 1.0, -0.9);
+				transform.Scale(MoveMatrix, 2.25, 2.25);
+				imageUtil.RenderStaticSpriteSheet(Img.Cart, 0);
+
+				if (RenderText) {
+					Text.SetOpacity(TextOpacity);
+
+					// 메뉴 표시
+					if (!SettingState && !QuestionToDesktop) {
+						Text.SetUseShadow(true);
+
+						for (int i = 0; i < 3; i++) {
+							if (MenuFocused[i])
+								Text.SetColorRGB(255, 213, 80);
+							else
+								Text.SetColor(1.0, 1.0, 1.0);
+
+							Text.Render(ASP(1.0) - 0.1, 0.25 - 0.25 * i, 0.1, MenuItems[i].c_str());
+						}
+					}
+
+					else if (SettingState) {
+						Begin(RENDER_TYPE_STATIC);
+						transform.Scale(MoveMatrix, ASP(2.0), 2.0);
+						imageUtil.Render(SysRes.COLOR_TEXTURE, 0.7);
+
+						Text.SetUseShadow(false);
 						Text.SetColor(1.0, 1.0, 1.0);
+						Text.SetAlign(ALIGN_MIDDLE);
+						Text.Render(0.0, 0.8, 0.15, L"환경설정");
 
-					Text.Render(ASP(1.0) - 0.1, 0.25 - 0.25 * i, 0.1, MenuItems[i].c_str());
-				}
-			}
+						Text.SetAlign(ALIGN_LEFT);
+						for (int i = 0; i < 5; i++) {
+							if (SettingFocused[i])
+								Text.SetColorRGB(255, 213, 80);
+							else
+								Text.SetColor(1.0, 1.0, 1.0);
 
-			else if (SettingState) {
-				Text.SetColor(1.0, 1.0, 1.0);
-				Text.SetAlign(ALIGN_MIDDLE);
-				Text.Render(0.0, 0.8, 0.15, L"환경설정");
+							switch (i) {
+							case 0:
+								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"타이틀로 돌아가기");
+								break;
+							case 1:
+								if (Glb.FullscreenAcvivated)
+									Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   화면 모드: 전체화면   >");
+								else
+									Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   화면 모드: 창   >");
+								break;
+							case 2:
+								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   배경음악 볼륨: %.1f   >", Glb.BGMVolume);
+								break;
+							case 3:
+								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   효과음 볼륨: %.1f   >", Glb.SFXVolume);
+								break;
+							case 4:
+								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"크래딧");
+								break;
+							}
+						}
+					}
 
-				Text.SetAlign(ALIGN_LEFT);
-				for (int i = 0; i < 5; i++) {
-					if (SettingFocused[i])
-						Text.SetColorRGB(255, 213, 80);
-					else
+					else if (QuestionToDesktop) {
+						Begin(RENDER_TYPE_STATIC);
+						transform.Scale(MoveMatrix, ASP(2.0), 2.0);
+						imageUtil.Render(SysRes.COLOR_TEXTURE, 0.7);
+
+						Text.SetUseShadow(false);
 						Text.SetColor(1.0, 1.0, 1.0);
+						Text.SetAlign(ALIGN_MIDDLE);
+						Text.Render(0.0, 0.8, 0.15, L" 바탕화면으로 나갈까요?");
 
-					switch (i) {
-					case 0:
-						Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"타이틀로 돌아가기");
-						break;
-					case 1:
-						if (Glb.FullscreenAcvivated)
-							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   화면 모드: 전체화면   >");
-						else
-							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   화면 모드: 창   >");
-						break;
-					case 2:
-						Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   배경음악 볼륨: %.1f   >", Glb.BGMVolume);
-						break;
-					case 3:
-						Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   효과음 볼륨: %.1f   >", Glb.SFXVolume);
-						break;
-					case 4:
-						Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"크래딧");
-						break;
+						Text.SetAlign(ALIGN_LEFT);
+						for (int i = 0; i < 2; i++) {
+							if (QuestionFocused[i])
+								Text.SetColorRGB(255, 213, 80);
+							else
+								Text.SetColor(1.0, 1.0, 1.0);
+
+							Text.Render(ASP(1.0) - 0.1, 0.125 - i * 0.25, 0.1, QuestionItems[i].c_str());
+						}
 					}
 				}
 			}
-
-			else if (QuestionToDesktop) {
-				Text.SetColor(1.0, 1.0, 1.0);
-				Text.SetAlign(ALIGN_MIDDLE);
-				Text.Render(0.0, 0.8, 0.15, L" 바탕화면으로 나갈까요?");
-
-				Text.SetAlign(ALIGN_LEFT);
-				for (int i = 0; i < 2; i++) {
-					if (QuestionFocused[i])
-						Text.SetColorRGB(255, 213, 80);
-					else
-						Text.SetColor(1.0, 1.0, 1.0);
-
-					Text.Render(ASP(1.0) - 0.1, 0.125 - i * 0.25, 0.1, QuestionItems[i].c_str());
-				}
-			}
 		}
+
+		RenderStart = true;
 	}
 };

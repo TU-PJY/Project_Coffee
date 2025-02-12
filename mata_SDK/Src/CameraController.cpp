@@ -41,7 +41,7 @@ void CameraController::Update(float FrameTime){
 		MoveCamera(CameraPosition);
 	}
 
-	else if (scene.Mode() == "GameOverMode") 
+	else
 		ShakePosition = glm::vec2(0.0, 0.0);
 
 	ComputeCameraMatrix();

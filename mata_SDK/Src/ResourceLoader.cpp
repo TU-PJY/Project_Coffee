@@ -43,6 +43,7 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 
 	imageUtil.LoadT(Img.GameOverBackGround, "Assets//Sprite//background-bad.png");
 	imageUtil.LoadT(Img.GameOverBackGround2, "Assets//Sprite//background-good.png");
+	imageUtil.LoadT(Img.BackGroundShelf, "Assets//Sprite//background-shelf.png");
 
 	return 0;
 }

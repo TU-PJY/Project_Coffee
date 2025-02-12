@@ -14,12 +14,12 @@ public:
 	void UpdateFunc(float FrameTime) {
 		// 자신의 위치가 화면 안쪽으로 들러오면 자신의 바로 오른쪽에 새로운 객체를 추가한다
 		if (!NewFloorGenerated && Position - 0.4 <= CameraPosition.x + ASP(1.0) + 0.4) {
-			scene.AddObject(new Floor(Position + 0.8, false), "floor", LAYER1);
+			scene.AddObject(new Floor(Position + 0.8, false), "floor", LAYER_BG);
 			NewFloorGenerated = true;
 		}
 
 		// 화면을 멀리 벗어나면 삭제한다
-		if (Position < CameraPosition.x - ASP(1.0) - 2.0)
+		if (Position < CameraPosition.x - ASP(1.0) - 3.0)
 			scene.DeleteObject(this);
 	}
 

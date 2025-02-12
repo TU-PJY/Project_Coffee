@@ -76,6 +76,10 @@ private:
 	bool SoundPlayed{};
 
 public:
+	ED() {
+		mathUtil.Lerp(EDCameraPosition, DestPosition + 0.5, 7.0, 1.0);
+	}
+	
 	void InputKey(KeyEvent& Event) {
 		// 비활성화 상태에서는 입력을 받지 않는다.
 		if (!InputAvailable)

@@ -187,6 +187,7 @@
     <ClCompile Include="Xion.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackgroundShelf.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="CountDown.h" />
     <ClInclude Include="DestroyedCan.h" />
