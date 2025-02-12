@@ -28,6 +28,7 @@ public:
 	Image FloorTile{};
 
 	Image GameOverBackGround{};
+	Image GameOverBackGround2{};
 };
 
 // Declare the sound resource here. 
@@ -118,7 +119,9 @@ enum ED_StateEnum {
 	ED_HitLow1,
 	ED_HitLow2,
 	ED_KickPeople,
-	ED_GameOver
+	ED_GameOver,
+	ED_Title,
+	ED_Happy
 };
 
 // 시온 프레임
@@ -128,7 +131,8 @@ enum XionStateEnum {
 	Xion_Curious,
 	Xion_Blocking,
 	Xion_Cry2,
-	Xion_Hurt
+	Xion_Hurt,
+	Xion_Happy
 };
 
 // 커피 종류

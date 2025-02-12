@@ -7,10 +7,10 @@
 
 // Use LoadT(), LoadClipT(), and LoadSpriteSheetT() to load image files and sprite sheets in this thread.
 DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
-	imageUtil.SetSpriteSheetSize(256, 256, 7, 1);
+	imageUtil.SetSpriteSheetSize(256, 256, 9, 1);
 	imageUtil.LoadSpriteSheetT(Img.ED, "Assets//Sprite//sheet-ed.png");
 
-	imageUtil.SetSpriteSheetSize(256, 256, 6, 1);
+	imageUtil.SetSpriteSheetSize(256, 256, 7, 1);
 	imageUtil.LoadSpriteSheetT(Img.Xion, "Assets//Sprite//sheet-xion.png");
 
 	imageUtil.SetSpriteSheetSize(256, 256, 2, 1);
@@ -41,7 +41,8 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.LoadT(Img.Smoke, "Assets//Sprite//smoke.png");
 	imageUtil.LoadT(Img.FloorTile, "Assets//Sprite//floor.png");
 
-	imageUtil.LoadT(Img.GameOverBackGround, "Assets//Sprite//background-gameover.png");
+	imageUtil.LoadT(Img.GameOverBackGround, "Assets//Sprite//background-bad.png");
+	imageUtil.LoadT(Img.GameOverBackGround2, "Assets//Sprite//background-good.png");
 
 	return 0;
 }

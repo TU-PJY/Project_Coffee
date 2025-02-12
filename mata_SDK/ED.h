@@ -284,6 +284,7 @@ public:
 			else
 				mathUtil.Lerp(HRotation, 0.0, 15.0, FrameTime);
 
+
 			// 애니메이션
 			// AnimationSize가 0.0보다 작다면 다시 0.0으로 복귀시킨다
 			mathUtil.Lerp(AnimationSize, 0.0, 15.0, FrameTime);
@@ -334,6 +335,9 @@ public:
 			}
 
 			else {
+				TiltValue = 0.0;
+				AnimationSize = 0.0;
+
 				Frame = ED_Idle;
 
 				// 이드의 숨쉬기 애니메이션을 업데이트 한다
