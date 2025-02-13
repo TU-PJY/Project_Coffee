@@ -144,7 +144,7 @@ public:
 		TotalRep += Glb.DestroyedItems[Item_BoxCoffee] * 25000;
 		TotalRep += Glb.DestroyedItems[Item_BottleCoffee] * 2500;
 		TotalRep += Glb.DestroyedItems[Item_CanCoffee] * 1200;
-		TotalRep += Glb.DestroyedItems[Item_People] * 1000000;
+		TotalRep += Glb.DestroyedItems[Item_People] * 1500000;
 		TotalRep += Glb.DestroyedItems[Item_Xion] * 1000000;
 		TotalRep += Glb.DestroyedItems[Item_HouseDoc] * 100000;
 	}
@@ -315,6 +315,13 @@ public:
 
 			// 점수 출력
 			ScoreText.Render(0.0, 0.4, 0.2, L"SCORE\n%d", Glb.Score);
+
+			ScoreText.SetColor(1.0, 1.0, 1.0);
+			ScoreText.SetAlign(ALIGN_LEFT);
+			ScoreText.SetHeightAlign(HEIGHT_ALIGN_UNDER);
+			ScoreText.Render(ASP(1.0) - 0.05, 0.95, 0.1, L"Enter를 눌러 계속");
+			ScoreText.SetAlign(ALIGN_MIDDLE);
+			ScoreText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 		}
 
 		// 배상금 출력
@@ -332,19 +339,19 @@ public:
 
 				switch (RepVec[i].DestroyedType) {
 				case Item_BoxCoffee:
-					ScoreText.Render(0.0, RenderHeight, 0.1, L"커피 상자 파손: %d개 x 25000골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
+					ScoreText.Render(0.0, RenderHeight, 0.1, L"커피 상자 배상: %d개 x 25000골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
 					break;
 
 				case Item_BottleCoffee:
-					ScoreText.Render(0.0, RenderHeight, 0.1, L"병 커피 파손: %d개 x 2500골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
+					ScoreText.Render(0.0, RenderHeight, 0.1, L"병 커피 배상: %d개 x 2500골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
 					break;
 
 				case Item_CanCoffee:
-					ScoreText.Render(0.0, RenderHeight, 0.1, L"캔 커피 파손: %d개 x 1200골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
+					ScoreText.Render(0.0, RenderHeight, 0.1, L"캔 커피 배상: %d개 x 1200골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
 					break;
 
 				case Item_People:
-					ScoreText.Render(0.0, RenderHeight, 0.1, L"타인 상해: %d명 x 1000000골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
+					ScoreText.Render(0.0, RenderHeight, 0.1, L"폭행 피해 합의금: %d명 x 1500000골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
 					break;
 
 				case Item_Xion:
@@ -352,7 +359,7 @@ public:
 					break;
 
 				case Item_HouseDoc:
-					ScoreText.Render(0.0, RenderHeight, 0.1, L"불 탄 집문서: %d장 x 100000골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
+					ScoreText.Render(0.0, RenderHeight, 0.1, L"불 탄 집문서 배상: %d장 x 100000골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
 					break;
 				}
 
@@ -361,7 +368,14 @@ public:
 
 			if (ShowTotalRep) {
 				ScoreText.SetColorRGB(255, 213, 80);
-				ScoreText.Render(0.0 + TextShake.x, -0.7 + TextShake.y, 0.15, L"총 배상액: %d 골드", TotalRep);
+				ScoreText.Render(0.0 + TextShake.x, -0.7 + TextShake.y, 0.15, L"합계: %d 골드", TotalRep);
+
+				ScoreText.SetColor(1.0, 1.0, 1.0);
+				ScoreText.SetAlign(ALIGN_LEFT);
+				ScoreText.SetHeightAlign(HEIGHT_ALIGN_DEFAULT);
+				ScoreText.Render(ASP(1.0) - 0.05, -0.95, 0.1, L"Enter를 눌러 계속");
+				ScoreText.SetAlign(ALIGN_MIDDLE);
+				ScoreText.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 			}
 		}
 	}
