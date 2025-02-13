@@ -14,11 +14,13 @@ private:
 	int MenuIndex{};
 
 	bool QuestionToDesktop{};
+	bool QuestionReset{};
 	bool QuestionFocused[2]{};
 
 	bool SettingState{};
 	bool SettingFocused[6]{};
 	int MenuIndex2{};
+	int MenuIndex3{};
 
 	TimerUtil StartTimer{};
 	bool GameStart{};
@@ -34,6 +36,11 @@ private:
 	std::wstring QuestionItems[2] = {
 		L"예",
 		L"아니오"
+	};
+
+	std::wstring QuestionItems2[2] = {
+		L"아니오",
+		L"예"
 	};
 
 	GLfloat TextOpacity{};
@@ -91,8 +98,10 @@ public:
 
 				if (!SettingState && !QuestionToDesktop)
 					MenuIndex--;
-				else if(SettingState || QuestionToDesktop)
+				else if ((SettingState && !QuestionReset) || QuestionToDesktop)
 					MenuIndex2--;
+				else if (SettingState && QuestionReset)
+					MenuIndex3--;
 				break;
 
 			case SK_ARROW_DOWN:
@@ -100,10 +109,12 @@ public:
 				soundUtil.Play(Snd.MenuSelect, SndChannel);
 				SndChannel->setVolume(Glb.SFXVolume);
 
-				if (!SettingState && !QuestionToDesktop) 
+				if (!SettingState && !QuestionToDesktop)
 					MenuIndex++;
-				else if (SettingState || QuestionToDesktop)
+				else if ((SettingState && !QuestionReset) || QuestionToDesktop)
 					MenuIndex2++;
+				else if (SettingState && QuestionReset)
+					MenuIndex3++;
 				break;
 
 			case SK_ARROW_LEFT:
@@ -162,15 +173,17 @@ public:
 			}
 
 			EX.ClampValue(MenuIndex, 0, 2, CLAMP_RETURN);
-			if(SettingState)
+			if(SettingState && !QuestionReset)
 				EX.ClampValue(MenuIndex2, 0, 5, CLAMP_RETURN);
-			if(QuestionToDesktop)
+			else if(QuestionToDesktop)
 				EX.ClampValue(MenuIndex2, 0, 1, CLAMP_RETURN);
+			else if(SettingState && QuestionReset)
+				EX.ClampValue(MenuIndex3, 0, 1, CLAMP_RETURN);
 
 			for (int i = 0; i < 3; i++)
 				MenuFocused[i] = false;
 
-			if (SettingState) {
+			if (SettingState && !QuestionReset) {
 				for (int i = 0; i < 6; i++)
 					SettingFocused[i] = false;
 				SettingFocused[MenuIndex2] = true;
@@ -180,7 +193,12 @@ public:
 				for (int i = 0; i < 2; i++)
 					QuestionFocused[i] = false;
 				QuestionFocused[MenuIndex2] = true;
+			}
 
+			else if (SettingState && QuestionReset) {
+				for (int i = 0; i < 2; i++)
+					QuestionFocused[i] = false;
+				QuestionFocused[MenuIndex3] = true;
 			}
 
 			MenuFocused[MenuIndex] = true;
@@ -217,7 +235,7 @@ public:
 					break;
 				}
 
-				if (SettingState) {
+				if (SettingState && !QuestionReset) {
 					if (MenuIndex2 == 0 || MenuIndex2 == 4 || MenuIndex2 == 5) {
 						soundUtil.Stop(SndChannel);
 						soundUtil.Play(Snd.MenuSelect, SndChannel);
@@ -232,11 +250,14 @@ public:
 						SettingFocused[0] = true;
 						MenuIndex2 = 0;
 						break;
+
+					case 4:
+						QuestionReset = true;
+						break;
 					}
-					break;
 				}
 
-				if (QuestionToDesktop) {
+				else if (QuestionToDesktop) {
 					soundUtil.Stop(SndChannel);
 					soundUtil.Play(Snd.MenuSelect, SndChannel);
 					SndChannel->setVolume(Glb.SFXVolume);
@@ -252,7 +273,32 @@ public:
 						MenuIndex2 = 0;
 						break;
 					}
-					break;
+				}
+
+				else if (SettingState && QuestionReset) {
+					soundUtil.Stop(SndChannel);
+					soundUtil.Play(Snd.MenuSelect, SndChannel);
+					SndChannel->setVolume(Glb.SFXVolume);
+
+					switch (MenuIndex3) {
+					case 0:
+						QuestionReset = false;
+						QuestionFocused[1] = false;
+						QuestionFocused[0] = true;
+						MenuIndex3 = 0;
+						break;
+
+					case 1:
+						Dat.HighscoreData.ResetData();
+						Glb.HighScore = 0;
+						Glb.MaxRep = 0;
+
+						QuestionReset = false;
+						QuestionFocused[1] = false;
+						QuestionFocused[0] = true;
+						MenuIndex3 = 0;
+						break;
+					}
 				}
 				break;
 
@@ -271,12 +317,19 @@ public:
 					MenuIndex2 = 0;
 				}
 
-				else if (SettingState) {
+				else if (SettingState && !QuestionReset) {
 					SettingState = false;
 					for (int i = 0; i < 6; i++)
 						SettingFocused[i] = false;
 					SettingFocused[0] = true;
 					MenuIndex2 = 0;
+				}
+
+				else if (SettingState && QuestionReset) {
+					QuestionReset = false;
+					QuestionFocused[1] = false;
+					QuestionFocused[0] = true;
+					MenuIndex3 = 0;
 				}
 				break;
 			}
@@ -390,7 +443,7 @@ public:
 					}
 				}
 
-				else if (SettingState) {
+				else if (SettingState && !QuestionReset) {
 					Begin(RENDER_TYPE_STATIC);
 					transform.Scale(MoveMatrix, ASP(2.0), 2.0);
 					imageUtil.Render(SysRes.COLOR_TEXTURE, 0.7);
@@ -449,7 +502,7 @@ public:
 					Text.SetUseShadow(false);
 					Text.SetColor(1.0, 1.0, 1.0);
 					Text.SetAlign(ALIGN_MIDDLE);
-					Text.Render(0.0, 0.8, 0.15, L" 바탕화면으로 나갈까요?");
+					Text.Render(0.0, 0.8, 0.15, L"바탕화면으로 나갈까요?");
 
 					Text.SetAlign(ALIGN_LEFT);
 					for (int i = 0; i < 2; i++) {
@@ -459,6 +512,27 @@ public:
 							Text.SetColor(1.0, 1.0, 1.0);
 
 						Text.Render(ASP(1.0) - 0.1, 0.125 - i * 0.25, 0.1, QuestionItems[i].c_str());
+					}
+				}
+
+				else if (QuestionReset) {
+					Begin(RENDER_TYPE_STATIC);
+					transform.Scale(MoveMatrix, ASP(2.0), 2.0);
+					imageUtil.Render(SysRes.COLOR_TEXTURE, 0.7);
+
+					Text.SetUseShadow(false);
+					Text.SetColor(1.0, 1.0, 1.0);
+					Text.SetAlign(ALIGN_MIDDLE);
+					Text.Render(0.0, 0.8, 0.15, L"정말인가요?");
+
+					Text.SetAlign(ALIGN_LEFT);
+					for (int i = 0; i < 2; i++) {
+						if (QuestionFocused[i])
+							Text.SetColorRGB(255, 213, 80);
+						else
+							Text.SetColor(1.0, 1.0, 1.0);
+
+						Text.Render(ASP(1.0) - 0.1, 0.125 - i * 0.25, 0.1, QuestionItems2[i].c_str());
 					}
 				}
 			}
