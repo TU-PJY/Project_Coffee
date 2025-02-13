@@ -9,6 +9,9 @@
 class Shelf : public GameObject {
 private:
 	//////////////////////// 선반
+	// 타이틀 렌더 여부
+	bool ForTitle{};
+	// 
 	// 선반 개수
 	int NumShelf{};
 
@@ -76,106 +79,164 @@ private:
 	bool XionGenerated{};
 
 public:
-	Shelf(int Num, GLfloat PositionValue) {
+	Shelf(int Num, GLfloat PositionValue, bool TitleRender=false) {
 		NumShelf = Num;
-		Position = PositionValue;
+		Position = PositionValue; 
+		ForTitle = TitleRender;
 
 		// 각 선반마다 50퍼센트의 확률로 시온 배치가 활성화된다
-		if (NumShelf > 2 && randomUtil.Probability(50))
-			XionAddActivated = true;
-
 		// 중간 지점 및 끝 지점 길이 계산 
 		MiddlePoint = Position + Length * (GLfloat)(Num - 1) * 0.5;
 		EndPoint = Position + Length * (GLfloat)(Num - 1) + Length * 0.5;
 
-		// 선반 한 칸당 4개의 커피들을 랜덤으로 배치한다.
-		// 마지막 칸은 3개만 배치한다.
-		int GenTime = Num * 4 - 1;
+		if (!ForTitle) {
+			if (NumShelf > 2 && randomUtil.Probability(50))
+				XionAddActivated = true;
 
-		for (int i = 0; i < GenTime; ++i) {
-			AvailableAddPeople = true;
+			// 선반 한 칸당 4개의 커피들을 랜덤으로 배치한다.
+			// 마지막 칸은 3개만 배치한다.
+			int GenTime = Num * 4 - 1;
 
-			ItemStruct Coffee{};
-			ItemStruct Other{};
+			for (int i = 0; i < GenTime; ++i) {
+				AvailableAddPeople = true;
 
-			// 최소 4칸 간격으로 배치한다
-			if (i - AddedIndex > 4 && NumShelf > 2) {
-				// 각 커피 칸마다 10퍼센트의 확률로 시온 위치를 지정한다.
-				// 시온 위치가 지정된 자리에는 사람이 배치될 수 없고 한 번 지정하면 다시 지정되지 않는다.
-				if (XionAddActivated && !AddedXionPosition && randomUtil.Probability(10)) {
-					AvailableAddPeople = false;
-					AddedXionPosition = true;
+				ItemStruct Coffee{};
+				ItemStruct Other{};
 
-					// 시온이 배치된 자리 별도 표시
-					Coffee.IsXionFront = true;
+				// 최소 4칸 간격으로 배치한다
+				if (i - AddedIndex > 4 && NumShelf > 2) {
+					// 각 커피 칸마다 10퍼센트의 확률로 시온 위치를 지정한다.
+					// 시온 위치가 지정된 자리에는 사람이 배치될 수 없고 한 번 지정하면 다시 지정되지 않는다.
+					if (XionAddActivated && !AddedXionPosition && randomUtil.Probability(10)) {
+						AvailableAddPeople = false;
+						AddedXionPosition = true;
 
-					// 시온 생성
-					GLfloat Position = PositionValue - 0.75 + 0.5 * i + 0.5;
-					scene.AddObject(new Xion(Position, 0.0, false, Xion_Blocking), "xion", LAYER3);
+						// 시온이 배치된 자리 별도 표시
+						Coffee.IsXionFront = true;
 
-					// 인덱스 기록
-					AddedIndex = i;
+						// 시온 생성
+						GLfloat Position = PositionValue - 0.75 + 0.5 * i + 0.5;
+						scene.AddObject(new Xion(Position, 0.0, false, Xion_Blocking), "xion", LAYER3);
 
-					// 시온이 등장할 자리 기록
-					XionIndex = i;
+						// 인덱스 기록
+						AddedIndex = i;
+
+						// 시온이 등장할 자리 기록
+						XionIndex = i;
+					}
+
+					//각 커피 칸 마다 5퍼센트의 확률로 사람을 배치한다
+					if (AvailableAddPeople && randomUtil.Probability(10)) {
+						glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * i, 0.0);
+						scene.AddObject(new People(AddPosition), "people", LAYER3);
+
+						// 사람이 배치된 자리의 커피는 별도 표시한다
+						Coffee.IsPeopleFront = true;
+
+						// 마지막으로 사람을 추가한 인덱스 기록
+						AddedIndex = i;
+					}
 				}
 
-				//각 커피 칸 마다 5퍼센트의 확률로 사람을 배치한다
-				if(AvailableAddPeople && randomUtil.Probability(10)) {
-					glm::vec2 AddPosition = glm::vec2(PositionValue - 0.75 + 0.5 * i, 0.0);
-					scene.AddObject(new People(AddPosition), "people", LAYER3);
+				// 타입 결정
+				Coffee.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
+				Other.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
 
-					// 사람이 배치된 자리의 커피는 별도 표시한다
-					Coffee.IsPeopleFront = true;
+				if (NumShelf == 2 && i == 0) {
+					if (i == 0) {
+						Coffee.Type = Coffee_Bottle;
+						Coffee.IsUpside = true;
+						Coffee.Position.y = 0.14;
 
-					// 마지막으로 사람을 추가한 인덱스 기록
-					AddedIndex = i;
+						Other.Type = 0;
+						Other.Position.y = -0.27;
+					}
 				}
+
+				// 위치 결정
+				// 1이면 위칸, 0이면 아래칸
+				// 커피와 다른 물건이 겹치지 않도록 배치한다
+				else {
+					int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
+					if (RandomNum == 1) {
+						Coffee.Position.y = 0.14;
+						Coffee.IsUpside = true;
+						Other.Position.y = -0.27;
+					}
+					else {
+						Coffee.Position.y = -0.27;
+						Coffee.IsUpside = false;
+						Other.Position.y = 0.14;
+					}
+				}
+
+				// x 위치는 커피와 다른 물건이 같도록 한다
+				Coffee.Position.x = PositionValue - 0.75 + 0.5 * i;
+				Other.Position.x = Coffee.Position.x;
+
+				CoffeeVec.emplace_back(Coffee);
+				OtherVec.emplace_back(Other);
 			}
+		}
 
-			// 타입 결정
-			Coffee.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
-			Other.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
+		else {
+			int GenTime = Num * 4 - 1;
+			for (int i = 0; i < GenTime; i++) {
+				ItemStruct Coffee{};
+				ItemStruct Other{};
 
-			// 위치 결정
-			// 1이면 위칸, 0이면 아래칸
-			// 커피와 다른 물건이 겹치지 않도록 배치한다
-			int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
-			if (RandomNum == 1) {
-				Coffee.Position.y = 0.14;
-				Coffee.IsUpside = true;
-				Other.Position.y = -0.27;
+				if (i == 0) {
+					Coffee.Type = Coffee_Bottle;
+					Coffee.IsUpside = true;
+					Coffee.Position.y = 0.14;
+
+					Other.Type = 0;
+					Other.Position.y = -0.27;
+				}
+
+				else {
+					Coffee.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
+					Other.Type = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
+
+					int RandomNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
+					if (RandomNum == 1) {
+						Coffee.Position.y = 0.14;
+						Coffee.IsUpside = true;
+						Other.Position.y = -0.27;
+					}
+					else {
+						Coffee.Position.y = -0.27;
+						Coffee.IsUpside = false;
+						Other.Position.y = 0.14;
+					}
+				}
+
+				Coffee.Position.x = PositionValue - 0.75 + 0.5 * i;
+				Other.Position.x = Coffee.Position.x;
+
+				CoffeeVec.emplace_back(Coffee);
+				OtherVec.emplace_back(Other);
 			}
-			else {
-				Coffee.Position.y = -0.27;
-				Coffee.IsUpside = false;
-				Other.Position.y = 0.14;
-			}
-
-			// x 위치는 커피와 다른 물건이 같도록 한다
-			Coffee.Position.x = PositionValue - 0.75 + 0.5 * i;
-			Other.Position.x = Coffee.Position.x;
-
-			CoffeeVec.emplace_back(Coffee);
-			OtherVec.emplace_back(Other);
 		}
 	}
 
 	void UpdateFunc(float FrameTime) {
-		if (auto ED = scene.Find("ed"); ED) {
-			// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
-			if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
-				NextShelfGenerated = true;
-				scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
+		if (!ForTitle) {
+			if (auto ED = scene.Find("ed"); ED) {
+				// 카메라 위치가 중간 지점에 도달하면 다음 선반을 미리 생성한다
+				if (!NextShelfGenerated && MiddlePoint <= CameraPosition.x) {
+					NextShelfGenerated = true;
+					scene.AddObject(new Shelf(NumShelf + 1, EndPoint + Length * 2.0), "shelf", LAYER2);
 
-				// 이드가 이동해야 할 다음 위치를 알린다
-				ED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
+					// 이드가 이동해야 할 다음 위치를 알린다
+					ED->TellNextPosition(EndPoint + Length * 2.0 - 1.75);
+				}
 			}
-		}
 
-		// 마지막 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
-		if (EndPoint < CameraPosition.x - ASP(1.0))
-			scene.DeleteObject(this);
+			// 마지막 선반이 화면에서 보이지 않게 되면 스스로 삭제한다
+			if (EndPoint < CameraPosition.x - ASP(1.0))
+				scene.DeleteObject(this);
+		}
 	}
 
 	void RenderFunc() {

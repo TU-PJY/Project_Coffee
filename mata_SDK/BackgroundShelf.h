@@ -26,7 +26,7 @@ public:
 			return;
 
 		Begin();
-		transform.Move(MoveMatrix, Position, 0.0);
+		transform.Move(MoveMatrix, Position, 0.1);
 		transform.Scale(MoveMatrix, 5.0, 5.0);
 		imageUtil.Render(Img.BackGroundShelf);
 	}

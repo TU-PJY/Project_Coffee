@@ -133,7 +133,9 @@ public:
 					else
 						soundUtil.Play(Snd.CartCrash, SndChannel);
 
-					if (Frame == Silphir * 2)
+					if (Frame == Listy * 2 || Frame == Mayo * 2)
+						Position.y = -1.35;
+					else if (Frame == Silphir * 2)
 						Position.y = -1.2;
 					else if (Frame == Kidian * 2)
 						Position.y = -0.8;

@@ -38,9 +38,7 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
-		System.SetBackColorRGB(112, 128, 144);
-
-		cameraControl.MoveCamera(0.0, 0.0);
+		System.SetBackColorRGB(122, 138, 154);
 
 		// 이전에 파괴했던 개수 초기화
 		for (int i = 0; i < 6; i++)
@@ -83,6 +81,8 @@ public:
 		scene.AddObject(new TimeWatch, "time_watch", LAYER7);
 		scene.AddObject(new ScoreIndicator, "score_indicator", LAYER7);
 		scene.AddObject(new CountDown, "countdown", LAYER7);
+
+		cameraControl.MoveCamera(0.5, 0.0);
 
 		SetUp();
 	}

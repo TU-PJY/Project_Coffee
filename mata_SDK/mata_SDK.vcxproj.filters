@@ -510,7 +510,7 @@
       <Filter>[2]___________[ Object ]\[ TitleMode Object ]</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundShelf.h">
-      <Filter>[2]___________[ Object ]</Filter>
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

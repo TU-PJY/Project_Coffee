@@ -14,7 +14,7 @@ public:
 
 class SinLerp{
 private:
-	GLfloat Num{ Preset::MaxNegative };
+	GLfloat Num{};
 
 public:
 	GLfloat Update(GLfloat Value, GLfloat Dest, GLfloat Speed, float FrameTime);

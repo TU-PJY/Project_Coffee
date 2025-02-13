@@ -77,7 +77,8 @@ private:
 
 public:
 	ED() {
-		mathUtil.Lerp(EDCameraPosition, DestPosition + 0.5, 7.0, 1.0);
+		EDCameraPosition = DestPosition + 0.5;
+		cameraControl.MoveCamera(EDCameraPosition, 0.0);
 	}
 	
 	void InputKey(KeyEvent& Event) {

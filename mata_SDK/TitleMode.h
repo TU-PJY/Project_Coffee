@@ -5,6 +5,7 @@
 #include "TitleScreen.h"
 #include "BackgroundShelf.h"
 #include "Floor.h"
+#include "Shelf.h"
 
 class Title_Mode {
 public:
@@ -19,27 +20,22 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
-		System.SetBackColorRGB(112, 128, 144);
-
-		
-		GLfloat Position = ASP(-1.0) - 2.4;
-		while (true) {
-			scene.AddObject(new Floor(Position, true), "floor", LAYER_BG);
-			Position += 0.8;
-
-			if (Position > ASP(1.0) + 0.8) {
-				scene.AddObject(new Floor(Position, false), "floor", LAYER_BG);
-				break;
-			}
-		}
+		System.SetBackColorRGB(122, 138, 154);
 
 		scene.AddObject(new BackgroundShelf(ASP(-1.0)), "background_shelf", LAYER1);
 
+		scene.AddObject(new Shelf(2, 1.75, true), "shelf", LAYER2);
+
 		// 타이틀 화면 인트로는 최초 실행 시에만 재생한다
 		scene.AddObject(new TitleScreen(Glb.TitleIntroPlayed), "title_screen", LAYER2);
+
 		if (Glb.TitleIntroPlayed) {
-			cameraControl.ChangeCameraZoom(1.0);
-			cameraControl.MoveCamera(1.0, 0.0);
+			cameraControl.ChangeCameraZoom(1.5);
+			cameraControl.MoveCamera(0.7, 0.4);
+		}
+		else {
+			cameraControl.ChangeCameraZoom(2.0);
+			cameraControl.MoveCamera(-1.3, 0.4);
 		}
 		Glb.TitleIntroPlayed = true;
 		SetUp();
