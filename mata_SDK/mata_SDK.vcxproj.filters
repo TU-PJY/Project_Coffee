@@ -512,6 +512,9 @@
     <ClInclude Include="BackgroundShelf.h">
       <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
     </ClInclude>
+    <ClInclude Include="Pillar.h">
+      <Filter>[2]___________[ Object ]\[ PlayMode Object ]</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ModeTemplate_Manual.txt">

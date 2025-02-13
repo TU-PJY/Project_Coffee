@@ -12,6 +12,7 @@
 #include "CountDown.h"
 #include "PlayModeManager.h"
 #include "BackgroundShelf.h"
+#include "Pillar.h"
 // render order
 
 // floor, Background
@@ -58,6 +59,8 @@ public:
 
 
 		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER1);
+
+		scene.AddObject(new Pillar(1.0), "pillar", LAYER_BG);
 
 		// 타일 추가
 		GLfloat Position = ASP(-1.0) - 1.6;

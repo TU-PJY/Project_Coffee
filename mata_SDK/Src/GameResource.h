@@ -31,6 +31,7 @@ public:
 	Image GameOverBackGround2{};
 
 	Image BackGroundShelf{};
+	Image Pillar{};
 };
 
 // Declare the sound resource here. 
