@@ -54,10 +54,13 @@ public:
 				MoveSpeed *= 0.7;
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.CanDrop, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 			}
 		}
-		else 
+		else {
 			soundUtil.PlayOnce(Snd.CanDrop, SndChannel, SoundPlayed);
+			SndChannel->setVolume(Glb.SFXVolume);
+		}
 
 		ps.UpdateBouncing(Position, FrameTime);
 

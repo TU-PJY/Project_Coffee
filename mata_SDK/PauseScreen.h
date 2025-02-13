@@ -46,6 +46,7 @@ public:
 		Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 
 		soundUtil.Play(Snd.MenuSelect, SndChannel);
+		SndChannel->setVolume(Glb.SFXVolume);
 		soundUtil.SetFreqCutOff(Glb.BGMChannel, 200);
 
 		MenuFocused[0] = true;
@@ -60,6 +61,7 @@ public:
 			if (Event.NormalKey == NK_ESCAPE) {
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.MenuSelect, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 
 				if (!QuestionState)
 					scene.EndFloatingMode();
@@ -76,6 +78,7 @@ public:
 			else if (Event.NormalKey == NK_ENTER) {
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.MenuSelect, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 
 				if (!QuestionState) {
 					switch (MenuIndex) {
@@ -133,6 +136,7 @@ public:
 			if (Event.SpecialKey == SK_ARROW_UP) {
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.MenuSelect, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 
 				if (!QuestionState)  MenuIndex--;
 				else  QuestionIndex--;
@@ -141,6 +145,7 @@ public:
 			else if (Event.SpecialKey == SK_ARROW_DOWN) {
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.MenuSelect, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 
 				if (!QuestionState)  MenuIndex++;
 				else  QuestionIndex++;

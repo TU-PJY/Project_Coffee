@@ -28,10 +28,13 @@ public:
 		if (Timer.CheckSec(1, CHECK_AND_INTERPOLATE)) {
 			Count--;
 			Size += 0.2;
-			if(Count > 0)
+			if (Count > 0) {
 				soundUtil.Play(Snd.CountDownReady, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
+			}
 			else {
 				soundUtil.Play(Snd.CountDownGo, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 
 				// 카운트다운을 모두 세면 타이머 동작 시작
 				if (auto TimeWatch = scene.Find("time_watch"); TimeWatch)

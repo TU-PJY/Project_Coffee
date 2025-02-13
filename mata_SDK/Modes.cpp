@@ -17,6 +17,7 @@ Title_Mode* Title_Mode::M_Inst;
 Play_Mode PlayMode;
 Play_Mode* Play_Mode::M_Inst;
 
-START_MODE_PTR START_MODE = PlayMode.Start;
 
 MODE_PTR PlayModePtr = PlayMode.Start;
+
+START_MODE_PTR START_MODE = TitleMode.Start;

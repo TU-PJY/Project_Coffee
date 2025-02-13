@@ -69,6 +69,7 @@ public:
 		Text.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.8);
 
 		soundUtil.Play(Snd.TitleBgm, Glb.BGMChannel);
+		Glb.BGMChannel->setVolume(Glb.BGMVolume);
 	}
 
 	void InputKey(KeyEvent& Event) {
@@ -80,6 +81,7 @@ public:
 			case SK_ARROW_UP:
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.MenuSelect, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 
 				if (!SettingState && !QuestionToDesktop)
 					MenuIndex--;
@@ -90,11 +92,66 @@ public:
 			case SK_ARROW_DOWN:
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.MenuSelect, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 
 				if (!SettingState && !QuestionToDesktop) 
 					MenuIndex++;
 				else if (SettingState || QuestionToDesktop)
 					MenuIndex2++;
+				break;
+
+			case SK_ARROW_LEFT:
+				if (SettingState && 0 < MenuIndex2 && MenuIndex2 < 4) {
+					switch (MenuIndex2) {
+					case 1:
+						EX.SwitchBool(Glb.FullscreenAcvivated);
+						Dat.UserSettingData.UpdateDigitData("Setting", "Fullscreen", (int)Glb.FullscreenAcvivated);
+						System.SwitchScreenState();
+						break;
+					case 2:
+						Glb.BGMVolume -= 0.1;
+						EX.ClampValue(Glb.BGMVolume, 0.0, CLAMP_LESS);
+						Dat.UserSettingData.UpdateDigitData("Setting", "BGMVolume", Glb.BGMVolume);
+						Glb.BGMChannel->setVolume(Glb.BGMVolume);
+						break;
+					case 3:
+						Glb.SFXVolume -= 0.1;
+						EX.ClampValue(Glb.SFXVolume, 0.0, CLAMP_LESS);
+						Dat.UserSettingData.UpdateDigitData("Setting", "SFXVolume", Glb.SFXVolume);
+						break;
+					}
+
+					soundUtil.Stop(SndChannel);
+					soundUtil.Play(Snd.MenuSelect, SndChannel);
+					SndChannel->setVolume(Glb.SFXVolume);
+				}
+				break;
+
+			case SK_ARROW_RIGHT:
+				if (SettingState && 0 < MenuIndex2 && MenuIndex2 < 4) {
+					switch (MenuIndex2) {
+					case 1:
+						EX.SwitchBool(Glb.FullscreenAcvivated);
+						Dat.UserSettingData.UpdateDigitData("Setting", "Fullscreen", (int)Glb.FullscreenAcvivated);
+						System.SwitchScreenState();
+						break;
+					case 2:
+						Glb.BGMVolume += 0.1;
+						EX.ClampValue(Glb.BGMVolume, 1.0, CLAMP_GREATER);
+						Dat.UserSettingData.UpdateDigitData("Setting", "BGMVolume", Glb.BGMVolume);
+						Glb.BGMChannel->setVolume(Glb.BGMVolume);
+						break;
+					case 3:
+						Glb.SFXVolume += 0.1;
+						EX.ClampValue(Glb.SFXVolume, 1.0, CLAMP_GREATER);
+						Dat.UserSettingData.UpdateDigitData("Setting", "SFXVolume", Glb.SFXVolume);
+						break;
+					}
+
+					soundUtil.Stop(SndChannel);
+					soundUtil.Play(Snd.MenuSelect, SndChannel);
+					SndChannel->setVolume(Glb.SFXVolume);
+				}
 				break;
 			}
 
@@ -117,6 +174,7 @@ public:
 				for (int i = 0; i < 2; i++)
 					QuestionFocused[i] = false;
 				QuestionFocused[MenuIndex2] = true;
+
 			}
 
 			MenuFocused[MenuIndex] = true;
@@ -130,12 +188,15 @@ public:
 					if (MenuIndex == 0) {
 						soundUtil.Stop(Glb.BGMChannel);
 						soundUtil.Play(Snd.CartCrash, SndChannel);
+						SndChannel->setVolume(Glb.SFXVolume);
 						GameStart = true;
 						scene.DeleteInputObject(this);
 					}
 
-					else 
+					else {
 						soundUtil.Play(Snd.MenuSelect, SndChannel);
+						SndChannel->setVolume(Glb.SFXVolume);
+					}
 
 					switch (MenuIndex) {
 					case 0:
@@ -154,6 +215,7 @@ public:
 					if (MenuIndex2 == 0 || MenuIndex2 == 4) {
 						soundUtil.Stop(SndChannel);
 						soundUtil.Play(Snd.MenuSelect, SndChannel);
+						SndChannel->setVolume(Glb.SFXVolume);
 					}
 
 					switch (MenuIndex2) {
@@ -171,6 +233,7 @@ public:
 				if (QuestionToDesktop) {
 					soundUtil.Stop(SndChannel);
 					soundUtil.Play(Snd.MenuSelect, SndChannel);
+					SndChannel->setVolume(Glb.SFXVolume);
 
 					switch (MenuIndex2) {
 					case 0:
@@ -190,6 +253,7 @@ public:
 			case NK_ESCAPE:
 				soundUtil.Stop(SndChannel);
 				soundUtil.Play(Snd.MenuSelect, SndChannel);
+				SndChannel->setVolume(Glb.SFXVolume);
 
 				if (!SettingState && !QuestionToDesktop) 
 					QuestionToDesktop = true;
@@ -285,6 +349,8 @@ public:
 				// 메뉴 표시
 				if (!SettingState && !QuestionToDesktop) {
 					Text.SetUseShadow(true);
+					Text.SetAlign(ALIGN_LEFT);
+					Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 
 					for (int i = 0; i < 3; i++) {
 						if (MenuFocused[i])
@@ -304,6 +370,7 @@ public:
 					Text.SetUseShadow(false);
 					Text.SetColor(1.0, 1.0, 1.0);
 					Text.SetAlign(ALIGN_MIDDLE);
+					Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 					Text.Render(0.0, 0.8, 0.15, L"환경설정");
 
 					Text.SetAlign(ALIGN_LEFT);
@@ -319,21 +386,28 @@ public:
 							break;
 						case 1:
 							if (Glb.FullscreenAcvivated)
-								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   화면 모드: 전체화면   >");
+								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"화면 모드: 전체화면");
 							else
-								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   화면 모드: 창   >");
+								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"화면 모드: 창");
 							break;
 						case 2:
-							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   배경음악 볼륨: %.1f   >", Glb.BGMVolume);
+							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1,     L"배경음악 볼륨: %.1f", Glb.BGMVolume);
 							break;
 						case 3:
-							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"<   효과음 볼륨: %.1f   >", Glb.SFXVolume);
+							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1,     L"효과음 볼륨: %.1f", Glb.SFXVolume);
 							break;
 						case 4:
 							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"크래딧");
 							break;
 						}
 					}
+
+					if (0 < MenuIndex2 && MenuIndex2 < 4) {
+						Text.SetHeightAlign(HEIGHT_ALIGN_DEFAULT);
+						Text.SetAlign(ALIGN_DEFAULT);
+						Text.Render(ASP(-1.0) + 0.1, -0.9, 0.08, L"좌 우 방향키로 설정");
+					}
+
 				}
 
 				else if (QuestionToDesktop) {

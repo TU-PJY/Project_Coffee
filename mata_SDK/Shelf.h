@@ -340,13 +340,15 @@ public:
 		soundUtil.Stop(SndChannel[StopChannel++]);
 
 		if(CoffeeVec[CurrentCoffeeIndex].Type == Coffee_Box)
-			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel++]);
+			soundUtil.Play(Snd.BoxBreak[RandomNum], SndChannel[PlayChannel]);
 
 		else if(CoffeeVec[CurrentCoffeeIndex].Type == Coffee_Bottle)
-			soundUtil.Play(Snd.Bottle[RandomNum], SndChannel[PlayChannel++]);
+			soundUtil.Play(Snd.Bottle[RandomNum], SndChannel[PlayChannel]);
 
 		else if(CoffeeVec[CurrentCoffeeIndex].Type == Coffee_Can)
-			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel++]);
+			soundUtil.Play(Snd.CanBreak[RandomNum], SndChannel[PlayChannel]);
+
+		SndChannel[PlayChannel++]->setVolume(Glb.SFXVolume);
 
 
 		EX.ClampValue(StopChannel, 0, 4, CLAMP_RETURN);

@@ -168,6 +168,7 @@ public:
 					if (IsCorrect) {
 						soundUtil.Stop(SndChannel);
 						soundUtil.Play(Snd.Whoosh, SndChannel);
+						SndChannel->setVolume(Glb.SFXVolume);
 
 						if (Item.IsUpside)
 							Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitHigh1, ED_HitHigh2);
@@ -197,6 +198,7 @@ public:
 
 							soundUtil.Stop(SndChannel2);
 							soundUtil.Play(Snd.NextWhoosh, SndChannel2);
+							SndChannel2->setVolume(Glb.SFXVolume);
 						}
 					}
 
@@ -204,6 +206,7 @@ public:
 					else {
 						soundUtil.Stop(SndChannel);
 						soundUtil.Play(Snd.MissWhoosh, SndChannel);
+						SndChannel->setVolume(Glb.SFXVolume);
 
 						if (Item.IsUpside)
 							Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitLow1, ED_HitLow2);
@@ -239,6 +242,7 @@ public:
 					if (auto People = scene.Find("people"); People) {
 						soundUtil.Stop(SndChannel);
 						soundUtil.Play(Snd.Whoosh, SndChannel);
+						SndChannel->setVolume(Glb.SFXVolume);
 
 						StateTimer.Reset();
 						AnimationSize = 2.0;
@@ -316,6 +320,7 @@ public:
 			// 입력 가능 상태 비활성화
 			InputAvailable = false;
 			soundUtil.PlayOnce(Snd.GameOver, SndChannel, SoundPlayed);
+			SndChannel->setVolume(Glb.BGMVolume);
 
 			// 이드에 포커싱 한다.
 			mathUtil.Lerp(EDCameraPosition, Position, 5.0, FrameTime);

@@ -126,12 +126,15 @@ public:
 					// 유미미는 폭발음을 재생한다
 					if (Frame == Yumimi * 2) {
 						soundUtil.Play(Snd.Explode, SndChannel);
+						SndChannel->setVolume(Glb.SFXVolume);
 
 						// 폭발로 인한 흔들림 추가
 						cameraControl.AddShakeValue(0.8);
 					}
-					else
+					else {
 						soundUtil.Play(Snd.CartCrash, SndChannel);
+						SndChannel->setVolume(Glb.SFXVolume);
+					}
 
 					if (Frame == Listy * 2 || Frame == Mayo * 2)
 						Position.y = -1.35;
@@ -243,6 +246,7 @@ public:
 	
 	void HitPeople() {
 		soundUtil.Play(Snd.PeopleHit, SndChannel);
+		SndChannel->setVolume(Glb.SFXVolume);
 		// 때린 상태가 되면 프레임을 변경하고 오브젝트 태그를 지워 더 이상 상호작용하지 않도록 한다
 		HitCount--;
 

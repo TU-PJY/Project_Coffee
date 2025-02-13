@@ -127,6 +127,7 @@ public:
 		}
 
 		soundUtil.Play(Snd.GameEnd[Glb.Ending], SndChannel1);
+		SndChannel1->setVolume(Glb.BGMVolume);
 
 		// 파괴한 품목이 존재하면 벡터에 저장한다
 		for (int i = 0; i < 6; i++) {
@@ -188,6 +189,7 @@ public:
 					VerticalSize = 0.3;
 					soundUtil.Stop(SndChannel2);
 					soundUtil.Play(Snd.HitCheek, SndChannel2);
+					SndChannel2->setVolume(Glb.SFXVolume);
 				}
 				EX.ClampValue(ChloeFrame, 0, 1, CLAMP_RETURN);
 			}
@@ -224,11 +226,13 @@ public:
 			if (CurrentSize != VecSize && RepTimer.CheckMiliSec(0.5, 1, CHECK_AND_INTERPOLATE)) {
 				CurrentSize++;
 				soundUtil.Play(Snd.Rep, SndChannel3);
+				SndChannel3->setVolume(Glb.SFXVolume);
 			}
 			
 			else if (CurrentSize == VecSize && RepTimer.CheckMiliSec(1, 1, CHECK_AND_INTERPOLATE)) {
 				ShowTotalRep = true;
 				soundUtil.Play(Snd.RepTotal, SndChannel3);
+				SndChannel3->setVolume(Glb.SFXVolume);
 				RepTimer.Stop();
 				RepTimer.Reset();
 			}
@@ -250,8 +254,8 @@ public:
 		if (ExitState) {
 			Volume -= FrameTime * 0.5;
 			EX.ClampValue(Volume, 0.0, CLAMP_LESS);
-			SndChannel1->setVolume(Volume);
-			SndChannel2->setVolume(Volume);
+			SndChannel1->setVolume(Volume * Glb.BGMVolume);
+			SndChannel2->setVolume(Volume * Glb.SFXVolume);
 
 			if(auto Cover = scene.Find("cover"); Cover)
 				if (Cover->GetState()) {

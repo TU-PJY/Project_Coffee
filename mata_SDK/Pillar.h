@@ -15,23 +15,23 @@ public:
 
 	void UpdateFunc(float FrameTime) {
 		if (GenerateNextPillar) {
-			if (!NextPillarGenerated && Position + CameraPosition.x * 0.3 < CameraPosition.x + ASP(0.5)) {
+			if (!NextPillarGenerated && Position + CameraPosition.x * 0.5 < CameraPosition.x + ASP(0.5)) {
 				scene.AddObject(new Pillar(Position + 3.0), "pillar", LAYER_BG);
 				NextPillarGenerated = true;
 			}
 		}
 
-		if (Position + CameraPosition.x * 0.3 < CameraPosition.x - ASP(1.0) - 0.75)
+		if (Position + CameraPosition.x * 0.5 < CameraPosition.x - ASP(1.0) - 0.75)
 			scene.DeleteObject(this);
 	}
 
 	void RenderFunc() {
-		if (Position + CameraPosition.x * 0.3 > CameraPosition.x + ASP(1.0) + 0.75)
+		if (Position + CameraPosition.x * 0.5 > CameraPosition.x + ASP(1.0) + 0.75)
 			return;
 
 		Begin();
-		transform.Move(MoveMatrix, Position + CameraPosition.x * 0.3, 0.3);
-		transform.Scale(MoveMatrix, 1.5, 1.5);
+		transform.Move(MoveMatrix, Position + CameraPosition.x * 0.5, 0.6);
+		transform.Scale(MoveMatrix, 3.0, 3.0);
 		imageUtil.Render(Img.Pillar);
 	}
 };

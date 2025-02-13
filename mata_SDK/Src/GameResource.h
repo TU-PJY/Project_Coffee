@@ -74,7 +74,7 @@ public:
 	};
 
 	DataFormat UserSettings = {
-		{DATA_TYPE_DIGIT, "Setting", "Fullscreen", 1, ""},
+		{DATA_TYPE_DIGIT, "Setting", "Fullscreen", 0, ""},
 		{DATA_TYPE_DIGIT, "Setting", "BGMVolume", 1.0, ""},
 		{DATA_TYPE_DIGIT, "Setting", "SFXVolume", 1.0, ""}
 	};

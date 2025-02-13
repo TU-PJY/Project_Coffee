@@ -67,6 +67,9 @@ public:
 					std::cout << "All of TextUtil objects initialized." << std::endl;
 
 					InitializationEnd = true;
+
+					if (Glb.FullscreenAcvivated)
+						System.SwitchScreenState();
 				}
 
 				if (!ENABLE_INTRO_SCREEN) {

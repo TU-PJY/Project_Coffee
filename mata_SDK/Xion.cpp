@@ -50,6 +50,7 @@ void Xion::UpdateFunc(float FrameTime) {
 				if (Position.y <= -1.3) {
 					Position.y = -1.3;
 					soundUtil.Play(Snd.CartCrash, SndChannel);
+					SndChannel->setVolume(Glb.SFXVolume);
 					FellDown = true;
 				}
 			}
@@ -108,6 +109,8 @@ void Xion::HitPeople() {
 	Glb.Ending = GameOver_HitXion;
 
 	soundUtil.Play(Snd.PeopleHit, SndChannel);
+	SndChannel->setVolume(Glb.SFXVolume);
+
 	HitState = true;
 	ObjectTag = "";
 }
@@ -115,6 +118,8 @@ void Xion::HitPeople() {
 // 시온을 뒤로 민다
 void Xion::PushPeople() {
 	soundUtil.Play(Snd.Whoosh, SndChannel);
+	SndChannel->setVolume(Glb.SFXVolume);
+
 	DestPosition = Position.x - 2.5;
 	DestHRotation = 180.0;
 	ObjectTag = "";

@@ -18,6 +18,7 @@ private:
 public:
 	TimeAdded() {
 		soundUtil.Play(Snd.AddTime, SndChannel);
+		SndChannel->setVolume(Glb.SFXVolume);
 
 		Text.Init(L"픽셀로보로보체", FW_DONTCARE);
 		Text.SetAlign(ALIGN_MIDDLE);
