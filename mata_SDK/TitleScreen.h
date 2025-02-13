@@ -17,11 +17,13 @@ private:
 	bool QuestionFocused[2]{};
 
 	bool SettingState{};
-	bool SettingFocused[5]{};
+	bool SettingFocused[6]{};
 	int MenuIndex2{};
 
 	TimerUtil StartTimer{};
 	bool GameStart{};
+
+	bool MoveState = true;
 
 	std::wstring MenuItems[3] = {
 		L"시작!",
@@ -41,6 +43,10 @@ private:
 	TimerUtil MoveDelayTimer{};
 	GLfloat TitleCameraPosition = -1.3;
 	GLfloat TitleCameraZoom = 2.0;
+
+	GLfloat TitleCameraPosition2{};
+	GLfloat TitleCameraZoom2{};
+	GLfloat TitleCameraHeight{};
 
 	SinLoop XionLoop{};
 	SinLoop EDLoop{};
@@ -157,7 +163,7 @@ public:
 
 			EX.ClampValue(MenuIndex, 0, 2, CLAMP_RETURN);
 			if(SettingState)
-				EX.ClampValue(MenuIndex2, 0, 4, CLAMP_RETURN);
+				EX.ClampValue(MenuIndex2, 0, 5, CLAMP_RETURN);
 			if(QuestionToDesktop)
 				EX.ClampValue(MenuIndex2, 0, 1, CLAMP_RETURN);
 
@@ -165,7 +171,7 @@ public:
 				MenuFocused[i] = false;
 
 			if (SettingState) {
-				for (int i = 0; i < 5; i++)
+				for (int i = 0; i < 6; i++)
 					SettingFocused[i] = false;
 				SettingFocused[MenuIndex2] = true;
 			}
@@ -212,7 +218,7 @@ public:
 				}
 
 				if (SettingState) {
-					if (MenuIndex2 == 0 || MenuIndex2 == 4) {
+					if (MenuIndex2 == 0 || MenuIndex2 == 4 || MenuIndex2 == 5) {
 						soundUtil.Stop(SndChannel);
 						soundUtil.Play(Snd.MenuSelect, SndChannel);
 						SndChannel->setVolume(Glb.SFXVolume);
@@ -221,7 +227,7 @@ public:
 					switch (MenuIndex2) {
 					case 0:
 						SettingState = false;
-						for (int i = 0; i < 5; i++)
+						for (int i = 0; i < 6; i++)
 							SettingFocused[i] = false;
 						SettingFocused[0] = true;
 						MenuIndex2 = 0;
@@ -267,7 +273,7 @@ public:
 
 				else if (SettingState) {
 					SettingState = false;
-					for (int i = 0; i < 5; i++)
+					for (int i = 0; i < 6; i++)
 						SettingFocused[i] = false;
 					SettingFocused[0] = true;
 					MenuIndex2 = 0;
@@ -292,13 +298,35 @@ public:
 					mathUtil.Lerp(TitleCameraPosition, 0.7, 0.4, FrameTime);
 					mathUtil.Lerp(TitleCameraZoom, 1.5, 0.4, FrameTime);
 				}
-				cameraControl.MoveCamera(TitleCameraPosition, 0.4);
-				cameraControl.ChangeCameraZoom(TitleCameraZoom);
 
 				if (TitleCameraPosition > 0.3)
 					RenderText = true;
 			}	
 		}
+		else {
+			TitleCameraPosition = 0.7;
+			TitleCameraZoom = 1.5;
+		}
+
+		if (SettingState) {
+			mathUtil.Lerp(TitleCameraPosition2, -2.0, 2.0, FrameTime);
+			mathUtil.Lerp(TitleCameraZoom2, 0.0, 2.0, FrameTime);
+			mathUtil.Lerp(TitleCameraHeight, 0.0, 2.0, FrameTime);
+		}
+		else if (QuestionToDesktop) {
+			mathUtil.Lerp(TitleCameraPosition2, 0.3, 2.0, FrameTime);
+			mathUtil.Lerp(TitleCameraZoom2, 3.0, 2.0, FrameTime);
+			mathUtil.Lerp(TitleCameraHeight, -0.25, 2.0, FrameTime);
+		}
+		else {
+			mathUtil.Lerp(TitleCameraPosition2, 0.0, 2.0, FrameTime);
+			mathUtil.Lerp(TitleCameraZoom2, 0.0, 2.0, FrameTime);
+			mathUtil.Lerp(TitleCameraHeight, 0.0, 2.0, FrameTime);
+		}
+
+
+		cameraControl.MoveCamera(TitleCameraPosition + TitleCameraPosition2, 0.4 + TitleCameraHeight);
+		cameraControl.ChangeCameraZoom(TitleCameraZoom + TitleCameraZoom2);
 
 		if(GameStart)
 			cameraControl.ChangeCameraZoom(1.0);
@@ -374,7 +402,7 @@ public:
 					Text.Render(0.0, 0.8, 0.15, L"환경설정");
 
 					Text.SetAlign(ALIGN_LEFT);
-					for (int i = 0; i < 5; i++) {
+					for (int i = 0; i < 6; i++) {
 						if (SettingFocused[i])
 							Text.SetColorRGB(255, 213, 80);
 						else
@@ -382,22 +410,25 @@ public:
 
 						switch (i) {
 						case 0:
-							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"타이틀로 돌아가기");
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"타이틀로 돌아가기");
 							break;
 						case 1:
 							if (Glb.FullscreenAcvivated)
-								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"화면 모드: 전체화면");
+								Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"화면 모드: 전체화면");
 							else
-								Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"화면 모드: 창");
+								Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"화면 모드: 창");
 							break;
 						case 2:
-							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1,     L"배경음악 볼륨: %.1f", Glb.BGMVolume);
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"배경음악 볼륨: %.1f", Glb.BGMVolume);
 							break;
 						case 3:
-							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1,     L"효과음 볼륨: %.1f", Glb.SFXVolume);
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"효과음 볼륨: %.1f", Glb.SFXVolume);
 							break;
 						case 4:
-							Text.Render(ASP(1.0) - 0.1, 0.5 - i * 0.25, 0.1, L"크래딧");
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"진행 상황 초기화");
+							break;
+						case 5:
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"크래딧");
 							break;
 						}
 					}
