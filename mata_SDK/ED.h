@@ -87,21 +87,21 @@ public:
 			return;
 
 		if (Event.Type == SPECIAL_KEY_DOWN) { 
-			// 3개의 키 중 하나라도 눌린 키가 있으면 동작하지 않는다
-			for (int i = 0; i < 4; i++)
-				if (KeyPressed[i])
-					return;
+			//// 3개의 키 중 하나라도 눌린 키가 있으면 동작하지 않는다
+			//for (int i = 0; i < 4; i++)
+			//	if (KeyPressed[i])
+			//		return;
 
-			if (Event.SpecialKey == SK_ARROW_LEFT)
-				KeyPressed[0] = true;
-			else if (Event.SpecialKey == SK_ARROW_DOWN)
-				KeyPressed[1] = true;
-			else if (Event.SpecialKey == SK_ARROW_RIGHT)
-				KeyPressed[2] = true;
-			else if (Event.SpecialKey == SK_ARROW_UP)
-			{}
-			else
-				return;
+			//if (Event.SpecialKey == SK_ARROW_LEFT)
+			//	KeyPressed[0] = true;
+			//else if (Event.SpecialKey == SK_ARROW_DOWN)
+			//	KeyPressed[1] = true;
+			//else if (Event.SpecialKey == SK_ARROW_RIGHT)
+			//	KeyPressed[2] = true;
+			//else if (Event.SpecialKey == SK_ARROW_UP)
+			//{}
+			//else
+			//	return;
 
 			// 가장 앞에 있는 커피를 부순다. 
 			if (auto Shelf = scene.Find("shelf"); Shelf) {
@@ -212,27 +212,30 @@ public:
 							Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitLow1, ED_HitLow2);
 						else
 							Frame = randomUtil.Gen(RANDOM_TYPE_INT, ED_HitHigh1, ED_HitHigh2);
+
+						if (auto TimeWatch = scene.Find("time_watch"); TimeWatch)
+							TimeWatch->DeleteTime();
 					}
 				}
 			}
 		}
 
-		// 키 입력을 모두 중단해야 다른 키를 입력할 수 있다
-		if (Event.Type == SPECIAL_KEY_UP) {
-			if (Event.SpecialKey == SK_ARROW_LEFT)
-				KeyPressed[0] = false;
-			else if (Event.SpecialKey == SK_ARROW_DOWN)
-				KeyPressed[1] = false;
-			else if (Event.SpecialKey == SK_ARROW_RIGHT)
-				KeyPressed[2] = false;
-		}
+		//// 키 입력을 모두 중단해야 다른 키를 입력할 수 있다
+		//if (Event.Type == SPECIAL_KEY_UP) {
+		//	if (Event.SpecialKey == SK_ARROW_LEFT)
+		//		KeyPressed[0] = false;
+		//	else if (Event.SpecialKey == SK_ARROW_DOWN)
+		//		KeyPressed[1] = false;
+		//	else if (Event.SpecialKey == SK_ARROW_RIGHT)
+		//		KeyPressed[2] = false;
+		//}
 
 		if (Event.Type == NORMAL_KEY_DOWN && Event.NormalKey == NK_SPACE) {
 			for (int i = 0; i < 4; i++)
 				if (KeyPressed[i])
 					return;
 
-			KeyPressed[3] = true;
+			//KeyPressed[3] = true;
 
 			// 앞에 있는 사람을 발로 찬다.
 			if (auto Shelf = scene.Find("shelf"); Shelf) {
@@ -266,9 +269,9 @@ public:
 			}
 		}
 
-		if (Event.Type == NORMAL_KEY_UP && Event.NormalKey == NK_SPACE) {
+		/*if (Event.Type == NORMAL_KEY_UP && Event.NormalKey == NK_SPACE) {
 			KeyPressed[3] = false;
-		}
+		}*/
 	}
 
 	void UpdateFunc(float FrameTime) {

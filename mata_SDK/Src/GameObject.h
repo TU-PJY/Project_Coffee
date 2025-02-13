@@ -102,6 +102,7 @@ public:
 	virtual void Stop() {}
 	virtual void Start() {}
 	virtual void AddTime() {}
+	virtual void DeleteTime() {}
 
 	// score indicator function
 	virtual void AddScore(int Value) {}

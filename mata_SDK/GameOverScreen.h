@@ -115,18 +115,18 @@ public:
 		if (Glb.Ending == GameOver_TimeOut) {
 			CheekInterval = 0.7;
 			Str = L"유죄!!!";
-			Str2 = L"미쳤어?!!";
+			Str2 = L"이드으으으으!!!";
 		}
 
 		else if (Glb.Ending == GameOver_HitXion) {
 			CheekInterval = 0.25;
 			Str = L"찐짜 유죄!!!";
-			Str2 = L"언니를 걷어 차?!!";
+			Str2 = L"이드으으으으으ㅠㅠㅠㅠㅠ!!!";
 		}
 
 		else if (Glb.Ending == GameOver_Suppressed) {
 			Str = L"무죄!!!";
-			Str2 = L"이드! 해냈구나!";
+			Str2 = L"이드! 참아냈구나!";
 		}
 
 		soundUtil.Play(Snd.GameEnd[Glb.Ending], SndChannel1);

@@ -64,9 +64,10 @@ private:
 	SinLoop Loop{};
 	GLfloat Size{};
 
-	bool RenderState{true};
 
 	TextUtil Text{};
+
+	glm::vec3 Color = { 1, 0.84, 0.31 };
 
 public:
 	TimeWatch() {
@@ -105,6 +106,8 @@ public:
 		
 		if (Glb.GameOver) 
 			Size = Loop.Update(0.025, 5.0, FrameTime);
+
+		mathUtil.Lerp(Color, glm::vec3(1, 0.84, 0.31), 5.0, FrameTime);
 	}
 
 	void RenderFunc() {
@@ -120,22 +123,20 @@ public:
 				if(AddValue > 0.0)
 					Text.SetColor(0.0, 1.0, 0.0);
 				else
-					Text.SetColorRGB(255, 213, 80);
+					Text.SetColor(Color);
 			}
 
 			Text.Render(0.0, 1.0, 0.25, L"%d", (int)Time);
 		}
 
 		else {
-			if (RenderState) {
-				Text.SetColorRGB(255, 213, 80);
+			Text.SetColorRGB(255, 213, 80);
 
-				if (Glb.GameOver && Time <= 0.0)
-					Text.Render(0.0, 1.0, 0.3 + Size, L"TIME OUT!");
+			if (Glb.GameOver && Time <= 0.0)
+				Text.Render(0.0, 1.0, 0.3 + Size, L"TIME OUT!");
 
-				else if (Glb.GameOver && Time > 0.0)
-					Text.Render(0.0, 1.0, 0.3 + Size, L"GAME OVER");
-			}
+			else if (Glb.GameOver && Time > 0.0)
+				Text.Render(0.0, 1.0, 0.3 + Size, L"GAME OVER");
 		}
 	}
 
@@ -150,5 +151,11 @@ public:
 	void AddTime() {
 		AddValue += 10;
 		scene.AddObject(new TimeAdded, "time_added", LAYER7);
+	}
+
+	void DeleteTime() {
+		Color = glm::vec3(1.0, 0.0, 0.0);
+		Time -= 2;
+		EX.ClampValue(Time, 0.0, CLAMP_LESS);
 	}
 };
