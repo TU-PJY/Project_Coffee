@@ -85,6 +85,9 @@ private:
 	// 타이틀로 나가기 지연 타이머
 	TimerUtil DeleteTimer{};
 
+	bool NewHighScore{};
+	bool NewHighRep{};
+
 public:
 	GameOverScreen() {
 		if(Glb.Ending == GameOver_TimeOut || Glb.Ending == GameOver_HitXion)
@@ -148,6 +151,16 @@ public:
 		TotalRep += Glb.DestroyedItems[Item_People] * 1500000;
 		TotalRep += Glb.DestroyedItems[Item_Xion] * 1000000;
 		TotalRep += Glb.DestroyedItems[Item_HouseDoc] * 100000;
+
+		if (Glb.HighScore < Glb.Score) {
+			NewHighScore = true;
+			Dat.HighscoreData.UpdateDigitData("HighScore", "Score", Glb.Score);
+		}
+
+		if (Glb.MaxRep < TotalRep) {
+			NewHighRep = true;
+			Dat.HighscoreData.UpdateDigitData("HighScore", "Rep", TotalRep);
+		}
 	}
 
 	void InputKey(KeyEvent& Event) {
@@ -314,11 +327,17 @@ public:
 
 		if (!ShowRep) {
 			// 텍스트 출력
+			ScoreText.SetColor(1.0, 1.0, 1.0);
 			Text.Render(ASP(-1.0) + 0.8, 0.85, 0.2 + TextSize, Str.c_str());
 			Text.Render(ASP(-1.0) + 0.8, 0.6, 0.1 + TextSize, Str2.c_str());
 
 			// 점수 출력
 			ScoreText.Render(0.0, 0.4, 0.2, L"SCORE\n%d", Glb.Score);
+
+			if (NewHighScore) {
+				ScoreText.SetColorRGB(255, 213, 80);
+				ScoreText.Render(0.0, 0.55, 0.1, L"HighScore!");
+			}
 
 			ScoreText.SetColor(1.0, 1.0, 1.0);
 			ScoreText.SetAlign(ALIGN_LEFT);
@@ -372,7 +391,10 @@ public:
 
 			if (ShowTotalRep) {
 				ScoreText.SetColorRGB(255, 213, 80);
-				ScoreText.Render(0.0 + TextShake.x, -0.7 + TextShake.y, 0.15, L"합계: %d 골드", TotalRep);
+				ScoreText.Render(TextShake.x, -0.7 + TextShake.y, 0.15, L"합계: %d 골드", TotalRep);
+
+				if (NewHighRep)
+					ScoreText.Render(TextShake.x, -0.5 + TextShake.y, 0.1, L"역대급!!");
 
 				ScoreText.SetColor(1.0, 1.0, 1.0);
 				ScoreText.SetAlign(ALIGN_LEFT);

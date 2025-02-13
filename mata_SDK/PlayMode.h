@@ -57,7 +57,6 @@ public:
 		// 게임 오버 상태 초기화
 		Glb.GameOver = false;
 
-
 		scene.AddObject(new PlayModeManager, "play_mode_manager", LAYER1);
 
 		scene.AddObject(new Pillar(1.0), "pillar", LAYER_BG);

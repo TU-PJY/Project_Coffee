@@ -20,4 +20,4 @@ Play_Mode* Play_Mode::M_Inst;
 
 MODE_PTR PlayModePtr = PlayMode.Start;
 
-START_MODE_PTR START_MODE = TitleMode.Start;
+START_MODE_PTR START_MODE = GameOverMode.Start;
