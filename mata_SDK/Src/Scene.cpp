@@ -42,10 +42,8 @@ void Scene::Update() {
 				}
 			}
 
-			if (LoopEscapeCommand) {
-				LoopEscapeCommand = false;
+			if (LoopEscapeCommand) 
 				return;
-			}
 
 			if (Object->DeleteCommand)
 				AddLocation(i, CurrentReferLocation);
@@ -60,6 +58,11 @@ void Scene::Update() {
 }
 
 void Scene::Render() {
+	if (LoopEscapeCommand) {
+		LoopEscapeCommand = false;
+		return;
+	}
+
 	for (int i = 0; i < Layers; ++i) {
 		for (auto& Object : ObjectList[i]) {
 			if(!Object->DeleteCommand)
