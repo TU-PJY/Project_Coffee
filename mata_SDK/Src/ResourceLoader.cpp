@@ -99,7 +99,15 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 }
 
 DWORD WINAPI DataResourceLoader(LPVOID lpParam) {
-	// load data resources here
+	Dat.HighscoreData.Load("GameData//HigeScore", Fmt.HighScore);
+	Dat.UserSettingData.Load("GameData//UserSettings", Fmt.UserSettings);
+
+	Glb.FullscreenAcvivated = Dat.UserSettingData.LoadDigitData("Setting", "Fullscreen");
+	Glb.BGMVolume = Dat.UserSettingData.LoadDigitData("Setting", "BGMVolume");
+	Glb.SFXVolume = Dat.UserSettingData.LoadDigitData("Setting", "SFXVolume");
+
+	Glb.HighScore = Dat.HighscoreData.LoadDigitData("HighScore", "Score");
+	Glb.MaxRep = Dat.HighscoreData.LoadDigitData("HighScore", "Rep");
 
 	return 0;
 }

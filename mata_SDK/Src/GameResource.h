@@ -68,13 +68,23 @@ public:
 // {  Data Type, Category Name, Data Name, Digit Value, String Value }
 class DataFormatResource {
 public:
+	DataFormat HighScore = {
+		{DATA_TYPE_DIGIT, "HighScore", "Score", 0, ""},
+		{DATA_TYPE_DIGIT, "HighScore", "Rep", 0, ""}
+	};
 
+	DataFormat UserSettings = {
+		{DATA_TYPE_DIGIT, "Setting", "Fullscreen", 1, ""},
+		{DATA_TYPE_DIGIT, "Setting", "BGMVolume", 1.0, ""},
+		{DATA_TYPE_DIGIT, "Setting", "SFXVolume", 1.0, ""}
+	};
 };
 
 // Decalre the data resource here.
 class DataResource {
 public:
-
+	FileUtil HighscoreData{};
+	FileUtil UserSettingData{};
 };
 
 // Declare the global value here.
@@ -106,6 +116,12 @@ public:
 	float BGMVolume{};
 	float SFXVolume{};
 	bool FullscreenAcvivated{};
+
+	// 유저 하이스코어
+	int HighScore{};
+
+	//  유저 최대 배상금
+	int MaxRep{};
 };
 
 // Declare the global text object here.

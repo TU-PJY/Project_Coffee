@@ -26,6 +26,7 @@ void FileUtil::Load(std::string FileDirectory, DataFormat Fmt) {
 	CheckDataVersion();
 	std::cout << "File util opened file: " << FilePath << std::endl;
 	FileExist = true;
+	OnUpdate = false;
 }
 
 void FileUtil::UpdateDigitData(std::string CategoryName, std::string DataName, float Value) {
@@ -162,6 +163,8 @@ void FileUtil::UpdateDataVersion(float VersionValue) {
 
 		Doc.ReplaceChild(DeclNode, NewDecl);
 
+		OnUpdate = true;
+
 		SetupData();
 	}
 }
@@ -248,8 +251,10 @@ TiXmlElement* FileUtil::FindCategory(std::string CategoryName) {
 std::string FileUtil::FindData(std::string CategoryName, std::string DataName) {
 	TiXmlElement* FoundCategory = FindCategory(CategoryName);
 	if (!FoundCategory) {
-		scene.SetErrorScreen(ERROR_TYPE_DATA_FILE_CATEGORY, CategoryName);
-		return "";
+		if (!OnUpdate) {
+			scene.SetErrorScreen(ERROR_TYPE_DATA_FILE_CATEGORY, CategoryName);
+			return "";
+		}
 	}
 	else {
 		const char* DataValue = FindCategory(CategoryName)->Attribute(DataName.c_str());
