@@ -70,7 +70,7 @@ class DataFormatResource {
 public:
 	DataFormat HighScore = {
 		{DATA_TYPE_DIGIT, "HighScore", "Score", 0, ""},
-		{DATA_TYPE_DIGIT, "HighScore", "Rep", 0, ""}
+		{DATA_TYPE_DIGIT, "HighScore", "Rep", 0, ""},
 	};
 
 	DataFormat UserSettings = {
