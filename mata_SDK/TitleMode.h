@@ -6,6 +6,7 @@
 #include "BackgroundShelf.h"
 #include "Floor.h"
 #include "Shelf.h"
+#include "Pillar.h"
 
 class Title_Mode {
 public:
@@ -25,6 +26,8 @@ public:
 		scene.AddObject(new BackgroundShelf(ASP(-1.0)), "background_shelf", LAYER1);
 
 		scene.AddObject(new Shelf(2, 1.75, true), "shelf", LAYER2);
+
+		scene.AddObject(new Pillar(1.0), "pillar", LAYER_BG);
 
 		// 타이틀 화면 인트로는 최초 실행 시에만 재생한다
 		scene.AddObject(new TitleScreen(Glb.TitleIntroPlayed), "title_screen", LAYER2);
