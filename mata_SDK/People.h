@@ -147,7 +147,7 @@ public:
 					else if (Frame == Yumimi * 2)
 						Position.y = -1.4;
 					else if (Frame == Daepyo * 2)
-						Position.y = -1.2;
+						Position.y = -1.35;
 					else
 						Position.y = -1.3;
 
