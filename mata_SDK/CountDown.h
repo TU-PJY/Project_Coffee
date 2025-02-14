@@ -11,7 +11,10 @@ private:
 
 	GLfloat Size{};
 
+	GLfloat Time = 1.0;
+
 	int Count = 4;
+	bool Running = true;
 
 public:
 	CountDown() {
@@ -24,8 +27,8 @@ public:
 	}
 
 	void UpdateFunc(float FrameTime) {
-		Timer.Update(FrameTime);
-		if (Timer.CheckSec(1, CHECK_AND_INTERPOLATE)) {
+		Time += FrameTime;
+		if (Running && Time >= 1.0) {
 			Count--;
 			Size += 0.2;
 			if (Count > 0) {
@@ -48,9 +51,10 @@ public:
 				if (auto Manager = scene.Find("play_mode_manager"); Manager)
 					Manager->PlayBGM();
 
-				Timer.Stop();
-				Timer.Reset();
+				Running = false;
 			}
+
+			Time = Time - 1.0;
 		}
 
 		// 카운트를 모두 센 후 1초 후 삭제 

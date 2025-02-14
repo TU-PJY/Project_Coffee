@@ -115,7 +115,7 @@ public:
 						Coffee.IsXionFront = true;
 
 						// 시온 생성
-						GLfloat Position = PositionValue - 0.75 + 0.5 * i + 0.5;
+						GLfloat Position = PositionValue - 0.75 + 0.5 * i + 0.35;
 						scene.AddObject(new Xion(Position, 0.0, false, Xion_Blocking), "xion", LAYER3);
 
 						// 인덱스 기록
@@ -290,8 +290,11 @@ public:
 			// 파괴된 커피는 파괴된 스프라이트를 렌더링한다
 			if(CoffeeVec[i].Destroyed)
 				imageUtil.RenderStaticSpriteSheet(Img.DestroyedCoffee, CoffeeVec[i].Type);
-			else
+			else {
+				if(i == CurrentCoffeeIndex && !CoffeeVec[CurrentCoffeeIndex].IsPeopleFront && !CoffeeVec[CurrentCoffeeIndex].IsXionFront && !ForTitle)
+					imageUtil.RenderStaticSpriteSheet(Img.CoffeeBack, CoffeeVec[i].Type);
 				imageUtil.RenderStaticSpriteSheet(Img.Coffee, CoffeeVec[i].Type);
+			}
 		}
 	
 

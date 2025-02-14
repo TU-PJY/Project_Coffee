@@ -346,7 +346,7 @@ public:
 	}
 
 	void UpdateFunc(float FrameTime) {
-		// 화면이 암전된 후 2초 후 플레이 모드로 전환한다
+		// 화면이 암전된 후 1초 후 플레이 모드로 전환한다
 		if (GameStart) {
 			StartTimer.Update(FrameTime);
 			if (StartTimer.MiliSec() >= 1)

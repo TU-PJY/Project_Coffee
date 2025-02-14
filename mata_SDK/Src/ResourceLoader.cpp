@@ -12,6 +12,7 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 
 	imageUtil.SetSpriteSheetSize(256, 256, 7, 1);
 	imageUtil.LoadSpriteSheetT(Img.Xion, "Assets//Sprite//sheet-xion.png");
+	imageUtil.LoadT(Img.XionBack, "Assets//Sprite//xion-back.png");
 
 	imageUtil.SetSpriteSheetSize(256, 256, 2, 1);
 	imageUtil.LoadSpriteSheetT(Img.ED_GameOver, "Assets//Sprite//sheet-ed-gameover.png");
@@ -22,6 +23,7 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 
 	imageUtil.SetSpriteSheetSize(128, 128, 3, 1);
 	imageUtil.LoadSpriteSheetT(Img.Coffee, "Assets//Sprite//sheet-coffee.png");
+	imageUtil.LoadSpriteSheetT(Img.CoffeeBack, "Assets//Sprite//sheet-coffee-back.png");
 	imageUtil.LoadSpriteSheetT(Img.DestroyedCoffee, "Assets//Sprite//sheet-destroyed.png");
 	imageUtil.LoadSpriteSheetT(Img.Other, "Assets//Sprite//sheet-other.png");
 
@@ -37,6 +39,7 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 
 	imageUtil.SetSpriteSheetSize(256, 256, 10, 2);
 	imageUtil.LoadSpriteSheetT(Img.People, "Assets//Sprite//sheet-people.png");
+	imageUtil.LoadSpriteSheetT(Img.PeopleBack, "Assets//Sprite//sheet-people-back.png");
 
 	imageUtil.LoadT(Img.Smoke, "Assets//Sprite//smoke.png");
 	imageUtil.LoadT(Img.FloorTile, "Assets//Sprite//floor.png");
@@ -90,8 +93,7 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.Rep, "Assets//Sound//rep.mp3");
 	soundUtil.Load(Snd.RepTotal, "Assets//Sound//rep-total.mp3");
 
-	soundUtil.Load(Snd.PlayBgm[0], "Assets//Sound//play-bgm-1.mp3", FMOD_LOOP_NORMAL);
-	soundUtil.Load(Snd.PlayBgm[1], "Assets//Sound//play-bgm-2.mp3", FMOD_LOOP_NORMAL);
+	soundUtil.Load(Snd.PlayBgm, "Assets//Sound//play-bgm.mp3", FMOD_LOOP_NORMAL);
 	soundUtil.Load(Snd.TitleBgm, "Assets//Sound//title-bgm.mp3", FMOD_LOOP_NORMAL);
 	soundUtil.Load(Snd.MenuSelect, "Assets//Sound//menu-select.mp3");
 

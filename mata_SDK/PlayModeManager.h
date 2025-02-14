@@ -68,9 +68,7 @@ public:
 
 	// Bgm 재생
 	void PlayBGM() {
-		// 2가지 bgm중 하나를 선택해 플레이 한다
-		int RandNum = randomUtil.Gen(RANDOM_TYPE_INT, 0, 1);
-		soundUtil.Play(Snd.PlayBgm[RandNum], Glb.BGMChannel);
+		soundUtil.Play(Snd.PlayBgm, Glb.BGMChannel);
 		Glb.BGMChannel->setVolume(Glb.BGMVolume);
 		GameStart = true;
 	}

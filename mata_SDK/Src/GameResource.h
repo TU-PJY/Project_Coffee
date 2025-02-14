@@ -10,10 +10,12 @@ class ImageResource {
 public:
 	SpriteSheet ED{};
 	SpriteSheet Xion{};
+	Image XionBack{};
 	SpriteSheet ED_GameOver{};
 	SpriteSheet Chloe{};
 
 	SpriteSheet Coffee{};
+	SpriteSheet CoffeeBack{};
 	SpriteSheet DestroyedCoffee{};
 	Image DestroyedCan{};
 	SpriteSheet Shelf{};
@@ -23,6 +25,7 @@ public:
 
 	SpriteSheet Cart{};
 	SpriteSheet People{};
+	SpriteSheet PeopleBack{};
 
 	Image Smoke{};
 	Image FloorTile{};
@@ -58,7 +61,7 @@ public:
 	Sound Rep{};
 	Sound RepTotal{};
 
-	Sound PlayBgm[2]{};
+	Sound PlayBgm{};
 	Sound TitleBgm{};
 	Sound MenuSelect{};
 };
