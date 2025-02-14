@@ -438,6 +438,12 @@ public:
 
 				// ¸Þ´º Ç¥½Ã
 				if (!SettingState && !QuestionToDesktop) {
+					// µÞ ¹è°æ ·»´õ¸µ
+					Begin(RENDER_TYPE_STATIC);
+					transform.Move(MoveMatrix, ASP(1.0), 0.0);
+					transform.Scale(MoveMatrix, 1.8, 2.0);
+					imageUtil.Render(SysRes.COLOR_TEXTURE, 0.3 * TextOpacity);
+
 					Text.SetUseShadow(true);
 					Text.SetAlign(ALIGN_LEFT);
 					Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
