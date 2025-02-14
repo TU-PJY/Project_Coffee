@@ -89,11 +89,16 @@ public:
 
 	// Shelf Function
 	virtual ItemStruct GetFrontCoffee() { return {}; }
+	virtual ItemStruct GetNextCoffee() { return {}; }
+	virtual int GetCoffeeSize() { return {}; }
 	virtual void EnableCoffeeHit() {}
 	virtual void BreakCoffee() {}
+	virtual int GetCurrentIndex() { return{}; }
 
 	// people function
 	virtual void HitPeople() {}
+	virtual void EnableBack() {}
+	virtual void DisableBack() {}
 
 	// cover function
 	virtual bool GetState() { return {}; }

@@ -64,6 +64,8 @@ private:
 	// 사운드 채널
 	SoundChannel SndChannel{};
 
+	bool ShowBack{};
+
 public:
 	People(glm::vec2 PositionValue) {
 		Position = PositionValue;
@@ -223,7 +225,10 @@ public:
 
 		// 사람 렌더링
 		Begin();
-		transform.Move(MoveMatrix, Position.x + TiltValue * 0.5, Position.y + LoopSize * 0.5);
+		if(Frame == Listy * 2)
+			transform.Move(MoveMatrix, Position.x + 0.3 + TiltValue * 0.5, Position.y + LoopSize * 0.5);
+		else
+			transform.Move(MoveMatrix, Position.x + TiltValue * 0.5, Position.y + LoopSize * 0.5);
 		transform.Rotate(MoveMatrix, Rotation);
 		if(Frame == Yumimi * 2 + 1)
 			transform.Scale(MoveMatrix, 3.0, 3.0 + LoopSize + FellDownSize);
@@ -231,6 +236,9 @@ public:
 			transform.Scale(MoveMatrix, 2.0, 2.0 + LoopSize + FellDownSize);
 
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
+
+		if(ShowBack)
+			imageUtil.RenderStaticSpriteSheet(Img.PeopleBack, Frame);
 		imageUtil.RenderStaticSpriteSheet(Img.People, Frame);
 
 		// 카트 렌더링
@@ -252,14 +260,15 @@ public:
 
 		// 사람의 HitCount가 0이 될 경우 커피를 다시 부술 수 있는 상태로 전환한다 
 		if (HitCount == 0) {
-			if(auto Shelf = scene.Find("shelf"); Shelf)
-				Shelf->EnableCoffeeHit();
-
+			ShowBack = false;
 			HitState = true;
 			ObjectTag = "";
 			Loop.SetValue(Preset::HalfPositive);                     
 			Loop2.SetValue(Preset::HalfNegative);
 			LoopSize = 0.0;
+
+			if (auto Shelf = scene.Find("shelf"); Shelf)
+				Shelf->EnableCoffeeHit();
 
 			GameObject* Score = scene.Find("score_indicator");
 
@@ -277,5 +286,14 @@ public:
 		// HitCount가 남아있을 경우 기울임 수치를 추가한다
 		else 
 			TiltValue = 2.0;
+	}
+
+	void EnableBack() {
+		std::cout << "Enabled" << std::endl;
+		ShowBack = true;
+	}
+
+	void DisableBack() {
+		ShowBack = false;
 	}
 };

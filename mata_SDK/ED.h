@@ -52,12 +52,12 @@ private:
 	// 이드 사운드 채널
 	SoundChannel SndChannel{};
 	SoundChannel SndChannel2{};
-	        
+
 	// 이드가 커피를 부순 횟수
 	int BreakCount{};
 
 	// 커피를 부숴야하는 개수, 초기값 7개
-	int MaxBreak{7};
+	int MaxBreak{ 7 };
 
 	// 다음 선반의 시작 지점
 	GLfloat NextPosition{};
@@ -70,7 +70,7 @@ private:
 	bool PushState{};
 
 	// 조작키 입력 가능한 상태, 게임오버 되면 비활성화 되어 더 이상 키를 입력할 수 없다
-	bool InputAvailable{false};
+	bool InputAvailable{ false };
 
 	// 게임오버 사운드 재생 여부
 	bool SoundPlayed{};
@@ -80,30 +80,18 @@ public:
 		EDCameraPosition = DestPosition + 0.5;
 		cameraControl.MoveCamera(EDCameraPosition, 0.0);
 	}
-	
+
 	void InputKey(KeyEvent& Event) {
 		// 비활성화 상태에서는 입력을 받지 않는다.
 		if (!InputAvailable)
 			return;
 
-		if (Event.Type == SPECIAL_KEY_DOWN) { 
-			//// 3개의 키 중 하나라도 눌린 키가 있으면 동작하지 않는다
-			//for (int i = 0; i < 4; i++)
-			//	if (KeyPressed[i])
-			//		return;
+		if (Event.Type == SPECIAL_KEY_DOWN) {
+			if (Event.SpecialKey != SK_ARROW_LEFT && Event.SpecialKey != SK_ARROW_RIGHT && Event.SpecialKey != SK_ARROW_DOWN &&
+				Event.SpecialKey != SK_ARROW_UP)
+				return;
 
-			//if (Event.SpecialKey == SK_ARROW_LEFT)
-			//	KeyPressed[0] = true;
-			//else if (Event.SpecialKey == SK_ARROW_DOWN)
-			//	KeyPressed[1] = true;
-			//else if (Event.SpecialKey == SK_ARROW_RIGHT)
-			//	KeyPressed[2] = true;
-			//else if (Event.SpecialKey == SK_ARROW_UP)
-			//{}
-			//else
-			//	return;
-
-			// 가장 앞에 있는 커피를 부순다. 
+			// 가장 앞에 있는 커피를 부순다.
 			if (auto Shelf = scene.Find("shelf"); Shelf) {
 				bool IsCorrect{};
 
@@ -162,8 +150,6 @@ public:
 					else if (Item.Type == Coffee_Can && Event.SpecialKey == SK_ARROW_LEFT)
 						IsCorrect = true;
 
-					
-
 					// 종류에 맞는 키를 눌러야 부술 수 있다.
 					if (IsCorrect) {
 						soundUtil.Stop(SndChannel);
@@ -177,7 +163,24 @@ public:
 
 						DestPosition += 0.5;
 
+						if ((BreakCount < MaxBreak - 1)) {
+							ItemStruct NextItem = Shelf->GetNextCoffee();
+							std::cout << NextItem.IsPeopleFront << std::endl;
+
+							// 다음 자리에 사람이 있다면 사람 강조 표시를 활성화 한다
+							if (NextItem.IsPeopleFront) {
+								if (auto People = scene.Find("people"); People)
+									People->EnableBack();
+							}
+
+							else if (NextItem.IsXionFront) {
+								if (auto Xion = scene.Find("xion"); Xion)
+									Xion->EnableBack();
+							}
+						}
+
 						Shelf->BreakCoffee();
+
 						BreakCount++;
 
 						// 커피를 다 부수면 다음 선반으로 이동한다
@@ -220,26 +223,11 @@ public:
 			}
 		}
 
-		//// 키 입력을 모두 중단해야 다른 키를 입력할 수 있다
-		//if (Event.Type == SPECIAL_KEY_UP) {
-		//	if (Event.SpecialKey == SK_ARROW_LEFT)
-		//		KeyPressed[0] = false;
-		//	else if (Event.SpecialKey == SK_ARROW_DOWN)
-		//		KeyPressed[1] = false;
-		//	else if (Event.SpecialKey == SK_ARROW_RIGHT)
-		//		KeyPressed[2] = false;
-		//}
-
 		if (Event.Type == NORMAL_KEY_DOWN && Event.NormalKey == NK_SPACE) {
-			for (int i = 0; i < 4; i++)
-				if (KeyPressed[i])
-					return;
-
-			//KeyPressed[3] = true;
-
 			// 앞에 있는 사람을 발로 찬다.
 			if (auto Shelf = scene.Find("shelf"); Shelf) {
 				ItemStruct Item = Shelf->GetFrontCoffee();
+				int Index = Shelf->GetCurrentIndex();
 
 				if (Item.IsPeopleFront) {
 					if (auto People = scene.Find("people"); People) {
@@ -268,17 +256,13 @@ public:
 				}
 			}
 		}
-
-		/*if (Event.Type == NORMAL_KEY_UP && Event.NormalKey == NK_SPACE) {
-			KeyPressed[3] = false;
-		}*/
 	}
 
 	void UpdateFunc(float FrameTime) {
 		// 프레임
 		// 이전 프레임과 현재 프레임이 다를 경우 이전 프레임을 갱신하고 애니메이션 출력하도록 한다
 		if (!Glb.GameOver) {
-			if (PrevFrame != Frame) 
+			if (PrevFrame != Frame)
 				PrevFrame = Frame;
 
 			// 현재 상태가 Idle이 아니라면 0.3초 후 다시 Idle 상태로 복귀시킨다
@@ -296,7 +280,6 @@ public:
 			else
 				mathUtil.Lerp(HRotation, 0.0, 15.0, FrameTime);
 
-
 			// 애니메이션
 			// AnimationSize가 0.0보다 작다면 다시 0.0으로 복귀시킨다
 			mathUtil.Lerp(AnimationSize, 0.0, 15.0, FrameTime);
@@ -306,7 +289,6 @@ public:
 
 			// 이드의 숨쉬기 애니메이션을 업데이트 한다
 			BreatheSize = BreatheLoop.Update(0.03, 6.0, FrameTime);
-
 
 			// 이동
 			// 목표 위치로 이동하도록 한다
@@ -360,8 +342,8 @@ public:
 	}
 
 	void RenderFunc() {
-		glm::vec2 FinalPosition { Position + AnimationSize * 0.5 + TiltValue * 0.5 + ShakeValue.x , BreatheSize * 0.5 - AnimationSize * 0.25 + ShakeValue.y};
-		glm::vec2 FinalSize{ 2.0 + AnimationSize, 2.0 + BreatheSize - AnimationSize * 0.5};
+		glm::vec2 FinalPosition{ Position + AnimationSize * 0.5 + TiltValue * 0.5 + ShakeValue.x , BreatheSize * 0.5 - AnimationSize * 0.25 + ShakeValue.y };
+		glm::vec2 FinalSize{ 2.0 + AnimationSize, 2.0 + BreatheSize - AnimationSize * 0.5 };
 
 		Begin();
 		transform.Move(MoveMatrix, FinalPosition);

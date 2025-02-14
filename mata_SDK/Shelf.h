@@ -107,16 +107,16 @@ public:
 				if (i - AddedIndex > 4 && NumShelf > 2) {
 					// 각 커피 칸마다 10퍼센트의 확률로 시온 위치를 지정한다.
 					// 시온 위치가 지정된 자리에는 사람이 배치될 수 없고 한 번 지정하면 다시 지정되지 않는다.
-					if (XionAddActivated && !AddedXionPosition && randomUtil.Probability(10)) {
+					if (!AddedXionPosition && XionAddActivated && randomUtil.Probability(10)) {
 						AvailableAddPeople = false;
 						AddedXionPosition = true;
-
-						// 시온이 배치된 자리 별도 표시
-						Coffee.IsXionFront = true;
 
 						// 시온 생성
 						GLfloat Position = PositionValue - 0.75 + 0.5 * i + 0.35;
 						scene.AddObject(new Xion(Position, 0.0, false, Xion_Blocking), "xion", LAYER3);
+
+						// 시온이 배치된 자리 별도 표시
+						Coffee.IsXionFront = true;
 
 						// 인덱스 기록
 						AddedIndex = i;
@@ -324,10 +324,22 @@ public:
 		return CoffeeVec[CurrentCoffeeIndex];
 	}
 
+	ItemStruct GetNextCoffee() {
+		return CoffeeVec[CurrentCoffeeIndex + 1];
+	}
+
+	int GetCurrentIndex() {
+		return CurrentCoffeeIndex;
+	}
+
 	// 커피를 부술 수 있는 상태로 전환한다
 	void EnableCoffeeHit() {
 		CoffeeVec[CurrentCoffeeIndex].IsPeopleFront = false;
 		CoffeeVec[CurrentCoffeeIndex].IsXionFront = false;
+	}
+
+	int GetCoffeeSize() { 
+		return CoffeeVec.size();
 	}
 
 	// 가장 앞에 있는 커피를 부순다.

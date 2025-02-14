@@ -93,6 +93,8 @@ void Xion::RenderFunc() {
 	if (Frame == Xion_Blocking || Frame == Xion_Cry2)
 		SetFlip(FLIP_TYPE_X);
 	transform.Shear(MoveMatrix, TiltValue, 0.0);
+	if (ShowBack)
+		imageUtil.Render(Img.XionBack);
 	imageUtil.RenderStaticSpriteSheet(Img.Xion, Frame);
 }
 
@@ -112,6 +114,7 @@ void Xion::HitPeople() {
 	SndChannel->setVolume(Glb.SFXVolume);
 
 	HitState = true;
+	ShowBack = false;
 	ObjectTag = "";
 }
 
@@ -125,6 +128,7 @@ void Xion::PushPeople() {
 	ObjectTag = "";
 
 	PushState = true;
+	ShowBack = false;
 
 	// 커피를 다시 부술 수 있는 상태로 전환한다
 	if (auto Shelf = scene.Find("shelf"); Shelf)
@@ -133,4 +137,12 @@ void Xion::PushPeople() {
 
 void Xion::SetFrame(int Value) {
 	Frame = Value;
+}
+
+void Xion::EnableBack() {
+	ShowBack = true;
+}
+
+void Xion::DisableBack() {
+	ShowBack = false;
 }

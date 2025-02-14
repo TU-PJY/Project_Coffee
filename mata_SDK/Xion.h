@@ -54,6 +54,8 @@ private:
 	// 게임오버 딜레이 타이머
 	TimerUtil GameOverTimer{};
 
+	bool ShowBack{};
+
 public:
 	// MoveState가 활성화된 상태로 생성되면 지정된 위치로 이동한다.
 	// MoveState가 비활성화된 상태로 생성되면 이동하지 않는다.
@@ -63,4 +65,6 @@ public:
 	void HitPeople();
 	void PushPeople();
 	void SetFrame(int Value);
+	void EnableBack();
+	void DisableBack();
 };
