@@ -80,6 +80,7 @@ public:
 		Text.SetAlign(ALIGN_LEFT);
 		Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 		Text.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.8);
+		Text.SetLineGap(0.01);
 
 		soundUtil.Play(Snd.TitleBgm, Glb.BGMChannel);
 		Glb.BGMChannel->setVolume(Glb.BGMVolume);
@@ -441,6 +442,17 @@ public:
 
 						Text.Render(ASP(1.0) - 0.1, 0.25 - 0.25 * i, 0.1, MenuItems[i].c_str());
 					}
+
+					Text.SetColor(1.0, 1.0, 1.0);
+					if(Glb.HighScore > 0)
+						Text.Render(ASP(1.0) - 0.1, 0.75, 0.08, L"최고 점수\n%d", Glb.HighScore);
+					else
+						Text.Render(ASP(1.0) - 0.1, 0.75, 0.08, L"최고 점수\n-", Glb.HighScore);
+
+					if(Glb.MaxRep > 0)
+						Text.Render(ASP(1.0) - 0.1, 0.55, 0.08, L"최고 금액\n%d", Glb.MaxRep);
+					else
+						Text.Render(ASP(1.0) - 0.1, 0.55, 0.08, L"최고 금액\n-", Glb.MaxRep);
 				}
 
 				else if (SettingState && !QuestionReset) {
