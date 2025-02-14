@@ -335,7 +335,7 @@ public:
 			// 텍스트 출력
 			ScoreText.SetColor(1.0, 1.0, 1.0);
 			Text.Render(ASP(-1.0) + 0.8, 0.85, 0.2 + TextSize, Str.c_str());
-			Text.Render(ASP(-1.0) + 0.8, 0.5, 0.06 + TextSize * 0.5, Str2.c_str());
+			Text.Render(ASP(-1.0) + 0.6, 0.5, 0.07 + TextSize * 0.5, Str2.c_str());
 
 			// 점수 출력
 			ScoreText.Render(0.0, 0.4, 0.2, L"SCORE\n%d", Glb.Score);
