@@ -77,7 +77,7 @@ public:
 	};
 
 	DataFormat UserSettings = {
-		{DATA_TYPE_DIGIT, "Setting", "Fullscreen", 0, ""},
+		{DATA_TYPE_DIGIT, "Setting", "Fullscreen", 1, ""},
 		{DATA_TYPE_DIGIT, "Setting", "BGMVolume", 1.0, ""},
 		{DATA_TYPE_DIGIT, "Setting", "SFXVolume", 1.0, ""}
 	};
@@ -120,8 +120,8 @@ public:
 	float SFXVolume{};
 
 	// 설정 표시용 볼륨 값
-	int BGMVolumeInt{};
-	int SFXVolumeInt{};
+	//int BGMVolumeInt{};
+	//int SFXVolumeInt{};
 
 	// 전체화면 여부
 	bool FullscreenAcvivated{};

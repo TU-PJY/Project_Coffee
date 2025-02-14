@@ -128,17 +128,17 @@ public:
 						break;
 					case 2:
 						Glb.BGMVolume -= 0.1;
-						Glb.BGMVolumeInt--;
+					//	Glb.BGMVolumeInt--;
 						EX.ClampValue(Glb.BGMVolume, 0.0, CLAMP_LESS);
-						EX.ClampValue(Glb.BGMVolumeInt, 0, CLAMP_LESS);
+					//	EX.ClampValue(Glb.BGMVolumeInt, 0, CLAMP_LESS);
 						Dat.UserSettingData.UpdateDigitData("Setting", "BGMVolume", Glb.BGMVolume);
 						Glb.BGMChannel->setVolume(Glb.BGMVolume);
 						break;
 					case 3:
 						Glb.SFXVolume -= 0.1;
-						Glb.SFXVolumeInt--;
+						//Glb.SFXVolumeInt--;
 						EX.ClampValue(Glb.SFXVolume, 0.0, CLAMP_LESS);
-						EX.ClampValue(Glb.SFXVolumeInt, 0, CLAMP_LESS);
+						//EX.ClampValue(Glb.SFXVolumeInt, 0, CLAMP_LESS);
 						Dat.UserSettingData.UpdateDigitData("Setting", "SFXVolume", Glb.SFXVolume);
 						break;
 					}
@@ -159,17 +159,17 @@ public:
 						break;
 					case 2:
 						Glb.BGMVolume += 0.1;
-						Glb.BGMVolumeInt++;
+					//	Glb.BGMVolumeInt++;
 						EX.ClampValue(Glb.BGMVolume, 1.0, CLAMP_GREATER);
-						EX.ClampValue(Glb.BGMVolumeInt, 10, CLAMP_GREATER);
+					//	EX.ClampValue(Glb.BGMVolumeInt, 10, CLAMP_GREATER);
 						Dat.UserSettingData.UpdateDigitData("Setting", "BGMVolume", Glb.BGMVolume);
 						Glb.BGMChannel->setVolume(Glb.BGMVolume);
 						break;
 					case 3:
 						Glb.SFXVolume += 0.1;
-						Glb.SFXVolumeInt++;
+					//	Glb.SFXVolumeInt++;
 						EX.ClampValue(Glb.SFXVolume, 1.0, CLAMP_GREATER);
-						EX.ClampValue(Glb.SFXVolumeInt, 10, CLAMP_GREATER);
+						//EX.ClampValue(Glb.SFXVolumeInt, 10, CLAMP_GREATER);
 						Dat.UserSettingData.UpdateDigitData("Setting", "SFXVolume", Glb.SFXVolume);
 						break;
 					}
@@ -507,10 +507,10 @@ public:
 								Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"화면 모드: 창");
 							break;
 						case 2:
-							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"배경음악 볼륨: %d", Glb.BGMVolumeInt);
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"배경음악 볼륨: %.1f", Glb.BGMVolume);
 							break;
 						case 3:
-							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"효과음 볼륨: %d", Glb.SFXVolumeInt);
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"효과음 볼륨: %.1f", Glb.SFXVolume);
 							break;
 						case 4:
 							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"진행 상황 초기화");

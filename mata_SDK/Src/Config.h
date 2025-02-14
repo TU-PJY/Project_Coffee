@@ -86,7 +86,7 @@ constexpr float APPLICATION_VERSION = 1.0;
 // Data file security option
 // When this option is activated, the data file is saved as an encrypted file.
 // When this option is disabled, the data file is saved as an xml file.
-constexpr bool USE_FILE_SECURITY = false;
+constexpr bool USE_FILE_SECURITY = true;
 
 // AES, IV for FileUtil
 // Recommend that you make this part private or 
