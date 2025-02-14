@@ -148,7 +148,7 @@ public:
 		TotalRep += Glb.DestroyedItems[Item_BoxCoffee] * 25000;
 		TotalRep += Glb.DestroyedItems[Item_BottleCoffee] * 2500;
 		TotalRep += Glb.DestroyedItems[Item_CanCoffee] * 1200;
-		TotalRep += Glb.DestroyedItems[Item_People] * 1500000;
+		TotalRep += Glb.DestroyedItems[Item_People] * 2000000;
 		TotalRep += Glb.DestroyedItems[Item_Xion] * 1000000;
 		TotalRep += Glb.DestroyedItems[Item_HouseDoc] * 100000;
 
@@ -376,7 +376,7 @@ public:
 					break;
 
 				case Item_People:
-					ScoreText.Render(0.0, RenderHeight, 0.1, L"폭행 피해 합의금: %d명 x 1500000골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
+					ScoreText.Render(0.0, RenderHeight, 0.1, L"폭행 피해 합의금: %d명 x 2000000골드", Glb.DestroyedItems[RepVec[i].DestroyedType]);
 					break;
 
 				case Item_Xion:
