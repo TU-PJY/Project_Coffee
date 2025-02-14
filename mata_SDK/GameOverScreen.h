@@ -154,12 +154,16 @@ public:
 
 		if (Glb.HighScore < Glb.Score) {
 			NewHighScore = true;
+			Glb.IsHighScore = true;
 			Dat.HighscoreData.UpdateDigitData("HighScore", "Score", Glb.Score);
+			Glb.HighScore = Glb.Score;
 		}
 
 		if (Glb.MaxRep < TotalRep) {
 			NewHighRep = true;
+			Glb.IsHighRep = true;
 			Dat.HighscoreData.UpdateDigitData("HighScore", "Rep", TotalRep);
+			Glb.MaxRep = TotalRep;
 		}
 	}
 
@@ -272,11 +276,11 @@ public:
 
 			if(auto Cover = scene.Find("cover"); Cover)
 				if (Cover->GetState()) {
+					System.SetBackColorRGB(122, 138, 154);
 					DeleteTimer.Update(FrameTime);
-					if (DeleteTimer.Sec() >= 1) {
-						System.SetBackColorRGB(122, 138, 154);
+					if (DeleteTimer.Sec() >= 1) 
 						scene.SwitchMode(TitleMode.Start);
-					}
+					
 				}
 		}
 	}

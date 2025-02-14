@@ -106,6 +106,20 @@ DWORD WINAPI DataResourceLoader(LPVOID lpParam) {
 	Glb.BGMVolume = Dat.UserSettingData.LoadDigitData("Setting", "BGMVolume");
 	Glb.SFXVolume = Dat.UserSettingData.LoadDigitData("Setting", "SFXVolume");
 
+	if (Glb.BGMVolume >= 1.0)
+		Glb.BGMVolumeInt = 10;
+	else if(Glb.BGMVolume <= 0.0)
+		Glb.BGMVolumeInt = 0;
+	else
+		Glb.BGMVolumeInt = (int)(Glb.BGMVolume * 10) % 10 * 10;
+
+	if (Glb.SFXVolume >= 1.0)
+		Glb.SFXVolumeInt = 10;
+	else if (Glb.SFXVolume <= 0.0)
+		Glb.SFXVolumeInt = 0;
+	else
+		Glb.SFXVolumeInt = (int)(Glb.SFXVolume * 10) % 10 * 10;
+
 	Glb.HighScore = Dat.HighscoreData.LoadDigitData("HighScore", "Score");
 	Glb.MaxRep = Dat.HighscoreData.LoadDigitData("HighScore", "Rep");
 

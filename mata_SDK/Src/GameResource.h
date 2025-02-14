@@ -115,6 +115,12 @@ public:
 	// 유저 설정
 	float BGMVolume{};
 	float SFXVolume{};
+
+	// 설정 표시용 볼륨 값
+	int BGMVolumeInt{};
+	int SFXVolumeInt{};
+
+	// 전체화면 여부
 	bool FullscreenAcvivated{};
 
 	// 유저 하이스코어
@@ -122,6 +128,10 @@ public:
 
 	//  유저 최대 배상금
 	int MaxRep{};
+
+	// 이전 최고 기록 달성 여부
+	bool IsHighScore{};
+	bool IsHighRep{};
 };
 
 // Declare the global text object here.

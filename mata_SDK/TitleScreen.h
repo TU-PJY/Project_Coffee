@@ -80,7 +80,7 @@ public:
 		Text.SetAlign(ALIGN_LEFT);
 		Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 		Text.SetShadow(0.1, glm::vec3(0.0, 0.0, 0.0), 0.8);
-		Text.SetLineGap(0.01);
+		Text.SetLineGap(0.02);
 
 		soundUtil.Play(Snd.TitleBgm, Glb.BGMChannel);
 		Glb.BGMChannel->setVolume(Glb.BGMVolume);
@@ -128,13 +128,17 @@ public:
 						break;
 					case 2:
 						Glb.BGMVolume -= 0.1;
+						Glb.BGMVolumeInt--;
 						EX.ClampValue(Glb.BGMVolume, 0.0, CLAMP_LESS);
+						EX.ClampValue(Glb.BGMVolumeInt, 0, CLAMP_LESS);
 						Dat.UserSettingData.UpdateDigitData("Setting", "BGMVolume", Glb.BGMVolume);
 						Glb.BGMChannel->setVolume(Glb.BGMVolume);
 						break;
 					case 3:
 						Glb.SFXVolume -= 0.1;
+						Glb.SFXVolumeInt--;
 						EX.ClampValue(Glb.SFXVolume, 0.0, CLAMP_LESS);
+						EX.ClampValue(Glb.SFXVolumeInt, 0, CLAMP_LESS);
 						Dat.UserSettingData.UpdateDigitData("Setting", "SFXVolume", Glb.SFXVolume);
 						break;
 					}
@@ -155,13 +159,17 @@ public:
 						break;
 					case 2:
 						Glb.BGMVolume += 0.1;
+						Glb.BGMVolumeInt++;
 						EX.ClampValue(Glb.BGMVolume, 1.0, CLAMP_GREATER);
+						EX.ClampValue(Glb.BGMVolumeInt, 10, CLAMP_GREATER);
 						Dat.UserSettingData.UpdateDigitData("Setting", "BGMVolume", Glb.BGMVolume);
 						Glb.BGMChannel->setVolume(Glb.BGMVolume);
 						break;
 					case 3:
 						Glb.SFXVolume += 0.1;
+						Glb.SFXVolumeInt++;
 						EX.ClampValue(Glb.SFXVolume, 1.0, CLAMP_GREATER);
+						EX.ClampValue(Glb.SFXVolumeInt, 10, CLAMP_GREATER);
 						Dat.UserSettingData.UpdateDigitData("Setting", "SFXVolume", Glb.SFXVolume);
 						break;
 					}
@@ -443,16 +451,25 @@ public:
 						Text.Render(ASP(1.0) - 0.1, 0.25 - 0.25 * i, 0.1, MenuItems[i].c_str());
 					}
 
-					Text.SetColor(1.0, 1.0, 1.0);
-					if(Glb.HighScore > 0)
-						Text.Render(ASP(1.0) - 0.1, 0.75, 0.08, L"최고 점수\n%d", Glb.HighScore);
-					else
-						Text.Render(ASP(1.0) - 0.1, 0.75, 0.08, L"최고 점수\n-", Glb.HighScore);
 
-					if(Glb.MaxRep > 0)
-						Text.Render(ASP(1.0) - 0.1, 0.55, 0.08, L"최고 금액\n%d", Glb.MaxRep);
+					// 최고 점수 또는 최고 금액을 갱신했을 경우 초록색으로 표시한다
+					Text.SetColor(1.0, 1.0, 1.0);
+
+					if (Glb.IsHighScore)
+						Text.SetColor(0.0, 1.0, 0.0);
+					if(Glb.HighScore > 0)
+						Text.Render(ASP(1.0) - 0.1, 0.85, 0.08, L"최고 점수\n%d", Glb.HighScore);
 					else
-						Text.Render(ASP(1.0) - 0.1, 0.55, 0.08, L"최고 금액\n-", Glb.MaxRep);
+						Text.Render(ASP(1.0) - 0.1, 0.85, 0.08, L"최고 점수\n-", Glb.HighScore);
+
+					Text.SetColor(1.0, 1.0, 1.0);
+
+					if (Glb.IsHighRep)
+						Text.SetColor(0.0, 1.0, 0.0);
+					if(Glb.MaxRep > 0)
+						Text.Render(ASP(1.0) - 0.1, 0.6, 0.08, L"최고 금액\n%d 골드", Glb.MaxRep);
+					else
+						Text.Render(ASP(1.0) - 0.1, 0.6, 0.08, L"최고 금액\n- 골드", Glb.MaxRep);
 				}
 
 				else if (SettingState && !QuestionReset) {
@@ -484,10 +501,10 @@ public:
 								Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"화면 모드: 창");
 							break;
 						case 2:
-							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"배경음악 볼륨: %.1f", Glb.BGMVolume);
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"배경음악 볼륨: %d", Glb.BGMVolumeInt);
 							break;
 						case 3:
-							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"효과음 볼륨: %.1f", Glb.SFXVolume);
+							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"효과음 볼륨: %d", Glb.SFXVolumeInt);
 							break;
 						case 4:
 							Text.Render(ASP(1.0) - 0.1, 0.625 - i * 0.25, 0.1, L"진행 상황 초기화");

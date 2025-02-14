@@ -48,6 +48,10 @@ public:
 		// 점수 초기화
 		Glb.Score = 0;
 
+		// 최고 기록 달성 여부 초기화
+		Glb.IsHighScore = false;
+		Glb.IsHighRep = false;
+
 		// 사람 생성 가능 여부 초기화
 		for (int i = 0; i < 10; i++) {
 			Glb.PrevChFrame[i] = 0;
