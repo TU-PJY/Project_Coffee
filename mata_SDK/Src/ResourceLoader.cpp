@@ -67,6 +67,8 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 
 	imageUtil.LoadT(Img.Title, "Assets//Sprite//title.png");
 
+	imageUtil.LoadT(Img.mataLogo, "SDKResource//Image//Common//mata_LOGO.png", IMAGE_TYPE_LINEAR);
+
 	return 0;
 }
 

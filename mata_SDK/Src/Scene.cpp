@@ -326,10 +326,20 @@ void Scene::ClearAll() {
 }
 
 void Scene::SwitchToErrorScreen() {
-	ClearAll();
+	for (int Layer = 0; Layer < Layers; ++Layer) {
+		int Size = ObjectList[Layer].size();
+
+		for (int i = 0; i < Size; i++) {
+			ObjectList[Layer][i]->DeleteCommand = true;
+			ObjectList[Layer][i]->ObjectTag = "";
+			AddLocation(Layer, i);
+		}
+	}
 
 	if (Value2Buffer.empty())
 		AddObject(new ErrorMessage(ErrorTypeBuffer, Value1Buffer), "error_message", LAYER1);
 	else
 		AddObject(new ErrorMessage(ErrorTypeBuffer, Value1Buffer, Value2Buffer), "error_message", LAYER1);
+
+	LoopEscapeCommand = true;
 }

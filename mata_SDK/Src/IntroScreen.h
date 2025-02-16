@@ -84,7 +84,7 @@ public:
 
 		switch (SceneNumber) {
 		case 1:
-			imageUtil.Render(SysRes.SDK_LOGO, LogoOpacity);
+			imageUtil.Render(Img.mataLogo, LogoOpacity);
 			break;
 
 		case 2: case 3:

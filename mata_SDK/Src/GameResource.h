@@ -45,6 +45,8 @@ public:
 	Image Chair{};
 
 	Image Title{};
+
+	Image mataLogo{};
 };
 
 // Declare the sound resource here. 
