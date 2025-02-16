@@ -46,7 +46,10 @@ public:
 
 	Image Title{};
 
+	Image LoadingED{};
 	Image mataLogo{};
+
+	Image ZZZ{};
 };
 
 // Declare the sound resource here. 

@@ -3,6 +3,37 @@
 
 #include "TitleMode.h"
 
+class ZZZ : public GameObject {
+private:
+	glm::vec2 Position{};
+	GLfloat Opacity{1.0};
+	GLfloat Size{};
+	SinLoop SizeLoop{};
+
+public:
+	ZZZ(glm::vec2 PositionValue) {
+		Position = PositionValue;
+		SizeLoop.SetValue(0.0);
+	}
+	
+	void RenderFunc() {
+		Begin();
+		transform.Move(MoveMatrix, Position);
+		transform.Scale(MoveMatrix, Size, Size);
+		imageUtil.Render(Img.ZZZ, Opacity);
+	}
+
+	void UpdateFunc(float FrameTime) {
+		Position.x += 0.3 * FrameTime;
+		Position.y += 0.3 * FrameTime;
+		Opacity -= 0.5 * FrameTime;
+		Size = SizeLoop.Update(0.2, 1.5, FrameTime);
+		EX.ClampValue(Opacity, 0.0, CLAMP_LESS);
+		if (Opacity <= 0.0)
+			scene.DeleteObject(this);
+	}
+};
+
 class CreditScreen : public GameObject {
 private:
 	GLfloat CreditZoom{ 2.2 };
@@ -24,6 +55,8 @@ private:
 
 	GLfloat EDSize{};
 	GLfloat XionSize{};
+
+	TimerUtil XionTimer{};
 
 	TextUtil Text{};
 
@@ -86,6 +119,10 @@ public:
 		EDSize = EDLoop.Update(0.01, 4.0, FrameTime);
 		XionSize = XionLoop.Update(0.03, 2.0, FrameTime);
 		LightOpacity = LightLoop.Update(0.2, 20.0, FrameTime);
+
+		XionTimer.Update(FrameTime);
+		if (XionTimer.CheckMiliSec(0.6, 1, CHECK_AND_INTERPOLATE))
+			scene.AddObject(new ZZZ(glm::vec2(XionPosition + 0.3, 0.5)), "zzz", LAYER2);
 
 		
 		if (!EDExitState) {

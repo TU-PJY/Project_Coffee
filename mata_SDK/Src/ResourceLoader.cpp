@@ -65,9 +65,9 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.LoadT(Img.BackGroundShelf, "Assets//Sprite//Background//background-shelf.png");
 	imageUtil.LoadT(Img.Pillar, "Assets//Sprite//Background//pillar.png");
 
-	imageUtil.LoadT(Img.Title, "Assets//Sprite//title.png");
-
 	imageUtil.LoadT(Img.mataLogo, "SDKResource//Image//Common//mata_LOGO.png", IMAGE_TYPE_LINEAR);
+
+	imageUtil.LoadT(Img.ZZZ, "Assets//Sprite//Object//z.png");
 
 	return 0;
 }

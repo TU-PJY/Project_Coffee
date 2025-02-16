@@ -45,6 +45,8 @@ public:
 			soundUtil.Init();
 
 			imageUtil.Load(SysRes.LOADING_SPINNER, SysRes.SDK_LOADING_SPINNER_DIRECTORY, IMAGE_TYPE_LINEAR);
+			imageUtil.Load(Img.Title, "Assets//Sprite//title.png");
+			imageUtil.Load(Img.LoadingED, "Assets//Sprite//People//ed-loading.png");
 
 			fontUtil.LoadT(SysRes.SYSTEM_FONT_DIRECTORY);
 			SystemText.Init(L"Roboto", FW_NORMAL);
@@ -95,6 +97,16 @@ public:
 		transform.Scale(ScaleMatrix, 0.25, 0.25);
 		transform.Rotate(RotateMatrix, Rotation);
 		imageUtil.Render(SysRes.LOADING_SPINNER, SpinnerOpacity);
+
+		Begin(RENDER_TYPE_STATIC);
+		transform.Move(MoveMatrix, 0.0, 0.3);
+		transform.Scale(MoveMatrix, 2.0, 2.0);
+		imageUtil.Render(Img.Title, SpinnerOpacity);
+
+		Begin(RENDER_TYPE_STATIC);
+		transform.Move(MoveMatrix, 0.0, -1.0);
+		transform.Scale(MoveMatrix, 2.0, 2.0);
+		imageUtil.Render(Img.LoadingED, SpinnerOpacity);
 	}
 
 	void AddFPSIndicator() {
