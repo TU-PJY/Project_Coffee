@@ -22,5 +22,6 @@ Credit_Mode CreditMode;
 Credit_Mode* Credit_Mode::M_Inst;
 
 MODE_PTR PlayModePtr = PlayMode.Start;
+MODE_PTR CreditModePtr = CreditMode.Start;
 
-START_MODE_PTR START_MODE = CreditMode.Start;
+START_MODE_PTR START_MODE = TitleMode.Start;

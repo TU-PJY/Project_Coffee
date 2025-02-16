@@ -279,6 +279,7 @@ extern glm::vec3 BackColor;
 extern START_MODE_PTR START_MODE;
 
 extern MODE_PTR PlayModePtr;
+extern MODE_PTR CreditModePtr;
 
 // global scope shader
 extern GLuint IMAGE_SHADER;

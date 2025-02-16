@@ -71,6 +71,9 @@ public:
 
 	Sound PlayBgm{};
 	Sound TitleBgm{};
+	Sound CreditBGM{};
+	Sound ShutDown{};
+
 	Sound MenuSelect{};
 };
 

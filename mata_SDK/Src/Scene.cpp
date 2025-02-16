@@ -299,10 +299,13 @@ void Scene::UpdateObjectList() {
 
 void Scene::ClearFloatingObject() {
 	for (int Layer = 0; Layer < Layers; ++Layer) {
-		for (auto const& Object : ObjectList[Layer]) {
-			if (Object->FloatingCommand && !Object->StaticCommand) {
-				Object->DeleteCommand = true;
-				Object->ObjectTag = "";
+		int Size = ObjectList[Layer].size();
+
+		for (int i = 0; i < Size; i++) {
+			if (!ObjectList[Layer][i]->StaticCommand && ObjectList[Layer][i]->FloatingCommand) {
+				ObjectList[Layer][i]->DeleteCommand = true;
+				ObjectList[Layer][i]->ObjectTag = "";
+				AddLocation(Layer, i);
 			}
 		}
 	}
@@ -310,10 +313,13 @@ void Scene::ClearFloatingObject() {
 
 void Scene::ClearAll() {
 	for (int Layer = 0; Layer < Layers; ++Layer) {
-		for (auto const& Object : ObjectList[Layer]) {
-			if (!Object->StaticCommand) {
-				Object->DeleteCommand = true;
-				Object->ObjectTag = "";
+		int Size = ObjectList[Layer].size();
+
+		for (int i = 0; i < Size; i++) {
+			if (!ObjectList[Layer][i]->StaticCommand) {
+				ObjectList[Layer][i]->DeleteCommand = true;
+				ObjectList[Layer][i]->ObjectTag = "";
+				AddLocation(Layer, i);
 			}
 		}
 	}

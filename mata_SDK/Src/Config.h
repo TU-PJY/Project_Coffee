@@ -3,7 +3,7 @@
 
 //////////////////////////////////// Window options
 // window name
-constexpr const char* WINDOW_NAME = "mata_SDK";
+constexpr const char* WINDOW_NAME = "Eld Mart Slam";
 
 // window size
 constexpr int WINDOW_WIDTH = 1200;
@@ -29,20 +29,20 @@ constexpr bool USE_COMPUTE_SHADER = false;
 
 //////////////////////////////////// Development options
 // console window option
-constexpr bool SHOW_CONSOLE = true;
+constexpr bool SHOW_CONSOLE = false;
 
 // FPS indicator option
 constexpr bool SHOW_FPS = false;
 
 // show boundbox option
-#define SHOW_BOUND_BOX
+//#define SHOW_BOUND_BOX
 
 // show frustumbox option
 //#define SHOW_FRUSTUM_BOX
 
 // Program termination options when developing a program
 // When this option is activated, pressing ESC will immediately terminate the program.
-#define ENABLE_DEV_EXIT
+//#define ENABLE_DEV_EXIT
 
 
 
