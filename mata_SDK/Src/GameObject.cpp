@@ -3,11 +3,9 @@
 
 void GameObject::Begin(int RenderType) {
 	SetColor(0.0, 0.0, 0.0);
-	transform.Identity(ResultMatrix);
 	transform.Identity(MoveMatrix);
 	transform.Identity(RotateMatrix);
 	transform.Identity(ScaleMatrix);
-	transform.Identity(ImageAspectMatrix);
 	transform.Identity(FlipMatrix);
 
 	ObjectOpacityValue = 1.0f;

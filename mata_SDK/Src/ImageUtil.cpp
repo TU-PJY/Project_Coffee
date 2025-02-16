@@ -433,6 +433,12 @@ void ImageUtil::PrepareRender(Image& ImageStruct) {
 		glUniform1i(BLUR_STATE_LOCATION, 0);
 
 	glUniformMatrix4fv(IMAGE_MODEL_LOCATION, 1, GL_FALSE, glm::value_ptr(ResultMatrix));
+
+	transform.Identity(ResultMatrix);
+	transform.Identity(ImageAspectMatrix);
+
+	ObjectOpacityValue = 1.0f;
+	ObjectBlurValue = 0.0;
 }
 
 void ImageUtil::PrepareRender(SpriteSheet& SpriteSheetStruct) {
@@ -451,6 +457,12 @@ void ImageUtil::PrepareRender(SpriteSheet& SpriteSheetStruct) {
 		glUniform1i(BLUR_STATE_LOCATION, 0);
 
 	glUniformMatrix4fv(IMAGE_MODEL_LOCATION, 1, GL_FALSE, glm::value_ptr(ResultMatrix));
+
+	transform.Identity(ResultMatrix);
+	transform.Identity(ImageAspectMatrix);
+
+	ObjectOpacityValue = 1.0f;
+	ObjectBlurValue = 0.0;
 }
 
 void ImageUtil::ProcessTransform(GLfloat Width, GLfloat Height, GLfloat OpacityValue, bool DisableAdjustAspect, bool ApplyUnitTransform) {

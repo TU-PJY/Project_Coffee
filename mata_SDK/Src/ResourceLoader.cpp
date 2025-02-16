@@ -49,6 +49,19 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.LoadT(Img.BackGroundShelf, "Assets//Sprite//background-shelf.png");
 	imageUtil.LoadT(Img.Pillar, "Assets//Sprite//pillar.png");
 
+	imageUtil.SetSpriteSheetSize(256, 256, 4, 1);
+	imageUtil.LoadSpriteSheetT(Img.CreditED, "Assets//Sprite//sheet-ed-credit.png");
+
+	imageUtil.SetSpriteSheetSize(256, 256, 2, 1);
+	imageUtil.LoadSpriteSheetT(Img.CreditXion, "Assets//Sprite//sheet-xion-credit.png");
+
+	imageUtil.SetSpriteSheetSize(512, 256, 3, 1);
+	imageUtil.LoadSpriteSheetT(Img.Sofa, "Assets//Sprite//sheet-sofa.png");
+
+	imageUtil.LoadT(Img.TV, "Assets//Sprite//TV.png");
+	imageUtil.LoadT(Img.TVLight, "Assets//Sprite//TV-light.png");
+	imageUtil.LoadT(Img.Chair, "Assets//Sprite//chair.png");
+
 	return 0;
 }
 

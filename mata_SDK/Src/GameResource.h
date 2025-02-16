@@ -35,6 +35,14 @@ public:
 
 	Image BackGroundShelf{};
 	Image Pillar{};
+
+	SpriteSheet CreditED{};
+	SpriteSheet CreditXion{};
+	SpriteSheet Sofa{};
+
+	Image TV{};
+	Image TVLight{};
+	Image Chair{};
 };
 
 // Declare the sound resource here. 

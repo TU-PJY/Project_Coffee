@@ -190,6 +190,8 @@
     <ClInclude Include="BackgroundShelf.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="CountDown.h" />
+    <ClInclude Include="CreditMode.h" />
+    <ClInclude Include="CreditScreen.h" />
     <ClInclude Include="DestroyedCan.h" />
     <ClInclude Include="Explode.h" />
     <ClInclude Include="ED.h" />
