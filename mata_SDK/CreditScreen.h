@@ -35,7 +35,7 @@ private:
 		L"- Effect sound -",
 		L"- Made using FMOD API by -",
 		L"",
-		L"플레이 해 주셔서 감사합니다!"
+		L"플레이 해주셔서 감사합니다!"
 	};
 
 	std::vector<std::wstring> Compositor = {

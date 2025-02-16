@@ -19,6 +19,7 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
+		System.HideCursor();
 		System.SetBackColorRGB(31, 31, 31);
 		scene.AddObject(new LoadingScreen, "loading_screen", LAYER1);
 		SetUp();
