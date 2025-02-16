@@ -62,6 +62,8 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.LoadT(Img.TVLight, "Assets//Sprite//TV-light.png");
 	imageUtil.LoadT(Img.Chair, "Assets//Sprite//chair.png");
 
+	imageUtil.LoadT(Img.Title, "Assets//Sprite//title.png");
+
 	return 0;
 }
 

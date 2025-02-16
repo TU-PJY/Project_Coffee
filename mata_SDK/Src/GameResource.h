@@ -43,6 +43,8 @@ public:
 	Image TV{};
 	Image TVLight{};
 	Image Chair{};
+
+	Image Title{};
 };
 
 // Declare the sound resource here. 

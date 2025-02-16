@@ -66,6 +66,9 @@ private:
 	TimerUtil ShakeTimer{};
 	glm::vec2 ShakePosition{};
 
+	glm::vec2 TitlePosition{ 0.0, 0.5 };
+	GLfloat TitleSize{ 1.8 };
+
 public:
 	TitleScreen(bool IntroFlag) {
 		if (IntroFlag) {
@@ -73,6 +76,9 @@ public:
 			TextRenderState = true;
 			RunningState = true;
 			TextOpacity = 1.0;
+			TitlePosition.x = ASP(1.0) - 0.45;
+			TitlePosition.y = -1.0 + 0.2;
+			TitleSize = 1.0;
 		}
 		else 
 			IntroEnd = false;
@@ -452,6 +458,10 @@ public:
 				if (RunningState) {
 					mathUtil.Lerp(TitleCameraZoom, 1.5, 0.4, FrameTime);
 					mathUtil.Lerp(TitleCameraPosition, 0.7, 0.4, FrameTime);
+
+					mathUtil.Lerp(TitlePosition.x, ASP(1.0) - 0.45, 5.0, FrameTime);
+					mathUtil.Lerp(TitlePosition.y, -1.0 + 0.2, 5.0, FrameTime);
+					mathUtil.Lerp(TitleSize, 1.0, 5.0, FrameTime);
 				}
 
 				if (TitleCameraPosition > 0.3)
@@ -666,6 +676,14 @@ public:
 					Text.Render(ASP(1.0) - 0.1, 0.125 - i * 0.25, 0.1, QuestionItems2[i].c_str());
 				}
 			}
+
+			// 타이틀
+			if (!SettingState && !QuestionToDesktop) {
+				Begin(RENDER_TYPE_STATIC);
+				transform.Move(MoveMatrix, TitlePosition);
+				transform.Scale(MoveMatrix, TitleSize, TitleSize);
+				imageUtil.Render(Img.Title);
+			}
 		}
 
 		if (!RunningState && !QuestionToDesktop) {
@@ -676,7 +694,5 @@ public:
 			Text.Render(0.0, -0.7, 0.1, L"Enter를 눌러 계속");
 			Text.SetUseShadow(false);
 		}
-
-		//RenderStart = true;
 	}
 };

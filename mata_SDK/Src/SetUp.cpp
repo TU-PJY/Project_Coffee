@@ -66,6 +66,9 @@ void SDKSystem::SetupWindow() {
 
 	const GLubyte* Version = glGetString(GL_VERSION);
 	std::cout << Version << std::endl;
+
+	RegisterHotKey(NULL, 1, MOD_ALT, VK_MENU);  // Left Alt
+	RegisterHotKey(NULL, 2, MOD_ALT | MOD_NOREPEAT, VK_MENU);  // Right Alt
 }
 
 void SDKSystem::LoadShader() {
@@ -94,6 +97,7 @@ void SDKSystem::SetGlOption() {
 	glEnable(GL_BLEND);
 	glEnable(GL_SMOOTH);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 }
 
 void SDKSystem::InitSystem() {

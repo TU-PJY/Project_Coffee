@@ -19,6 +19,9 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
+		if (Glb.FullscreenAcvivated)
+			System.SwitchScreenState();
+
 		scene.AddObject(new IntroScreen, "intro_screen", LAYER1);
 		SetUp();
 	}

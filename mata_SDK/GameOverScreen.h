@@ -31,6 +31,10 @@ private:
 	GLfloat XionSize{};
 	SinLoop XionSizeLoop{};
 
+	// 시온 대사 루프
+	GLfloat XionTextSize{};
+	SinLoop XionTextLoop{};
+
 	// 텍스트 크기
 	GLfloat TextSize{};
 
@@ -236,6 +240,7 @@ public:
 
 		// 텍스트 애니메이션
 		TextSize = TextSizeLoop.Update(0.01, 10.0, FrameTime);
+		XionTextSize = XionTextLoop.Update(0.01, 20.0, FrameTime);
 
 		// 각 배상액을 순차적으로 보여준다
 		if (ShowRep) {
@@ -335,7 +340,7 @@ public:
 			// 텍스트 출력
 			ScoreText.SetColor(1.0, 1.0, 1.0);
 			Text.Render(ASP(-1.0) + 0.8, 0.85, 0.2 + TextSize, Str.c_str());
-			Text.Render(ASP(-1.0) + 0.6, 0.5, 0.07 + TextSize * 0.5, Str2.c_str());
+			Text.Render(ASP(-1.0) + 0.6, 0.4, 0.07 + XionTextSize, Str2.c_str());
 
 			// 점수 출력
 			ScoreText.Render(0.0, 0.4, 0.2, L"SCORE\n%d", Glb.Score);

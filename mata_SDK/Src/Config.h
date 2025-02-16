@@ -6,8 +6,8 @@
 constexpr const char* WINDOW_NAME = "Eld Mart Slam";
 
 // window size
-constexpr int WINDOW_WIDTH = 1200;
-constexpr int WINDOW_HEIGHT = 800;
+constexpr int WINDOW_WIDTH = 1000;
+constexpr int WINDOW_HEIGHT = 600;
 
 // fullscreen option
 constexpr bool FULL_SCREEN_OPTION = false;
@@ -16,7 +16,7 @@ constexpr bool FULL_SCREEN_OPTION = false;
 
 //////////////////////////////////// SDK options
 // intro screen option
-constexpr bool ENABLE_INTRO_SCREEN = false;
+constexpr bool ENABLE_INTRO_SCREEN = true;
 
 // frame limits option
 // If this option is set to 0, the system will run at maximum framerate.

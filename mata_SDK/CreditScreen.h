@@ -28,25 +28,27 @@ private:
 	TextUtil Text{};
 
 	std::vector<std::wstring> CreditStr = {
+		L" ",
 		L"- Original Game by -",
 		L"- A Computer game by -",
 		L"- Programming & Art -",
 		L"- Music -",
 		L"- Effect sound -",
 		L"- Made using FMOD API by -",
-		L"",
+		L" ",
 		L"플레이 해주셔서 감사합니다!"
 	};
 
 	std::vector<std::wstring> Compositor = {
+		L" ",
 		L"EPID Games",
 		L"mata_",
 		L"mata_",
-		L"Zane Little\nContext Sensitive\nHolizna",
+		L"Zane Little\nContext Sensitive\nPixabay",
 		L"Context Sensitive\nPixabay",
 		L"Firelight Technologies Pty Ltd.",
-		L"",
-		L"",
+		L" ",
+		L" ",
 	};
 
 	bool StartTextRender{};
@@ -106,22 +108,22 @@ public:
 
 
 		CreditTimer.Update(FrameTime);
-		if (!StartTextRender && CreditTimer.CheckMiliSec(11.8, 1, CHECK_AND_INTERPOLATE)) {
+		if (!StartTextRender && CreditTimer.CheckMiliSec(7.385, 3, CHECK_AND_INTERPOLATE)) {
 			StartTextRender = true;
 			TextRenderState = true;
 		}
 
-		else if (StartTextRender && !TextRenderState && CreditTimer.CheckMiliSec(0.73, 2, CHECK_AND_INTERPOLATE)) 
+		if (StartTextRender && !TextRenderState && CreditTimer.CheckMiliSec(0.462, 3, CHECK_AND_INTERPOLATE)) 
 			TextRenderState = true;
 
-		else if (CurrentIndex < CreditStr.size() - 1 && StartTextRender && TextRenderState && CreditTimer.CheckMiliSec(5.12, 2, CHECK_AND_INTERPOLATE)) {
+		if (CurrentIndex < CreditStr.size() - 1 && StartTextRender && TextRenderState && CreditTimer.CheckMiliSec(3.234, 3, CHECK_AND_INTERPOLATE)) {
 			TextRenderState = false;
 			CurrentIndex++;
 		}
 
 		if (!EDExitState) {
-			CreditZoom -= 1.4 * 0.1 * FrameTime;
-			CreditHeight -= 0.2 * 0.1 * FrameTime;
+			CreditZoom -= 1.4 * 0.15 * FrameTime;
+			CreditHeight -= 0.2 * 0.15 * FrameTime;
 			EX.ClampValue(CreditZoom, 0.8, CLAMP_LESS);
 			EX.ClampValue(CreditHeight, 0.1, CLAMP_LESS);
 		}
@@ -226,33 +228,43 @@ public:
 
 			// 텍스트
 			if (!EDExitState) {
-				Text.SetAlign(ALIGN_MIDDLE);
-				Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
 				if (TextRenderState) {
-					Text.SetColorRGB(255, 213, 80);
-					if (CurrentIndex == 7)
-						Text.Render(0.0, 0.75, 0.15, CreditStr[CurrentIndex].c_str());
-					else
-						Text.Render(0.0, 0.95, 0.15, CreditStr[CurrentIndex].c_str());
-
-					Text.SetColor(1.0, 1.0, 1.0);
-					Text.Render(0.0, 0.8, 0.08, Compositor[CurrentIndex].c_str());
-
-					if (CurrentIndex == 5) {
+					if (CurrentIndex == 0) {
 						Begin(RENDER_TYPE_STATIC);
-						transform.Move(MoveMatrix, 0.0, 0.65);
-						transform.Scale(MoveMatrix, 0.5, 0.5);
+						transform.Move(MoveMatrix, 0.0, 0.7);
+						transform.Scale(MoveMatrix, 1.2, 1.2);
+						imageUtil.Render(Img.Title);
+					}
+
+					if (CurrentIndex == 6) {
+						Begin(RENDER_TYPE_STATIC);
+						transform.Move(MoveMatrix, 0.0, 0.6);
+						transform.Scale(MoveMatrix, 0.7, 0.7);
 						imageUtil.Render(SysRes.FMOD_LOGO);
 					}
 
-					else if (CurrentIndex == 6) {
+					if (CurrentIndex == 7) {
 						Begin(RENDER_TYPE_STATIC);
 						transform.Move(MoveMatrix, 0.0, 0.75);
 						transform.Scale(MoveMatrix, 0.7, 0.7);
 						imageUtil.Render(SysRes.SDK_LOGO);
 					}
 
+					else {
+						Text.SetAlign(ALIGN_MIDDLE);
+						Text.SetHeightAlign(HEIGHT_ALIGN_MIDDLE);
+
+						Text.SetColorRGB(255, 213, 80);
+						if (CurrentIndex == 8)
+							Text.Render(0.0, 0.75, 0.15, CreditStr[CurrentIndex].c_str());
+						else
+							Text.Render(0.0, 0.95, 0.15, CreditStr[CurrentIndex].c_str());
+
+						Text.SetColor(1.0, 1.0, 1.0);
+						Text.Render(0.0, 0.8, 0.08, Compositor[CurrentIndex].c_str());
+					}
 				}
+
 				Text.SetAlign(ALIGN_LEFT);
 				Text.SetHeightAlign(HEIGHT_ALIGN_DEFAULT);
 				Text.SetColorRGB(255, 213, 80);

@@ -9,9 +9,7 @@ private:
 	GLfloat      LogoSize        = 1.0;
 	GLfloat      LogoOpacity     = 0.0;
 	GLfloat      LogoPosition    = -0.3;
-	GLfloat      AnimationSpeed  = 0.5;
-
-	SinLerp      Slerp{};
+	GLfloat      AnimationSpeed  = 3.0;
 
 	int          SceneNumber{}; 
 
@@ -46,8 +44,8 @@ public:
 
 		case 1:
 			if (timer.MiliSec() < 2.5) {
-				LogoPosition = Slerp.Update(LogoPosition, 0.0, AnimationSpeed, FrameTime);
-				LogoOpacity = Slerp.Update(LogoOpacity, 1.0, AnimationSpeed, FrameTime);
+				mathUtil.Lerp(LogoPosition, 0.0, AnimationSpeed, FrameTime);
+				mathUtil.Lerp(LogoOpacity, 1.0, AnimationSpeed, FrameTime);
 			}
 
 			if (timer.CheckMiliSec(2.5, 1, CHECK_AND_RESUME)) {
@@ -57,7 +55,6 @@ public:
 
 			if (timer.CheckMiliSec(4.0, 1, CHECK_AND_INTERPOLATE)) {
 				LogoPosition = -0.3;
-				Slerp.Reset();
 				++SceneNumber;
 			}
 			break;
@@ -65,8 +62,8 @@ public:
 
 		case 2:
 			if (timer.MiliSec() < 2.5) {
-				LogoPosition = Slerp.Update(LogoPosition, 0.0, AnimationSpeed, FrameTime);
-				LogoOpacity = Slerp.Update(LogoOpacity, 1.0, AnimationSpeed, FrameTime);
+				mathUtil.Lerp(LogoPosition, 0.0, AnimationSpeed, FrameTime);
+				mathUtil.Lerp(LogoOpacity, 1.0, AnimationSpeed, FrameTime);
 			}
 
 			if (timer.CheckMiliSec(2.5, 1, CHECK_AND_RESUME)) {
