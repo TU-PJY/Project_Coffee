@@ -68,7 +68,8 @@ public:
 
 	// Bgm Àç»ý
 	void PlayBGM() {
-		soundUtil.Play(Snd.PlayBgm, Glb.BGMChannel);
+		int RandomIndex = randomUtil.Gen(RANDOM_TYPE_INT, 0, 2);
+		soundUtil.Play(Snd.PlayBgm[RandomIndex], Glb.BGMChannel);
 		Glb.BGMChannel->setVolume(Glb.BGMVolume);
 		GameStart = true;
 	}

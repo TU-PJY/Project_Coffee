@@ -76,7 +76,7 @@ public:
 	Sound Rep{};
 	Sound RepTotal{};
 
-	Sound PlayBgm{};
+	Sound PlayBgm[3]{};
 	Sound TitleBgm{};
 	Sound CreditBGM{};
 	Sound ShutDown{};

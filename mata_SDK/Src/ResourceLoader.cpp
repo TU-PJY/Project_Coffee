@@ -117,7 +117,12 @@ DWORD WINAPI SoundResourceLoader(LPVOID lpParam) {
 	soundUtil.Load(Snd.GameEnd[0], "Assets//Sound//BGM//gameover-timeout.mp3");
 	soundUtil.Load(Snd.GameEnd[1], "Assets//Sound//BGM//gameover-hit-xion.mp3");
 	soundUtil.Load(Snd.GameEnd[2], "Assets//Sound//BGM//gameover-suppress.mp3");
-	soundUtil.Load(Snd.PlayBgm, "Assets//Sound//BGM//play-bgm.mp3", FMOD_LOOP_NORMAL);
+
+	for (int i = 0; i < 3; i++) {
+		std::string FileName = "Assets//Sound//BGM//play-bgm-" + std::to_string(i + 1) + ".mp3";
+		soundUtil.Load(Snd.PlayBgm[i], FileName, FMOD_LOOP_NORMAL);
+	}
+
 	soundUtil.Load(Snd.TitleBgm, "Assets//Sound//BGM//title-bgm.mp3", FMOD_LOOP_NORMAL);
 	soundUtil.Load(Snd.CreditBGM, "Assets//Sound//BGM//credit-bgm.mp3", FMOD_LOOP_NORMAL);
 
