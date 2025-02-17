@@ -19,6 +19,8 @@ public:
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
+		System.SetBackColorRGB(31, 31, 31);
+
 		if (Glb.FullscreenAcvivated)
 			System.SwitchScreenState();
 

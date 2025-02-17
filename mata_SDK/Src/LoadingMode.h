@@ -20,7 +20,7 @@ public:
 
 	static void Start() {
 		System.HideCursor();
-		System.SetBackColorRGB(31, 31, 31);
+		System.SetBackColorRGB(122, 138, 154);
 		scene.AddObject(new LoadingScreen, "loading_screen", LAYER1);
 		SetUp();
 	}

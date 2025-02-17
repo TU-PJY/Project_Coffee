@@ -25,7 +25,7 @@ public:
 
 	void UpdateFunc(float FrameTime) {
 		Position.x += 0.3 * FrameTime;
-		Position.y += 0.3 * FrameTime;
+		Position.y += 0.2 * FrameTime;
 		Opacity -= 0.5 * FrameTime;
 		Size = SizeLoop.Update(0.2, 1.5, FrameTime);
 		EX.ClampValue(Opacity, 0.0, CLAMP_LESS);
@@ -145,22 +145,22 @@ public:
 
 
 		CreditTimer.Update(FrameTime);
-		if (!StartTextRender && CreditTimer.CheckMiliSec(7.385, 3, CHECK_AND_INTERPOLATE)) {
+		if (!StartTextRender && CreditTimer.CheckMiliSec(12.96, 2, CHECK_AND_INTERPOLATE)) {
 			StartTextRender = true;
 			TextRenderState = true;
 		}
 
-		if (StartTextRender && !TextRenderState && CreditTimer.CheckMiliSec(0.462, 3, CHECK_AND_INTERPOLATE)) 
+		if (StartTextRender && !TextRenderState && CreditTimer.CheckMiliSec(0.81, 3, CHECK_AND_INTERPOLATE)) 
 			TextRenderState = true;
 
-		if (CurrentIndex < CreditStr.size() - 1 && StartTextRender && TextRenderState && CreditTimer.CheckMiliSec(3.234, 3, CHECK_AND_INTERPOLATE)) {
+		if (CurrentIndex < CreditStr.size() - 1 && StartTextRender && TextRenderState && CreditTimer.CheckMiliSec(5.67, 3, CHECK_AND_INTERPOLATE)) {
 			TextRenderState = false;
 			CurrentIndex++;
 		}
 
 		if (!EDExitState) {
-			CreditZoom -= 1.4 * 0.15 * FrameTime;
-			CreditHeight -= 0.2 * 0.15 * FrameTime;
+			CreditZoom -= 1.4 * 0.1 * FrameTime;
+			CreditHeight -= 0.2 * 0.1 * FrameTime;
 			EX.ClampValue(CreditZoom, 0.8, CLAMP_LESS);
 			EX.ClampValue(CreditHeight, 0.1, CLAMP_LESS);
 		}
