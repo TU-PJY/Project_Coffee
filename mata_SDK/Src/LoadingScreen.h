@@ -45,7 +45,7 @@ public:
 			soundUtil.Init();
 
 			imageUtil.Load(SysRes.LOADING_SPINNER, SysRes.SDK_LOADING_SPINNER_DIRECTORY, IMAGE_TYPE_LINEAR);
-			imageUtil.Load(Img.Title, "Assets//Sprite//title.png");
+			imageUtil.Load(Img.Title, "Assets//Sprite//UI//title.png");
 			imageUtil.Load(Img.LoadingED, "Assets//Sprite//People//ed-loading.png");
 
 			fontUtil.LoadT(SysRes.SYSTEM_FONT_DIRECTORY);

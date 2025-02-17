@@ -253,9 +253,11 @@
     <ClInclude Include="Src\TransformUtil.h" />
     <ClInclude Include="Src\UiUtil.h" />
     <ClInclude Include="Src\UtilPack.h" />
+    <ClInclude Include="TestMode.h" />
     <ClInclude Include="TimeWatch.h" />
     <ClInclude Include="TitleMode.h" />
     <ClInclude Include="TitleScreen.h" />
+    <ClInclude Include="Tutorial.h" />
     <ClInclude Include="Xion.h" />
     <ClInclude Include="Cover.h" />
   </ItemGroup>

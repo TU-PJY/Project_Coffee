@@ -1,5 +1,6 @@
 #pragma once
 #include <Scene.h>
+#include "Tutorial.h"
 
 class TitleScreen : public GameObject {
 private:
@@ -68,6 +69,8 @@ private:
 
 	glm::vec2 TitlePosition{ 0.0, 0.5 };
 	GLfloat TitleSize{ 1.8 };
+
+	bool TutorialState{};
 
 public:
 	TitleScreen(bool IntroFlag) {
@@ -306,11 +309,25 @@ public:
 					if (!SettingState && !QuestionToDesktop) {
 						soundUtil.Stop(SndChannel);
 						if (MenuIndex == 0) {
-							soundUtil.Stop(Glb.BGMChannel);
-							soundUtil.Play(Snd.CartCrash, SndChannel);
-							SndChannel->setVolume(Glb.SFXVolume);
-							GameStart = true;
-							scene.DeleteInputObject(this);
+							if (!Glb.NeedTutorial) {
+								soundUtil.Stop(Glb.BGMChannel);
+								soundUtil.Play(Snd.CartCrash, SndChannel);
+								SndChannel->setVolume(Glb.SFXVolume);
+								GameStart = true;
+								scene.DeleteInputObject(this);
+							}
+
+							// 튜토리얼이 필요한 상황일 경우 튜토리얼 객체를 추가한다
+							else {
+								soundUtil.Stop(Glb.BGMChannel);
+								soundUtil.Play(Snd.MenuSelect, SndChannel);
+								SndChannel->setVolume(Glb.SFXVolume);
+								scene.DeleteInputObject(this);
+								scene.AddObject(new Tutorial, "tutorial", LAYER7);
+								scene.AddInputObject(scene.Find("tutorial"));
+								TutorialState = true;
+							}
+
 						}
 
 						else {
@@ -394,6 +411,7 @@ public:
 							Dat.HighscoreData.ResetData();
 							Glb.HighScore = 0;
 							Glb.MaxRep = 0;
+							Glb.NeedTutorial = true;
 
 							QuestionReset = false;
 							QuestionFocused[1] = false;
@@ -513,6 +531,9 @@ public:
 	}
 
 	void RenderFunc() {
+		if (TutorialState)
+			return;
+
 		if (GameStart || CreditStart) {
 			Begin(RENDER_TYPE_STATIC);
 			transform.Scale(MoveMatrix, ASP(2.0), 2.0);

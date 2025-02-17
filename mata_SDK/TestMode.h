@@ -1,28 +1,23 @@
 #pragma once
+
 #include <ModeHeader.h>
 
-#include "CreditScreen.h"
+#include "Tutorial.h"
 
-class Credit_Mode {
+class Test_Mode {
 public:
-	std::string ModeName{ "CreditMode" };
+	std::string ModeName{ "TestMode" };
 	int         ModeType{ MODE_TYPE_DEFAULT };
 
 	std::vector<std::string> InputObjectTag
 	{
-		"credit_screen"
+		
 	};
 
 	/////////////////////////////////////////////////////////////
 
 	static void Start() {
-		Glb.IsHighScore = false;
-		Glb.IsHighRep = false;
-
-		System.SetBackColorRGB(78, 99, 151);
-		cameraControl.ChangeCameraZoom(2.2);
-		cameraControl.MoveCamera(0.0, 0.3);
-		scene.AddObject(new CreditScreen, "credit_screen", LAYER1);
+		scene.AddObject(new Tutorial, "tutorial", LAYER1);
 		SetUp();
 	}
 
@@ -33,9 +28,9 @@ public:
 	// Fold here
 #pragma region FoldRegion 
 	std::vector<GameObject*> InputObject{};
-	static Credit_Mode* M_Inst;
+	static Test_Mode* M_Inst;
 
-	Credit_Mode() {
+	Test_Mode() {
 		M_Inst = this;
 	}
 
@@ -59,10 +54,9 @@ public:
 
 	}
 	static void KeyDown(unsigned char KEY, int X, int Y) {
-#ifdef ENABLE_DEV_EXIT
 		if (KEY == NK_ESCAPE)
 			System.Exit();
-#endif
+
 		KeyEvent Event{ NORMAL_KEY_DOWN, KEY, NULL };
 		ProcessKeyEvent(Event);
 	}
@@ -145,4 +139,4 @@ public:
 	}
 #pragma endregion
 };
-extern Credit_Mode CreditMode;
+extern Test_Mode TemplateMode;

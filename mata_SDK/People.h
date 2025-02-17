@@ -3,20 +3,6 @@
 #include "Cart.h"
 #include "Smoke.h"
 
-enum PeopleTypeEnum {
-	Listy,
-	Mayo,
-	Naia,
-	Hildae,
-	Silphir,
-	Balong,
-	Kidian,
-	Melloon,
-	Yumimi,
-	Daepyo,
-	EOE
-};
-
 int Num;
 
 class People : public GameObject {

@@ -23,6 +23,12 @@ public:
 
 		if (Glb.FullscreenAcvivated)
 			System.SwitchScreenState();
+		else {
+			WIDTH = GetSystemMetrics(SM_CXSCREEN);
+			HEIGHT = GetSystemMetrics(SM_CYSCREEN);
+			glutReshapeWindow(WIDTH, HEIGHT);
+			glutPositionWindow(0, 0);
+		}
 
 		scene.AddObject(new IntroScreen, "intro_screen", LAYER1);
 		SetUp();

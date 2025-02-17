@@ -68,6 +68,8 @@ DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
 	imageUtil.LoadT(Img.mataLogo, "SDKResource//Image//Common//mata_LOGO.png", IMAGE_TYPE_LINEAR);
 
 	imageUtil.LoadT(Img.ZZZ, "Assets//Sprite//Object//z.png");
+	
+	imageUtil.LoadT(Img.Tutorial, "Assets//Sprite//UI//tutorial.png");
 
 	return 0;
 }
@@ -136,8 +138,10 @@ DWORD WINAPI DataResourceLoader(LPVOID lpParam) {
 	Glb.FullscreenAcvivated = Dat.UserSettingData.LoadDigitData("Setting", "Fullscreen");
 	Glb.BGMVolume = Dat.UserSettingData.LoadDigitData("Setting", "BGMVolume");
 	Glb.SFXVolume = Dat.UserSettingData.LoadDigitData("Setting", "SFXVolume");
+
 	Glb.HighScore = Dat.HighscoreData.LoadDigitData("HighScore", "Score");
 	Glb.MaxRep = Dat.HighscoreData.LoadDigitData("HighScore", "Rep");
+	Glb.NeedTutorial = Dat.HighscoreData.LoadDigitData("TutorialNeed", "Bool");
 
 	return 0;
 }

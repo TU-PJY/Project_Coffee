@@ -45,6 +45,7 @@ public:
 	Image Chair{};
 
 	Image Title{};
+	Image Tutorial{};
 
 	Image LoadingED{};
 	Image mataLogo{};
@@ -92,6 +93,7 @@ public:
 	DataFormat HighScore = {
 		{DATA_TYPE_DIGIT, "HighScore", "Score", 0, ""},
 		{DATA_TYPE_DIGIT, "HighScore", "Rep", 0, ""},
+		{DATA_TYPE_DIGIT, "TutorialNeed", "Bool", 1, ""}
 	};
 
 	DataFormat UserSettings = {
@@ -141,6 +143,7 @@ public:
 	//int BGMVolumeInt{};
 	//int SFXVolumeInt{};
 
+
 	// 전체화면 여부
 	bool FullscreenAcvivated{};
 
@@ -153,6 +156,9 @@ public:
 	// 이전 최고 기록 달성 여부
 	bool IsHighScore{};
 	bool IsHighRep{};
+
+	// 튜토리얼 열람 여부
+	bool NeedTutorial{};
 };
 
 // Declare the global text object here.
@@ -183,6 +189,21 @@ enum XionStateEnum {
 	Xion_Cry2,
 	Xion_Hurt,
 	Xion_Happy
+};
+
+// 사람 프레임
+enum PeopleTypeEnum {
+	Listy,
+	Mayo,
+	Naia,
+	Hildae,
+	Silphir,
+	Balong,
+	Kidian,
+	Melloon,
+	Yumimi,
+	Daepyo,
+	EOE
 };
 
 // 커피 종류
