@@ -69,6 +69,9 @@ private:
 	// 시온을 뒤로 미는 상태
 	bool PushState{};
 
+	// 뒤로 미는 상태 카메라 위치
+	GLfloat PushCameraOffset{};
+
 	// 조작키 입력 가능한 상태, 게임오버 되면 비활성화 되어 더 이상 키를 입력할 수 없다
 	bool InputAvailable{ false };
 
@@ -275,10 +278,14 @@ public:
 				}
 			}
 
-			if (PushState)
-				mathUtil.Lerp(HRotation, 180.0, 8.0, FrameTime);
-			else
+			if (PushState) {
+				mathUtil.Lerp(HRotation, 180.0, 15.0, FrameTime);
+				mathUtil.Lerp(PushCameraOffset, -0.8, 10.0, FrameTime);
+			}
+			else {
 				mathUtil.Lerp(HRotation, 0.0, 15.0, FrameTime);
+				mathUtil.Lerp(PushCameraOffset, 0.0, 10.0, FrameTime);
+			}
 
 			// 애니메이션
 			// AnimationSize가 0.0보다 작다면 다시 0.0으로 복귀시킨다
@@ -298,7 +305,7 @@ public:
 			mathUtil.Lerp(EDCameraPosition, DestPosition + 0.5, 7.0, FrameTime);
 
 			// 이드를 약간 오른쪽에서 바라보도록 한다
-			cameraControl.MoveCamera(EDCameraPosition, 0.0);
+			cameraControl.MoveCamera(EDCameraPosition + PushCameraOffset, 0.0);
 		}
 
 		else {

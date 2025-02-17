@@ -99,12 +99,12 @@ public:
 		imageUtil.Render(SysRes.LOADING_SPINNER, SpinnerOpacity);
 
 		Begin(RENDER_TYPE_STATIC);
-		transform.Move(MoveMatrix, 0.0, 0.3);
+		transform.Move(MoveMatrix, 0.0, 0.45);
 		transform.Scale(MoveMatrix, 2.0, 2.0);
 		imageUtil.Render(Img.Title, SpinnerOpacity);
 
 		Begin(RENDER_TYPE_STATIC);
-		transform.Move(MoveMatrix, 0.0, -1.0);
+		transform.Move(MoveMatrix, 0.0, -0.9);
 		transform.Scale(MoveMatrix, 2.0, 2.0);
 		imageUtil.Render(Img.LoadingED, SpinnerOpacity);
 	}
