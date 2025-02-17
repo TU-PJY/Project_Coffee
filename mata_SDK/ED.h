@@ -78,6 +78,13 @@ private:
 	// 게임오버 사운드 재생 여부
 	bool SoundPlayed{};
 
+
+	// 이드가 부순 총 커피 개수, 개수에 따라 커피 얼룩의 정도가 달라진다
+	int TotalBreakCount{};
+
+	// 커피 얼룩 레벨, 레벨이 높을 수록 더 얼룩진다
+	int CoffeeStatinLevel{};
+
 public:
 	ED() {
 		EDCameraPosition = DestPosition + 0.5;
@@ -185,6 +192,18 @@ public:
 						Shelf->BreakCoffee();
 
 						BreakCount++;
+
+						// 캔 커피 또는 뱡 커피를 부술 때 얼룩 레벨이 증가한다
+						if(Item.Type == Coffee_Can || Coffee_Bottle)
+							TotalBreakCount++;
+
+						// 30개를 부술 때마다 커피 얼룩 레벨이 증가한다
+						if (TotalBreakCount >= 30){
+							CoffeeStatinLevel++;
+							EX.ClampValue(CoffeeStatinLevel, 5, CLAMP_GREATER);
+							TotalBreakCount = 0;
+						}
+
 
 						// 커피를 다 부수면 다음 선반으로 이동한다
 						// 부숴야할 커피는 4개 증가한다
@@ -357,7 +376,7 @@ public:
 		transform.Scale(MoveMatrix, FinalSize);
 		transform.RotateH(MoveMatrix, HRotation);
 		transform.Shear(MoveMatrix, TiltValue, 0.0);
-		imageUtil.RenderStaticSpriteSheet(Img.ED, Frame);
+		imageUtil.RenderStaticSpriteSheet(Img.ED, Frame + CoffeeStatinLevel * 9);
 	}
 
 	GLfloat GetPosition() {

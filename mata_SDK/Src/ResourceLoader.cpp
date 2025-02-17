@@ -7,7 +7,7 @@
 
 // Use LoadT(), LoadClipT(), and LoadSpriteSheetT() to load image files and sprite sheets in this thread.
 DWORD WINAPI ImageResourceLoader(LPVOID lpParam) {
-	imageUtil.SetSpriteSheetSize(256, 256, 9, 1);
+	imageUtil.SetSpriteSheetSize(256, 256, 9, 6);
 	imageUtil.LoadSpriteSheetT(Img.ED, "Assets//Sprite//People//sheet-ed.png");
 
 	imageUtil.SetSpriteSheetSize(256, 256, 7, 1);
